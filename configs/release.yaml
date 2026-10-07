@@ -10,3 +10,8 @@ repo_url: https://github.com/liugangg/protein-failure-benchmark
 # 填上之后 src/eval/build_submission.py 会强制要求稿件第 1 页的内部 TODO 已删除 ——
 # 预印本不该带着 TODO 上线。
 zenodo_doi: null
+
+# 沉积尚未发布时置 true: 稿件改为明说"DOI 将在修订版补上", 而不是带着
+# 占位符或内部待办上线。预印本先挂、数据 DOI 作为 v2 补上是常规做法。
+# DOI 落实后把 zenodo_doi 填上并把本项改回 false, build_submission.py 会强制稿件同步。
+zenodo_deposit_pending: true

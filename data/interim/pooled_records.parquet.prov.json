@@ -1,0 +1,282 @@
+{
+  "artifact": {
+    "path": "data/interim/pooled_records.parquet",
+    "size": 130856803,
+    "sha256": "0056308e0ad5a484f24ed65f10b23d2c30ff42a0f754a12ab0d78c21f5f9b270",
+    "rows": 2380297
+  },
+  "produced_by": "src/labels/pool.py",
+  "inputs": [
+    {
+      "path": "data/interim/ds1_targettrack/ATCG3D.parquet",
+      "size": 46575,
+      "sha256": "93788883ab4eb6bd69f6ca6b0bdd504519572c5096fe05b65b1d263c596cfecc",
+      "rows": 192
+    },
+    {
+      "path": "data/interim/ds1_targettrack/BIGS.parquet",
+      "size": 72127,
+      "sha256": "a264d536d90261ac659b96e87133f4fb03dc7c44b75e09ae2c2b3ef447196f9c",
+      "rows": 297
+    },
+    {
+      "path": "data/interim/ds1_targettrack/BSGC.parquet",
+      "size": 116583,
+      "sha256": "982f8fed2cde039ead3c1e70a374501f8bcc2fab046f834f0735f93382591074",
+      "rows": 1036
+    },
+    {
+      "path": "data/interim/ds1_targettrack/BSGI.parquet",
+      "size": 330708,
+      "sha256": "697054afce7bca1a4a62f08dbddc7ecad06be7e45e077eb40a13d29b30673b4a",
+      "rows": 1933
+    },
+    {
+      "path": "data/interim/ds1_targettrack/CESG.parquet",
+      "size": 1457562,
+      "sha256": "54c74febae184d87e07edddc227c75038d7946109f27ad7100f17ffa2c8b38b4",
+      "rows": 19697
+    },
+    {
+      "path": "data/interim/ds1_targettrack/CHTSB.parquet",
+      "size": 40963,
+      "sha256": "a7a6226cea750f0fc4eeff03c98ebb4b570922504069ef8423302d2209f16372",
+      "rows": 164
+    },
+    {
+      "path": "data/interim/ds1_targettrack/CSGID.parquet",
+      "size": 2174862,
+      "sha256": "19d0b3594fecf3a79bc5005ffaa5a19de5c599daaf379d17f9a4759277f94715",
+      "rows": 45341
+    },
+    {
+      "path": "data/interim/ds1_targettrack/CSMP.parquet",
+      "size": 427730,
+      "sha256": "50e3695b46c104636faa54143bfc70deeb2c016c5c71bfab303562608aa7f101",
+      "rows": 2486
+    },
+    {
+      "path": "data/interim/ds1_targettrack/EFI.parquet",
+      "size": 2019439,
+      "sha256": "19da8d53a72698f5cf860aa7e6c5802231d97ec3114646b26c3f88b02d8cd89d",
+      "rows": 24021
+    },
+    {
+      "path": "data/interim/ds1_targettrack/GPCR.parquet",
+      "size": 175116,
+      "sha256": "f1de380407105c5fa2e85a0a27525ad02295b91bc321e11d9fffc2bf407f49d0",
+      "rows": 847
+    },
+    {
+      "path": "data/interim/ds1_targettrack/ISFI.parquet",
+      "size": 60861,
+      "sha256": "f8dfe3046c20464b439328a3b975b0e448b2e8e9c8451c7a6fc4d65ae7e6bed4",
+      "rows": 425
+    },
+    {
+      "path": "data/interim/ds1_targettrack/ISPC.parquet",
+      "size": 31758,
+      "sha256": "0b69454d07103f929e99e6a1d183938583898f2286111828ecc2f696a89c5098",
+      "rows": 135
+    },
+    {
+      "path": "data/interim/ds1_targettrack/JCSG.parquet",
+      "size": 6411418,
+      "sha256": "7dfb1c686bc414c3ff3a21d12d26ce7c92482f62c1fc19d60b751e07683d9987",
+      "rows": 378364
+    },
+    {
+      "path": "data/interim/ds1_targettrack/MCSG.parquet",
+      "size": 8395011,
+      "sha256": "e89b1ebc80ad08cdbf3375e7631cc731502d8fed47e72693d255d4ce65328f72",
+      "rows": 117745
+    },
+    {
+      "path": "data/interim/ds1_targettrack/MPID.parquet",
+      "size": 19169,
+      "sha256": "a236c2db9859dc86de4481d9cfb618873afc1e64b3f7e6b2ec66e1b02509a708",
+      "rows": 237
+    },
+    {
+      "path": "data/interim/ds1_targettrack/MPP.parquet",
+      "size": 142294,
+      "sha256": "47c233a1d2ddf28e0d852c7b323e80a27fda3caae374e9999ab118d686e8d680",
+      "rows": 2137
+    },
+    {
+      "path": "data/interim/ds1_targettrack/MPSBC.parquet",
+      "size": 40670,
+      "sha256": "a814fb58e246396f15fad733c444ca1fab427549057646de80796d701bcf4c00",
+      "rows": 339
+    },
+    {
+      "path": "data/interim/ds1_targettrack/MPSBYNMR.parquet",
+      "size": 12973,
+      "sha256": "d0799d3c9438db100a096b0f2e1a353c13a3f494d1a1e11d06ddba10819af545",
+      "rows": 88
+    },
+    {
+      "path": "data/interim/ds1_targettrack/MSGP.parquet",
+      "size": 80199,
+      "sha256": "becaac5e0e49eace60f5fd2b2f19c4f3a61773d6271da901223c9323fc0c5fe9",
+      "rows": 314
+    },
+    {
+      "path": "data/interim/ds1_targettrack/NATPRO.parquet",
+      "size": 260899,
+      "sha256": "2b3ea78377011c53e0a12191b3856ab5ed84955671131939cb4af6eaac02c26a",
+      "rows": 1040
+    },
+    {
+      "path": "data/interim/ds1_targettrack/NESG.parquet",
+      "size": 10543465,
+      "sha256": "7b989ff529023c930e205e4811738e6fd9ef38b03bb00ae750a2bdb6fde36c94",
+      "rows": 133249
+    },
+    {
+      "path": "data/interim/ds1_targettrack/NYCOMPS.parquet",
+      "size": 2699984,
+      "sha256": "9f806eb5ee02deb0a7f47e7fbd2eca3159031b0498c3c2a8f2758c1ccbf6dd07",
+      "rows": 31780
+    },
+    {
+      "path": "data/interim/ds1_targettrack/NYSGRC.parquet",
+      "size": 7464056,
+      "sha256": "dbbea695ece37e9e6783cadda2b6b3ccbc3dd5cfac008c44c9004aef114e1029",
+      "rows": 69598
+    },
+    {
+      "path": "data/interim/ds1_targettrack/NYSGXRC.parquet",
+      "size": 3914147,
+      "sha256": "49ce371ca5092740798f1a80bb1dec9d7056638844adefece8b1e308e199fc94",
+      "rows": 46105
+    },
+    {
+      "path": "data/interim/ds1_targettrack/OCSP.parquet",
+      "size": 134327,
+      "sha256": "a78c67415de777524664c77b83f9885b86d2729360e40855bc565e426272f3dd",
+      "rows": 884
+    },
+    {
+      "path": "data/interim/ds1_targettrack/OPPF.parquet",
+      "size": 49424,
+      "sha256": "58e15e318b545c04ab7c91c77786ad901417a03001e9cf1fdd5d146815abe62a",
+      "rows": 189
+    },
+    {
+      "path": "data/interim/ds1_targettrack/RSGI.parquet",
+      "size": 812934,
+      "sha256": "d05c79ac9b71fa1dd6b51b7d0385720983446840049c7478d8a567c681f27361",
+      "rows": 5970
+    },
+    {
+      "path": "data/interim/ds1_targettrack/S2F.parquet",
+      "size": 53997,
+      "sha256": "7fc697d2e0e9c140fe8f1718f1e1acf830c8685216897c28d6fac3cac771d203",
+      "rows": 336
+    },
+    {
+      "path": "data/interim/ds1_targettrack/SECSG.parquet",
+      "size": 3189450,
+      "sha256": "62575e7e489cb4f0c5520a0d531f9348724c0feb674fd0c03cb440621f4daa5a",
+      "rows": 15287
+    },
+    {
+      "path": "data/interim/ds1_targettrack/SGC.parquet",
+      "size": 43159,
+      "sha256": "73dc3a0099bd40c754242b1ea4be07b314770bb6c06ae0f866d65cb940dae9d7",
+      "rows": 107
+    },
+    {
+      "path": "data/interim/ds1_targettrack/SGPP.parquet",
+      "size": 3184876,
+      "sha256": "fbbd80f19e80bca81e168cd639df72593393a41a64af7556169d62c1dcfe1f3c",
+      "rows": 20856
+    },
+    {
+      "path": "data/interim/ds1_targettrack/SGX.parquet",
+      "size": 70946,
+      "sha256": "b4259fcc832b86a5d5d3aa7f380078c99ccab2b674181ddf14507f05ab350b5b",
+      "rows": 9483
+    },
+    {
+      "path": "data/interim/ds1_targettrack/SPINE.parquet",
+      "size": 184341,
+      "sha256": "4ed0456896e85d105084bfe3e91eaf9fbc83ce1008d2cb92fbca58f94888f486",
+      "rows": 1095
+    },
+    {
+      "path": "data/interim/ds1_targettrack/SSGCID.parquet",
+      "size": 2570580,
+      "sha256": "76a823479377b8457c71bff453efd4928188a6002aa55e37915e77081bb7e483",
+      "rows": 21715
+    },
+    {
+      "path": "data/interim/ds1_targettrack/STAD.parquet",
+      "size": 15622,
+      "sha256": "24106316274de4b9612864eac1a7549fad5dec190e65d7196f0eb1cd53dcbae0",
+      "rows": 95
+    },
+    {
+      "path": "data/interim/ds1_targettrack/TB.parquet",
+      "size": 406107,
+      "sha256": "d74f8df4ae497fa10e21aaafdbbb548edc78639773a6d0e1a48a2471a1d51f96",
+      "rows": 5226
+    },
+    {
+      "path": "data/interim/ds1_targettrack/TEMIMPS.parquet",
+      "size": 31983,
+      "sha256": "e6a360edc7ef2d66ef38552a8499d94e1a4744020e3a6563fde45d108745fb0f",
+      "rows": 154
+    },
+    {
+      "path": "data/interim/ds1_targettrack/TMPC.parquet",
+      "size": 54216,
+      "sha256": "671a31563118d03e354dc3cc9407187f75f3bc528327fb7af992528bf71e3cca",
+      "rows": 770
+    },
+    {
+      "path": "data/interim/ds1_targettrack/TRANSPORTPDB.parquet",
+      "size": 205428,
+      "sha256": "8c3a974824f2642d596633cba6b66a63f90b050014bf74ca5d374abed902bd9f",
+      "rows": 1307
+    },
+    {
+      "path": "data/interim/ds1_targettrack/XMTB.parquet",
+      "size": 53093,
+      "sha256": "69228aa9459365fa683f2548dc8350089e5eb46159b1aa0b9d02f12d736ac4a7",
+      "rows": 222
+    },
+    {
+      "path": "data/interim/ds1_targettrack/YSG.parquet",
+      "size": 54004,
+      "sha256": "625b75fde8402c30ac82cb84b8b8824e202aff48f2783a6d00453a39953ddc65",
+      "rows": 270
+    },
+    {
+      "path": "data/interim/ds2_tsuboyama.parquet",
+      "size": 14124503,
+      "sha256": "34469cfcb93eeaa5463c4c3021c100cf437c9409e6e891bb839a291808772383",
+      "rows": 776296
+    },
+    {
+      "path": "data/interim/ds3_proteingym.parquet",
+      "size": 7917186,
+      "sha256": "b392380179a54150427ddef4a9d7bf2c52a02624f9b2722d9a183912631021e2",
+      "rows": 654010
+    },
+    {
+      "path": "data/interim/ds5_dtu_binder.parquet",
+      "size": 204184,
+      "sha256": "546f447a8c7e1fa9cab2d314c789eb54dfa060aa03080ff00079efefe67763fe",
+      "rows": 3669
+    },
+    {
+      "path": "data/interim/ds5_adaptyv_egfr.parquet",
+      "size": 38767,
+      "sha256": "4f41c3629c5910dedc219cc39d6b2569e1c927a0da58c355858e16455e4f757b",
+      "rows": 604
+    }
+  ],
+  "extra": {}
+}

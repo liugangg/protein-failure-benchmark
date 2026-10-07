@@ -429,7 +429,9 @@ L2 在 express 折 2 (基础率 0.032) 上 PR-AUC/base = 1.13 [1.0199, 1.3076], 
 
 完整的许可分层、逐条引用条目、以及 ProteinGym 要求的 33 个 assay 原始论文引用清单见仓库 `DATA_AVAILABILITY.md`。本仓库**不重新分发任何上游原始文件**: `data/raw/` 由记录在 `configs/data_sources.yaml` 的地址下载、校验 md5 后只读使用。
 
-**归档沉积。** 衍生数据与四套冻结切分归档于 Zenodo, doi:[to be added — deposit not yet published]。由于该沉积是作为**单一作品**再分发的, 按上文给出的理由, 它**整体**适用 CC BY-SA 4.0; 需要纯 CC BY 4.0 子集的使用者必须自行剔除 TargetTrack 衍生部分来重建该子集, 而那个子集**不含 `express` 主任务**。
+本文引用的 `src/…`、`configs/…`、`reports/…`、`data/processed/splits/…` 均为仓库内路径。`data/interim/` 下的中间产物两头都不在: 由 `src/` 的脚本重新生成, 仓库里只带它们的指纹 (见 9.1), 以便重算出来的副本能与本文所用的那份对账。
+
+**归档与沉积。** 四套冻结切分、`center_folds`、评估代码与本文引用的全部报告已在配套仓库中发布。统一标签表对代码托管平台来说过大, **将**单独沉积于 Zenodo; 该沉积的 DOI 将在本预印本的修订版中补上。由于该沉积将作为**单一作品**再分发, 按上文给出的理由, 它将**整体**适用 CC BY-SA 4.0; 需要纯 CC BY 4.0 子集的使用者必须自行剔除 TargetTrack 衍生部分来重建该子集, 而那个子集**不含 `express` 主任务**。
 
 ## 8 参考文献
 
@@ -463,7 +465,7 @@ L2 在 express 折 2 (基础率 0.032) 上 PR-AUC/base = 1.13 [1.0199, 1.3076], 
 - `configs/stage3_train.yaml` 的 `changelog` — 评估规则改动的时间点、理由与影响
 - `LICENSE` (Apache-2.0) · `LICENSE-DATA-CC-BY-SA-4.0.txt` / `LICENSE-DATA-CC-BY-4.0.txt` · `NOTICE` · `DATA_AVAILABILITY.md` (许可分层的完整说明)
 - `reports/runs/` — 每次评测的数据源清单、切分 hash、超参、环境版本
-- Zenodo 沉积 doi:[to be added — deposit not yet published] — 衍生数据与四套冻结切分的归档副本, 作为单一作品适用 CC BY-SA 4.0 (见 §7)
+- Zenodo 沉积 — 统一标签表的归档副本 (DOI 将在本预印本的修订版中补上)
 
 
 ### 9.1 冻结产物指纹
@@ -482,4 +484,4 @@ L2 在 express 折 2 (基础率 0.032) 上 PR-AUC/base = 1.13 [1.0199, 1.3076], 
 | `data/interim/pooled_unique_seqs.fasta` | 708,038 | `d8fc464697129e26` |
 | `data/interim/split_groups.parquet` | 354,019 | `ba4ddfbe54fdff87` |
 
-完整的 sha256 与上游输入链见各 `.prov.json` (9 个文件, 随代码发布)。
+完整的 sha256 与上游输入链见上表每个产物各自的 `.prov.json` (共 9 个, 随代码发布; 仓库另带中间产物与报告产物的指纹, 未列入上表)。

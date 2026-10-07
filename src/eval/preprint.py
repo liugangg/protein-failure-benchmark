@@ -99,8 +99,15 @@ def main() -> None:
     _rel = yaml.safe_load(pathlib.Path("configs/release.yaml").read_text()) or {}
     REPO_URL = _rel.get("repo_url") or "<REPOSITORY_URL>"
     _zd = _rel.get("zenodo_doi")
-    # 未落实时给**明显的占位符**, 不给一个看着像真的死 DOI
-    DOI_TXT = f"doi:{_zd}" if _zd else "doi:[to be added — deposit not yet published]"
+    _pending = bool(_rel.get("zenodo_deposit_pending"))
+    # 三态: DOI 已有 -> 写实际 DOI; 沉积待发布 -> 写明"将在修订版补上";
+    # 都不是 -> 明显占位符 (绝不给一个看着像真的死 DOI)
+    if _zd:
+        DOI_TXT = f"doi:{_zd}"
+    elif _pending:
+        DOI_TXT = "\u6c89\u79ef DOI \u5c06\u5728\u672c\u9884\u5370\u672c\u7684\u4fee\u8ba2\u7248\u4e2d\u8865\u4e0a"
+    else:
+        DOI_TXT = "doi:[to be added — deposit not yet published]"
     _refs_all = yaml.safe_load(pathlib.Path("configs/references.yaml").read_text())
     RF = _refs_all["refs"]
 
@@ -1128,10 +1135,17 @@ def main() -> None:
       "本仓库**不重新分发任何上游原始文件**: `data/raw/` 由记录在 "
       "`configs/data_sources.yaml` 的地址下载、校验 md5 后只读使用。")
     A("")
-    A(f"**归档沉积。** 衍生数据与四套冻结切分归档于 Zenodo, {DOI_TXT}。"
-      "由于该沉积是作为**单一作品**再分发的, 按上文给出的理由, 它**整体**适用 "
-      "CC BY-SA 4.0; 需要纯 CC BY 4.0 子集的使用者必须自行剔除 TargetTrack 衍生部分"
-      "来重建该子集, 而那个子集**不含 `express` 主任务**。")
+    A("本文引用的 `src/…`、`configs/…`、`reports/…`、`data/processed/splits/…` 均为仓库内路径。"
+      "`data/interim/` 下的中间产物两头都不在: 由 `src/` 的脚本重新生成, "
+      "仓库里只带它们的指纹 (见 9.1), 以便重算出来的副本能与本文所用的那份对账。")
+    A("")
+    A("**归档与沉积。** 四套冻结切分、`center_folds`、评估代码与本文引用的全部报告已在配套仓库中发布。"
+      "统一标签表对代码托管平台来说过大, **将**单独沉积于 Zenodo; "
+      "该沉积的 DOI 将在本预印本的修订版中补上。"
+      "由于该沉积将作为**单一作品**再分发, 按上文给出的理由, "
+      "它将**整体**适用 CC BY-SA 4.0; 需要纯 CC BY 4.0 子集的使用者"
+      "必须自行剔除 TargetTrack 衍生部分来重建该子集, "
+      "而那个子集**不含 `express` 主任务**。")
     A("")
     # ───────── 7 补充材料清单 ─────────
     A("## 8 参考文献")
@@ -1184,8 +1198,8 @@ def main() -> None:
       "`LICENSE-DATA-CC-BY-4.0.txt` · `NOTICE` · `DATA_AVAILABILITY.md` "
       "(许可分层的完整说明)")
     A("- `reports/runs/` — 每次评测的数据源清单、切分 hash、超参、环境版本")
-    A(f"- Zenodo 沉积 {DOI_TXT} — 衍生数据与四套冻结切分的归档副本, "
-      f"作为单一作品适用 CC BY-SA 4.0 (见 §7)")
+    A("- Zenodo 沉积 — 统一标签表的归档副本 "
+      "(DOI 将在本预印本的修订版中补上)")
     A("")
 
     A("")
@@ -1205,7 +1219,7 @@ def main() -> None:
         _j = json.loads(_pv.read_text())["artifact"]
         A(f"| `{_j['path']}` | {fm(_j.get('rows') or 0)} | `{_j['sha256'][:16]}` |")
     A("")
-    A(f"完整的 sha256 与上游输入链见各 `.prov.json` ({len(_pvs)} 个文件, 随代码发布)。")
+    A(f"完整的 sha256 与上游输入链见上表每个产物各自的 `.prov.json` (共 {len(_pvs)} 个, 随代码发布; 仓库另带中间产物与报告产物的指纹, 未列入上表)。")
     A("")
 
     # ───────── 交叉核对 ─────────

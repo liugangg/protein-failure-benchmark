@@ -1,0 +1,18 @@
+{
+  "artifact": {
+    "path": "/data/oih/negative-data-model/data/interim/cluster30/c30_cluster.tsv",
+    "size": 4746493,
+    "sha256": "6edce418d1f333be50c8ecc30b0c647a3260e874925acd127f5183652d5c1f49",
+    "rows": 354019
+  },
+  "produced_by": "src/splits/cluster30.sh",
+  "inputs": [
+    {
+      "path": "/data/oih/negative-data-model/data/interim/pooled_unique_seqs.fasta",
+      "size": 118692782,
+      "sha256": "d8fc464697129e266bdd2b755306f8650c5f8b28e1e553a80a7c17c4242a460d",
+      "rows": 708038
+    }
+  ],
+  "extra": {}
+}

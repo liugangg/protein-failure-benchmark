@@ -14,10 +14,6 @@
 
 ORCID: [0009-0007-6982-201X](https://orcid.org/0009-0007-6982-201X)
 
-> **One item remains before posting:** insert the deposit DOI in §7 and §9 once the
-> Zenodo record is published (reserved DOIs do not resolve until the deposit is published).
-> **Delete this sentence before posting.**
-
 > Preprint license: CC BY 4.0 — this applies to the manuscript text; the derived data are
 > licensed separately and not uniformly, see §7.
 
@@ -419,10 +415,13 @@ The threshold this paper sets for subsequent work therefore requires **both cond
 All relative paths cited in this manuscript (`src/…`, `configs/…`, `reports/…`,
 `data/processed/splits/…`) are paths within that repository. Two items are deposited
 separately rather than in the repository: the unified label table `records.parquet`,
-whose size exceeds the per-file limit of common code hosts *(deposit DOI to be added)* —
+whose size exceeds the per-file limit of common code hosts —
 its authoritative size, row count and sha256 are recorded in
 `data/processed/records.parquet.prov.json` in the repository, so any copy can be verified
 byte-for-byte — and the upstream raw files, which this work does not redistribute at all.
+The intermediate artifacts under `data/interim/` are shipped as neither: they are regenerated
+by the scripts in `src/`, and only their fingerprints (§9.1) are in the repository, so that a
+regenerated copy can be checked against the one used here.
 
 Code is released under **Apache-2.0**. The derived data (unified labels, four frozen splits, center folds) are **not under a single license** — the share-alike terms upstream do not permit us to relicense them uniformly as CC BY 4.0:
 
@@ -455,11 +454,7 @@ Two traps are easy to fall into, stated here so that those reproducing this work
 
 The full license layering, the per-item citation entries, and the list of 33 original assay papers that ProteinGym requires to be cited are given in `DATA_AVAILABILITY.md` in the repository. This repository **redistributes no upstream raw file**: `data/raw/` is downloaded from the addresses recorded in `configs/data_sources.yaml`, md5-verified, and used read-only.
 
-**Archived deposit.** The derived data and the four frozen splits are archived at Zenodo
-under doi:[to be added — deposit not yet published]. Because that deposit is redistributed
-as a single work, it carries CC BY-SA 4.0 in its entirety, for the reason given above; a
-user requiring a pure CC BY 4.0 subset must reconstruct it by excluding the
-TargetTrack-derived portion, and that subset does not contain the `express` primary task.
+**Archival and deposit.** The four frozen splits, `center_folds`, the evaluation code and all reports cited here are released in the companion repository. The unified label table is too large for a code host and will be deposited separately at Zenodo; that deposit's DOI will be added in a revised version of this preprint. Because the deposit will be redistributed as a single work, it will carry CC BY-SA 4.0 in its entirety, for the reason given above; a user requiring a pure CC BY 4.0 subset must reconstruct it by excluding the TargetTrack-derived portion, and that subset does not contain the `express` primary task.
 
 ### Funding
 
@@ -521,7 +516,7 @@ All of the following are in the repository (<https://github.com/liugangg/protein
 - the `changelog` in `configs/stage3_train.yaml` — timing, rationale and impact of evaluation-rule changes
 - `LICENSE` (Apache-2.0) · `LICENSE-DATA-CC-BY-SA-4.0.txt` / `LICENSE-DATA-CC-BY-4.0.txt` · `NOTICE` · `DATA_AVAILABILITY.md` (full account of the license layering)
 - `reports/runs/` — data-source list, split hash, hyperparameters and environment versions for every evaluation run
-- Zenodo deposit doi:[to be added — deposit not yet published] — archived copy of the derived data and the four frozen splits, under CC BY-SA 4.0 as a single work (§7)
+- Zenodo deposit — archived copy of the unified label table (DOI to be added in a revised version of this preprint)
 
 ### 9.1 Frozen artifact fingerprints
 
@@ -539,4 +534,4 @@ Every artifact carries a `.prov.json` recording its own `sha256`, byte count and
 | `data/interim/pooled_unique_seqs.fasta` | 708,038 | `d8fc464697129e26` |
 | `data/interim/split_groups.parquet` | 354,019 | `ba4ddfbe54fdff87` |
 
-The complete sha256 values and upstream input chains are given in the individual `.prov.json` files (9 files, released with the code).
+The complete sha256 values and upstream input chains are given in the individual `.prov.json` file of each artifact listed above (9 in total, released with the code; the repository additionally carries fingerprints for intermediate and report artifacts not listed in this table).

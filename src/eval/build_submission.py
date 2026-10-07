@@ -53,9 +53,35 @@ def main() -> None:
     import yaml as _y
     _rel = _y.safe_load(pathlib.Path("configs/release.yaml").read_text()) or {}
     _doi = _rel.get("zenodo_doi")
-    _ph = "to be added" in md
+    _pending = bool(_rel.get("zenodo_deposit_pending"))
+    _ph = "deposit not yet published" in md          # 明显占位符
+    _v2 = "revised version of this preprint" in md   # "DOI 将在修订版补上"
     _todo = "remains before posting" in md or "Delete this sentence before posting" in md
-    if _doi:
+
+    # 三态门。任何一态下稿件都不许带内部待办上线。
+    if _todo:
+        raise SystemExit("!! 稿件仍带投稿前内部待办句, 拒绝出件 —— 预印本不该带 TODO 上线。")
+    if _pending and not _doi:
+        bad = []
+        if not _v2:
+            bad.append('稿件未写明 "the deposit DOI will be added in a revised version"')
+        if _ph:
+            bad.append("稿件仍有未发布占位符, 与 pending 表述重复")
+        # 沉积还没发布时, 任何"已归档"的**现在时**表述都是假陈述 ——
+        # 读者照它去找会什么也找不到, 而这正是本文批评别人的那类问题。
+        present_tense = [
+            "are archived at Zenodo", "is archived at Zenodo",
+            "archived at Zenodo;", "归档于 Zenodo,", "已归档于 Zenodo",
+            "are deposited at Zenodo", "is deposited at Zenodo",
+        ]
+        hit = [x for x in present_tense if x in md]
+        if hit:
+            bad.append(f"稿件用现在时声称数据已归档, 但沉积尚未发布: {hit}")
+        if bad:
+            raise SystemExit("!! release.yaml 标为 zenodo_deposit_pending, 但稿件没同步:\n  - "
+                             + "\n  - ".join(bad))
+        print("DOI 门: 沉积待发布 —— 稿件已写明 DOI 将在修订版补上 (无占位符、无待办)")
+    elif _doi:
         bad = []
         if _ph:
             bad.append("稿件里还有 \"to be added\" 占位符")
@@ -71,10 +97,74 @@ def main() -> None:
     else:
         if not _ph:
             raise SystemExit(
-                "!! release.yaml 的 zenodo_doi 为空, 但稿件里没有占位符 —— "
+                "!! zenodo_doi 为空且未标 pending, 但稿件里没有占位符 —— "
                 "是不是手写了一个 DOI? 未发布的 Zenodo DOI 不解析, 不能写进稿件。")
-    print(f"DOI 门: zenodo_doi={_doi or '(未落实)'} · 占位符={'在' if _ph else '无'} "
-          f"· 待办句={'在' if _todo else '无'}")
+        print("DOI 门: 未落实且未标 pending —— 稿件带明显占位符")
+    # ── 仓库路径门 (刘刚刚 2026-10-07) ──
+    # §7 有一句全称陈述: "all reports cited here are released in the companion repository",
+    # §9 又列出一串仓库内路径。全称陈述必须机械可核 —— 稿件声称"在仓库中"的路径,
+    # 必须真的被 git 跟踪, 一个都不能少。本文批评别人"记录说有、实际没有",
+    # 自己不能犯同一条。
+    #
+    # NOT_SHIPPED 是稿件**明确声明不在仓库**的产物, 不受本门约束。
+    # 但这个豁免名单自己也要受约束: 每一项都必须在稿件里找到那句声明,
+    # 否则豁免就退化成"悄悄放过" —— 删掉 §7 那句话, 这里就会炸。
+    NOT_SHIPPED = {
+        "data/raw/": "redistributes no upstream raw file",
+        "records.parquet": "deposited\nseparately rather than in the repository",
+        "data/processed/records.parquet": "deposited\nseparately rather than in the repository",
+        "data/interim/pooled_records.parquet": "under `data/interim/` are shipped as neither",
+        "data/interim/pooled_unique_seqs.fasta": "under `data/interim/` are shipped as neither",
+        "data/interim/split_groups.parquet": "under `data/interim/` are shipped as neither",
+    }
+    missing_decl = [k for k, v in NOT_SHIPPED.items() if v not in md]
+    if missing_decl:
+        raise SystemExit(
+            "!! 以下产物被豁免'必须在仓库里'的检查, 但稿件里已找不到那句声明:\n  - "
+            + "\n  - ".join(missing_decl)
+            + "\n   要么把声明写回稿件, 要么把产物真的放进仓库 —— 不许静默豁免。")
+
+    tracked = set(subprocess.run(["git", "ls-files"], cwd=ROOT,
+                                 capture_output=True, text=True, check=True).stdout.split())
+    if not tracked:
+        raise SystemExit("!! git ls-files 返回空 —— 无法核验仓库路径声明, 拒绝出件。")
+
+    cited = set(re.findall(
+        r"`([A-Za-z0-9_][A-Za-z0-9_/.\-]*\.(?:md|json|yaml|parquet|py|txt|fasta))`", md))
+    cited |= set(re.findall(r"`((?:src|configs|reports|data)/[A-Za-z0-9_/.\-]*/)`", md))
+
+    def is_tracked(path: str) -> bool:
+        if path in tracked:
+            return True
+        d = path.rstrip("/")
+        return any(t.startswith(d + "/") for t in tracked)
+
+    untracked = sorted(p for p in cited
+                       if p not in NOT_SHIPPED and not is_tracked(p))
+    if untracked:
+        raise SystemExit(
+            f"!! 稿件引用了 {len(untracked)} 个仓库内路径, 但它们没被 git 跟踪:\n  - "
+            + "\n  - ".join(untracked)
+            + "\n   §7 声称引用的报告全部随仓库发布 —— 这句话现在是假的。"
+            + "\n   (若该产物本就不该进仓库, 在稿件里写明, 并登记进 NOT_SHIPPED。)")
+
+    # §9.1 的指纹承诺: 表里每个产物都必须有一份被跟踪的 .prov.json。
+    # 不用 `git ls-files '*.prov.json' | wc -l` 数个数 —— 仓库里另有中间产物与报告产物的
+    # 指纹, 个数对不上, 而且"个数相等"从来不是完成判据; 这里按名字逐个点。
+    fp_rows = re.findall(r"^\| `((?:data)/[^`]+)` \| [\d,]+ \| `[0-9a-f]{16}` \|$", md, re.M)
+    if len(fp_rows) != 9:
+        raise SystemExit(f"!! §9.1 指纹表解析到 {len(fp_rows)} 行, 预期 9 行 —— "
+                         "表格式变了, 先修这个门再出件。")
+    fp_missing = [f"{a}.prov.json" for a in fp_rows
+                  if f"{a}.prov.json" not in tracked]
+    if fp_missing:
+        raise SystemExit(
+            "!! §9.1 称这些指纹'随代码发布', 但它们没被 git 跟踪:\n  - "
+            + "\n  - ".join(fp_missing)
+            + "\n   注意 .gitignore 忽略了整个 data/interim/, 需要 git add -f。")
+    print(f"仓库路径门: PASS —— 稿件引用 {len(cited) - len(NOT_SHIPPED)} 个仓库内路径全部被跟踪, "
+          f"§9.1 的 9 份指纹全部在仓库 (另有 {len(NOT_SHIPPED)} 项已声明不在仓库)")
+
     OUT.mkdir(exist_ok=True)
 
     html_p = OUT / "manuscript.html"

@@ -1,0 +1,18 @@
+{
+  "artifact": {
+    "path": "data/interim/pooled_unique_seqs.fasta",
+    "size": 118692782,
+    "sha256": "d8fc464697129e266bdd2b755306f8650c5f8b28e1e553a80a7c17c4242a460d",
+    "rows": 708038
+  },
+  "produced_by": "src/labels/pool.py",
+  "inputs": [
+    {
+      "path": "data/interim/pooled_records.parquet",
+      "size": 130856803,
+      "sha256": "0056308e0ad5a484f24ed65f10b23d2c30ff42a0f754a12ab0d78c21f5f9b270",
+      "rows": 2380297
+    }
+  ],
+  "extra": {}
+}
