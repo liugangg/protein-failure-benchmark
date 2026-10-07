@@ -87,7 +87,55 @@ def sha256(p: pathlib.Path) -> str:
     return h.hexdigest()
 
 
+def scan_pattern() -> tuple[re.Pattern, int]:
+    """构造脱敏扫描用的正则。**缺前提即硬失败, 不许静默通过。**
+
+    待检出的内部字符串由 configs/local_paths.yaml 给出, 不写死在公开代码里 ——
+    否则这段扫描器自己就把内部主机名/路径名印在了公开仓库里
+    (2026-10-07 审计实测命中的就是那两行正则)。
+
+    缺文件或缺 extra_scan_needles 字段时抛 SystemExit, 与 provenance.require()
+    同一条原则: 检查前提消失要炸, 不能当作"无敏感词"继续 —— 那就重演了
+    2,377 -> 289 那次事故 (检查条件没了, 结果照常产出, 没有报错)。
+
+    **本函数在 main() 的最前面调用**: 校验不过就不许开始复制文件, 否则会留下一个
+    已填满但未扫描的目录, 而"目录是满的"会被当成"构建完成"。
+    """
+    import yaml as _yaml
+    lp = pathlib.Path("configs/local_paths.yaml")
+    if not lp.exists():
+        raise SystemExit(
+            f"!! 缺 {lp} —— 脱敏扫描的待检字符串来自这里, 没有它这一步会"
+            f'"零命中"地假通过。\n'
+            f"   照 configs/local_paths.yaml.example 建一份再跑:\n"
+            f"     cp configs/local_paths.yaml.example {lp}\n"
+            f"   拒绝在无法扫描的情况下产出待传件。")
+    cfg = _yaml.safe_load(lp.read_text()) or {}
+    if "extra_scan_needles" not in cfg:
+        raise SystemExit(
+            f"!! {lp} 里缺 `extra_scan_needles` 字段。\n"
+            f"   这个字段列出本机不该外流的标识 (内部主机名 / 服务名 / 沙箱路径)。\n"
+            f"   确实没有要查的就显式写 `extra_scan_needles: []` —— "
+            f"空列表是一次明确声明, 字段缺失不是。")
+    # 通用模式, 不含任何内部标识, 可以留在公开代码里
+    needles = [r"localhost", r"127\.0\.0\.1",
+               r"192\.168\.\d+", r"10\.\d+\.\d+\.\d+",
+               r"172\.(?:1[6-9]|2\d|3[01])\.\d+"]
+    extra = list(cfg["extra_scan_needles"] or [])
+    needles += [re.escape(str(x)) for x in extra]
+    for k, v in cfg.items():
+        if k != "extra_scan_needles" and isinstance(v, str) and v.startswith("/"):
+            needles.append(re.escape(v.rstrip("/")))   # 完整路径, 不拆片段
+    return re.compile("|".join(needles)), len(extra)
+
+
 def main() -> None:
+    # 前提检查必须在动文件之前 (见 scan_pattern 的说明)
+    pat, n_extra = scan_pattern()
+    print(f"脱敏扫描前提: OK ({pat.pattern.count('|') + 1} 个待检项, "
+          f"其中 extra_scan_needles {n_extra} 个"
+          + ("  ⚠️ 为空" if n_extra == 0 else "") + ")")
+
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir()
@@ -266,27 +314,7 @@ def main() -> None:
     (OUT / "SHA256SUMS.txt").write_text(
         "\n".join(f"{sha256(OUT / n)}  {n}" for n in names) + "\n", encoding="utf8")
 
-    # ── 敏感信息扫描 ──
-    # 待检出的内部字符串由本地配置给出, **不写死在公开代码里** —— 否则这段扫描器
-    # 自己就把内部主机名/路径名印在了公开仓库里 (2026-10-07 审计实测命中的就是这两行)。
-    # 用**完整路径串**而非路径片段: 拆片段会得到 "data" 这类通用词, 误报
-    # .prov.json 里合法的 "path": "data/processed/..." (第一版就是这么错的)。
-    import yaml as _yaml
-    _lp = pathlib.Path("configs/local_paths.yaml")
-    # 这些是通用模式, 不含任何内部标识, 可以留在公开代码里
-    needles = [r"localhost", r"127\.0\.0\.1",
-               r"192\.168\.\d+", r"10\.\d+\.\d+\.\d+",
-               r"172\.(?:1[6-9]|2\d|3[01])\.\d+"]
-    narrowed = True
-    if _lp.exists():
-        cfg = _yaml.safe_load(_lp.read_text()) or {}
-        for k, v in cfg.items():
-            if k == "extra_scan_needles":
-                needles += [re.escape(str(x)) for x in (v or [])]
-            elif isinstance(v, str) and v.startswith("/"):
-                needles.append(re.escape(v.rstrip("/")))     # 完整路径, 不拆片段
-        narrowed = False
-    pat = re.compile("|".join(needles))
+    # ── 敏感信息扫描 (pat 在 main 开头就已校验并构造好) ──
     hits = []
     for p in sorted(OUT.iterdir()):
         if p.suffix == ".parquet":
@@ -310,8 +338,7 @@ def main() -> None:
     cjk = sum(1 for ch in (OUT / "README.md").read_text(encoding="utf8")
               if "一" <= ch <= "鿿")
     print(f"  README 中文字符: {cjk} (应为 0)")
-    print(f"  敏感信息扫描: 干净"
-          f"{'  (无 local_paths.yaml, 仅查通用模式, 覆盖面变窄)' if narrowed else ''}")
+    print("  敏感信息扫描: 干净 (待检项见本脚本开头的 \"脱敏扫描前提\" 一行)")
     if cjk:
         raise SystemExit("!! README 仍有中文, 应全英文")
 
