@@ -1,0 +1,168 @@
+{
+  "n_soluble_observed": 530012,
+  "n_soluble_negative": 9995,
+  "n_soluble_positive": 520017,
+  "negatives_by_evidence_tier": [
+    {
+      "evidence_tier": "inferred_next_step",
+      "n": 9985
+    },
+    {
+      "evidence_tier": "explicit",
+      "n": 10
+    }
+  ],
+  "by_tier": [
+    {
+      "evidence_tier": "inferred_next_step",
+      "n_negatives_in_tier": 9985,
+      "n_his_total": 116395,
+      "n_his_fail": 5915,
+      "fail_rate_his": 0.05082,
+      "n_nohis_total": 413607,
+      "n_nohis_fail": 4070,
+      "fail_rate_nohis": 0.00984,
+      "risk_ratio": 5.164,
+      "sufficient_for_verdict": true
+    },
+    {
+      "evidence_tier": "explicit",
+      "n_negatives_in_tier": 10,
+      "n_his_total": 110480,
+      "n_his_fail": 0,
+      "fail_rate_his": 0.0,
+      "n_nohis_total": 409547,
+      "n_nohis_fail": 10,
+      "fail_rate_nohis": 2e-05,
+      "risk_ratio": 0.0,
+      "sufficient_for_verdict": false
+    }
+  ],
+  "explicit_negatives_listed": [
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Arr3p:t1",
+      "center": "MPSBC",
+      "seq_len": 412,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Ole1pCg:t3",
+      "center": "MPSBC",
+      "seq_len": 518,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Rgt2p:t1",
+      "center": "MPSBC",
+      "seq_len": 771,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Rgt2p:t2",
+      "center": "MPSBC",
+      "seq_len": 586,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Rgt2p:t3",
+      "center": "MPSBC",
+      "seq_len": 504,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Scs7p:t7",
+      "center": "MPSBC",
+      "seq_len": 243,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Snf3p:t1",
+      "center": "MPSBC",
+      "seq_len": 892,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Snf3p:t2",
+      "center": "MPSBC",
+      "seq_len": 583,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Snf3p:t3",
+      "center": "MPSBC",
+      "seq_len": 494,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    },
+    {
+      "record_id": "ds1:MPSBC:MPSBC-Vma22p:t2",
+      "center": "MPSBC",
+      "seq_len": 189,
+      "has_his": false,
+      "evidence": "status=work stopped|stop=membrane protein solubilization failed"
+    }
+  ],
+  "inferred_by_center": [
+    {
+      "center": "NYSGRC",
+      "n_his": 1250,
+      "fail_rate_his": 0.0,
+      "n_nohis": 17811,
+      "fail_rate_nohis": 0.00028,
+      "risk_ratio": 0.0
+    },
+    {
+      "center": "SGPP",
+      "n_his": 1136,
+      "fail_rate_his": 0.07218,
+      "n_nohis": 633,
+      "fail_rate_nohis": 0.0316,
+      "risk_ratio": 2.285
+    },
+    {
+      "center": "JCSG",
+      "n_his": 26055,
+      "fail_rate_his": 0.0,
+      "n_nohis": 280070,
+      "fail_rate_nohis": 0.0,
+      "risk_ratio": null
+    },
+    {
+      "center": "NYSGXRC",
+      "n_his": 19900,
+      "fail_rate_his": 0.0,
+      "n_nohis": 4338,
+      "fail_rate_nohis": 0.0,
+      "risk_ratio": null
+    },
+    {
+      "center": "NESG",
+      "n_his": 56287,
+      "fail_rate_his": 0.1034,
+      "n_nohis": 2371,
+      "fail_rate_nohis": 0.01476,
+      "risk_ratio": 7.005
+    },
+    {
+      "center": "SECSG",
+      "n_his": 359,
+      "fail_rate_his": 0.0,
+      "n_nohis": 903,
+      "fail_rate_nohis": 0.08527,
+      "risk_ratio": 0.0
+    }
+  ],
+  "verdict": {
+    "explicit_subset_testable": false,
+    "verdict": "UNRESOLVED",
+    "reason": "显式 soluble 阴性只有 10 条 (全库唯一来源是 stopStatus 的 membrane protein solubilization failed), 远低于下判断所需的 100 条。因此**无法**用刘刚刚预先定义的判据区分'生物学'与'记录习惯' —— 不是关联不存在, 是这批数据里不存在可用的对照子集。按预先约定, soluble 在正文里单列为**未解决**, 不并入任一方向。"
+  }
+}

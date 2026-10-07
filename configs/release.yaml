@@ -1,0 +1,12 @@
+# 发布标识的**单一出处**。生成器从这里取, 稿件里不手写。
+#
+# 为什么: Zenodo 的 reserved DOI 在沉积发布前不解析 (实测 doi.org / zenodo API /
+# DataCite 三处均 404)。所以 DOI 必须能"一处改、处处生效", 且在未落实时
+# 稿件里出现**明显的占位符**而不是一个看起来像真的死 DOI。
+
+repo_url: https://github.com/liugangg/protein-failure-benchmark
+
+# 沉积发布后填实际 DOI (形如 10.5281/zenodo.XXXXXXXX)。
+# 填上之后 src/eval/build_submission.py 会强制要求稿件第 1 页的内部 TODO 已删除 ——
+# 预印本不该带着 TODO 上线。
+zenodo_doi: null

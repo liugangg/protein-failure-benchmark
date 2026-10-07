@@ -1,0 +1,50 @@
+[
+  {
+    "split": "sequence",
+    "train_sequences": 316247,
+    "test_sequences": 18125,
+    "train_clusters": 84160,
+    "test_clusters": 6873,
+    "split_group_overlap": 0,
+    "cross_pairs_over_30pct": 0,
+    "worst_examples": [],
+    "pairs_file": null,
+    "verdict": "PASS"
+  },
+  {
+    "split": "lab",
+    "train_sequences": 135411,
+    "test_sequences": 2375,
+    "train_clusters": 60646,
+    "test_clusters": 1556,
+    "split_group_overlap": 0,
+    "cross_pairs_over_30pct": 0,
+    "worst_examples": [],
+    "pairs_file": null,
+    "verdict": "PASS"
+  },
+  {
+    "split": "time",
+    "train_sequences": 141691,
+    "test_sequences": 431,
+    "train_clusters": 62227,
+    "test_clusters": 322,
+    "split_group_overlap": 0,
+    "cross_pairs_over_30pct": 0,
+    "worst_examples": [],
+    "pairs_file": null,
+    "verdict": "PASS"
+  },
+  {
+    "split": "bind_target",
+    "train_sequences": 1623,
+    "test_sequences": 300,
+    "train_clusters": 1109,
+    "test_clusters": 267,
+    "split_group_overlap": 0,
+    "cross_pairs_over_30pct": 0,
+    "worst_examples": [],
+    "pairs_file": null,
+    "verdict": "PASS"
+  }
+]

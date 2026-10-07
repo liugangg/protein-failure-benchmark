@@ -1,0 +1,122 @@
+{
+  "run_name": "within_vs_cross_center",
+  "timestamp": "20260930T170715+0800",
+  "seed": 20260930,
+  "data": {
+    "sources": [
+      "ds1_targettrack"
+    ],
+    "contains_targettrack": true,
+    "license_note": "含 TargetTrack (CC BY-SA 4.0, 带 share-alike)"
+  },
+  "splits_used": [],
+  "split_hashes": {
+    "sequence": "32400d7121f1f132d454abf84c2a6a727fdd6bfbdd0afef34aeb18502489d5b7",
+    "lab": "8ebd096f12a627e1a7d99bbefd7e22638f22c60ab24e4dff8e37da15faa3e3ab",
+    "time": "d0861f97bc110dea41c9c9c0546a642e49ed2711157ffc8fb49a64a9a85c73bd",
+    "bind_target": "6d8a9465f50a3f7e524f535c7cc434f8748647f4916445c8a64440e4c4c8032e",
+    "_records": "f8a7d496cf01ffd1f2386c755a1b18aeed3232bf3cf6e15ba6daf5061c74eca3"
+  },
+  "records_parquet_sha256": "f8a7d496cf01ffd1f2386c755a1b18aeed3232bf3cf6e15ba6daf5061c74eca3",
+  "config": {
+    "K": 5,
+    "tasks": [
+      "express",
+      "soluble_expression",
+      "purify"
+    ],
+    "min_center_n": 3000
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "not installed",
+      "transformers": "not installed"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "express/NESG": {
+      "within_lift100": 1.6666,
+      "cross_lift100": 1.2984
+    },
+    "express/MCSG": {
+      "within_lift100": 2.229,
+      "cross_lift100": 1.3084
+    },
+    "express/NYSGRC": {
+      "within_lift100": 1.2408,
+      "cross_lift100": 1.1863
+    },
+    "express/CSGID": {
+      "within_lift100": 1.3342,
+      "cross_lift100": 1.2634
+    },
+    "express/NYSGXRC": {
+      "within_lift100": 2.1991,
+      "cross_lift100": 1.7913
+    },
+    "express/NYCOMPS": {
+      "within_lift100": 1.0858,
+      "cross_lift100": 1.023
+    },
+    "express/CESG": {
+      "within_lift100": 1.2686,
+      "cross_lift100": 1.0013
+    },
+    "soluble_expression/NESG": {
+      "within_lift100": 1.5081,
+      "cross_lift100": 1.2947
+    },
+    "soluble_expression/MCSG": {
+      "within_lift100": 1.8657,
+      "cross_lift100": 1.2225
+    },
+    "soluble_expression/NYSGRC": {
+      "within_lift100": 1.2335,
+      "cross_lift100": 1.2093
+    },
+    "soluble_expression/CSGID": {
+      "within_lift100": 1.276,
+      "cross_lift100": 1.3345
+    },
+    "soluble_expression/NYSGXRC": {
+      "within_lift100": 2.1296,
+      "cross_lift100": 1.6944
+    },
+    "soluble_expression/NYCOMPS": {
+      "within_lift100": 1.0259,
+      "cross_lift100": 1.006
+    },
+    "soluble_expression/CESG": {
+      "within_lift100": 1.2695,
+      "cross_lift100": 1.0652
+    },
+    "purify/NESG": {
+      "within_lift100": 1.1537,
+      "cross_lift100": 1.1231
+    },
+    "purify/MCSG": {
+      "within_lift100": 4.7241,
+      "cross_lift100": 1.8848
+    },
+    "purify/CSGID": {
+      "within_lift100": 1.336,
+      "cross_lift100": 1.1948
+    },
+    "purify/NYSGXRC": {
+      "within_lift100": 1.3243,
+      "cross_lift100": 1.0584
+    },
+    "purify/CESG": {
+      "within_lift100": 1.1301,
+      "cross_lift100": 1.0883
+    }
+  },
+  "notes": "中心内 CV vs 跨中心留出, 同测试折"
+}

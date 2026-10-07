@@ -1,0 +1,64 @@
+{
+  "run_name": "L1_express_adv",
+  "timestamp": "20260930T200132+0800",
+  "seed": 20260930,
+  "data": {
+    "sources": [
+      "ds1_targettrack"
+    ],
+    "contains_targettrack": true,
+    "license_note": "含 TargetTrack (CC BY-SA 4.0, 带 share-alike)"
+  },
+  "splits_used": [
+    "center_folds"
+  ],
+  "split_hashes": {
+    "sequence": "1d5032c5d3f3d4c7824b2e32593f026beaeb7a5ae3e50dbb14d020ac3dfef083",
+    "lab": "8db25c131e451c88dc5e416dd0718ef53f57f07ce485a789ab7897b0f85aae96",
+    "time": "a08c217a6ed3cb57bc7f80b18286f6f26fe4d9ed8070360fa1ffb4c6ae0fecba",
+    "bind_target": "5ac1e62546717aa67e73c5e33a1c9911c9988969d36a045e83d1f91d7055142e",
+    "_records": "e887059736b60a98cc92e59c32f2241ab87d5908c1df9400210e981572ddd7e2"
+  },
+  "records_parquet_sha256": "e887059736b60a98cc92e59c32f2241ab87d5908c1df9400210e981572ddd7e2",
+  "config": {
+    "level": "L1",
+    "adversarial": true,
+    "caliber": "default",
+    "strip_construct_residues": true,
+    "uses_sequence_length_feature": false,
+    "is_paper_default": true,
+    "note": "默认口径 = 剥构建体残留 + 不用序列长度; 依据见 configs/baseline_gbdt.yaml 与 reports/tag_confound_analysis.json (1b Simpson 反转)"
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "2.10.0+cu128",
+      "transformers": "not installed"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "fold1": {
+      "cross_lift100": 1.4006058435880915,
+      "within_lift100": 2.257762189457154
+    },
+    "fold2": {
+      "cross_lift100": 0.6797326702498098,
+      "within_lift100": 4.2254945596169
+    },
+    "fold3": {
+      "cross_lift100": 0.3250678980462431,
+      "within_lift100": 2.155609963906281
+    },
+    "fold4": {
+      "cross_lift100": 1.0859975623423717,
+      "within_lift100": 1.6158840542140043
+    }
+  },
+  "notes": "L1 = 冻结 ESM-2 650M + 线性头; 主评估 cross-center"
+}

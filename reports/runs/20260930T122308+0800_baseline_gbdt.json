@@ -1,0 +1,181 @@
+{
+  "run_name": "baseline_gbdt",
+  "timestamp": "20260930T122308+0800",
+  "seed": 20260930,
+  "data": {
+    "sources": [
+      "ds1_targettrack",
+      "ds2_tsuboyama",
+      "ds3_proteingym",
+      "ds5_adaptyv_egfr",
+      "ds5_dtu_binder"
+    ],
+    "contains_targettrack": true,
+    "license_note": "含 TargetTrack (CC BY-SA 4.0, 带 share-alike)"
+  },
+  "splits_used": [
+    "sequence",
+    "lab",
+    "time",
+    "bind_target"
+  ],
+  "split_hashes": {
+    "sequence": "691ece093ec37278afa66c24fb7cdd9768504a7f962b8e5ad8a8edd09ec01ad5",
+    "lab": "9faf7cc49da498eaf7a354dd1f458452506545b19bb9929fc665f58b33b7f4dc",
+    "time": "eb484e37d8d20c4094e28136d2d75b05b89c731ec1054ab5943c1b56ae2c355e",
+    "bind_target": "a08f3e19206c9bb0d67ff5607fd1627cdc80319e393b7db12c5780cc23914681",
+    "_records": "88e2751d28e225b889e9cb6ebae37fff93e9247e75088258a75b292211987919"
+  },
+  "records_parquet_sha256": "88e2751d28e225b889e9cb6ebae37fff93e9247e75088258a75b292211987919",
+  "config": {
+    "version": 1,
+    "seed": 20260930,
+    "features": {
+      "seq_len": true,
+      "log_seq_len": true,
+      "aa_composition": true,
+      "aa_dipeptide": false,
+      "molecular_weight": false
+    },
+    "model": {
+      "kind": "HistGradientBoostingClassifier",
+      "max_iter": 300,
+      "learning_rate": 0.1,
+      "max_leaf_nodes": 31,
+      "l2_regularization": 1.0,
+      "early_stopping": true,
+      "validation_fraction": 0.1
+    },
+    "eval": {
+      "ks": [
+        20,
+        100
+      ],
+      "group_by": [
+        "center",
+        "year",
+        "organism"
+      ],
+      "min_group_n": 200
+    },
+    "stages": [
+      "clone",
+      "express",
+      "soluble",
+      "purify",
+      "stable",
+      "bind",
+      "soluble_expression"
+    ]
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "not installed",
+      "transformers": "not installed"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "sequence/clone": {
+      "precision@20": 0.05,
+      "precision@100": 0.07,
+      "lift@100": 4.153333333333334,
+      "pr_auc": 0.04673009965459039,
+      "base_rate": 0.016853932584269662
+    },
+    "sequence/express": {
+      "precision@20": 0.75,
+      "precision@100": 0.52,
+      "lift@100": 3.195278396436526,
+      "pr_auc": 0.35226908278816615,
+      "base_rate": 0.16274012323305545
+    },
+    "sequence/soluble": {
+      "precision@20": 0.3,
+      "precision@100": 0.16,
+      "lift@100": 3.9175,
+      "pr_auc": 0.1645316631679591,
+      "base_rate": 0.0408423739629866
+    },
+    "sequence/purify": {
+      "precision@20": 0.75,
+      "precision@100": 0.42,
+      "lift@100": 2.989945945945946,
+      "pr_auc": 0.3699937580987995,
+      "base_rate": 0.1404707668944571
+    },
+    "sequence/stable": {
+      "precision@20": 1.0,
+      "precision@100": 0.67,
+      "lift@100": 1.9222068965517243,
+      "pr_auc": 0.7100437810881863,
+      "base_rate": 0.3485576923076923
+    },
+    "sequence/bind": "样本不足 (train=1101, test=140)",
+    "sequence/soluble_expression": {
+      "precision@20": 0.85,
+      "precision@100": 0.66,
+      "lift@100": 2.461276595744681,
+      "pr_auc": 0.5041079198866343,
+      "base_rate": 0.26815352697095435
+    },
+    "lab/clone": {
+      "precision@20": 0.05,
+      "precision@100": 0.11,
+      "lift@100": 1.423265306122449,
+      "pr_auc": 0.10330875455367203,
+      "base_rate": 0.07728706624605679
+    },
+    "lab/express": {
+      "precision@20": 0.7,
+      "precision@100": 0.75,
+      "lift@100": 1.222263868065967,
+      "pr_auc": 0.6832959568212034,
+      "base_rate": 0.6136154553817847
+    },
+    "lab/soluble": "阴性不足 (train_fail=647, test_fail=0)",
+    "lab/purify": {
+      "precision@20": 0.25,
+      "precision@100": 0.33,
+      "lift@100": 1.551891891891892,
+      "pr_auc": 0.31298858371991833,
+      "base_rate": 0.21264367816091953
+    },
+    "lab/stable": "样本不足 (train=3306, test=36)",
+    "lab/bind": "样本不足 (train=52, test=0)",
+    "lab/soluble_expression": {
+      "precision@20": 0.75,
+      "precision@100": 0.81,
+      "lift@100": 1.3180688622754493,
+      "pr_auc": 0.7204664734425752,
+      "base_rate": 0.6145354185832567
+    },
+    "time/clone": "阴性不足 (train_fail=619, test_fail=12)",
+    "time/express": "样本不足 (train=25961, test=145)",
+    "time/soluble": "样本不足 (train=14404, test=135)",
+    "time/purify": "样本不足 (train=11922, test=70)",
+    "time/stable": "样本不足 (train=2855, test=8)",
+    "time/bind": "样本不足 (train=48, test=0)",
+    "time/soluble_expression": "样本不足 (train=17712, test=145)",
+    "bind_target/clone": "样本不足 (train=16, test=0)",
+    "bind_target/express": "样本不足 (train=16, test=0)",
+    "bind_target/soluble": "样本不足 (train=0, test=0)",
+    "bind_target/purify": "样本不足 (train=0, test=0)",
+    "bind_target/stable": "样本不足 (train=0, test=0)",
+    "bind_target/bind": {
+      "precision@20": 0.75,
+      "precision@100": 0.78,
+      "lift@100": 0.9801047120418849,
+      "pr_auc": 0.8022092328754521,
+      "base_rate": 0.7958333333333333
+    },
+    "bind_target/soluble_expression": "样本不足 (train=0, test=0)"
+  },
+  "notes": "长度+氨基酸组成+GBDT 简单基线 (SPEC v2 §3.2)"
+}

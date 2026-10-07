@@ -1,0 +1,17 @@
+# 机器相关路径。复制为 configs/local_paths.yaml 并填本机实际值 (该文件已 gitignore)。
+#
+# 为什么不直接写进代码: 本仓库对外发布, 而 DATA_AVAILABILITY.md 承诺过
+# OIH 自有管线 (DS6) 的内部路径不随仓库发布。报告与代码里只出现占位符。
+
+# DS6 (OIH 自有管线, 仅作未标注探测集) 的输出根目录与任务记录目录。
+# 只有重跑 src/ingest/ds6_oih.py 才需要; 外部使用者没有这批数据, 跳过 DS6 即可。
+oih_outputs: /path/to/pipeline/outputs
+oih_tasks: /path/to/pipeline/tasks
+
+# 本地 ESM-2 650M checkpoint (fair-esm 格式)。
+# 也可从 https://github.com/facebookresearch/esm 下载后指到此处。
+esm2_650m_ckpt: /path/to/esm2_t33_650M_UR50D.pt
+
+# 额外要在沉积件里查禁的字符串。写你自己环境里不该外流的标识
+# (内部主机名、服务名、沙箱路径等)。为空即可。
+extra_scan_needles: []

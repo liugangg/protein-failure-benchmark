@@ -1,0 +1,24 @@
+{
+  "artifact": {
+    "path": "data/processed/splits/time_split.parquet",
+    "size": 3954350,
+    "sha256": "a08c217a6ed3cb57bc7f80b18286f6f26fe4d9ed8070360fa1ffb4c6ae0fecba",
+    "rows": 945718
+  },
+  "produced_by": "src/splits/make_splits.py",
+  "inputs": [
+    {
+      "path": "data/processed/records.parquet",
+      "size": 132717275,
+      "sha256": "e887059736b60a98cc92e59c32f2241ab87d5908c1df9400210e981572ddd7e2",
+      "rows": 2380297
+    },
+    {
+      "path": "data/interim/split_groups.parquet",
+      "size": 2076576,
+      "sha256": "ba4ddfbe54fdff8730213a0aaa5562f3222f875aeef9f3253578accd5c807458",
+      "rows": 354019
+    }
+  ],
+  "extra": {}
+}

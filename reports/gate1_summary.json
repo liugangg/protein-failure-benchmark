@@ -1,0 +1,32 @@
+{
+  "records": 2380297,
+  "unique_sequences": 354019,
+  "clusters_30pct": 98617,
+  "negatives_clusters_per_stage": {
+    "clone": 5663,
+    "express": 22771,
+    "soluble": 4640,
+    "purify": 9001,
+    "stable": 3766,
+    "bind": 2161
+  },
+  "top_center": "MCSG",
+  "top_center_share_clusters": 0.23186671669184827,
+  "top_center_by_records": "tsuboyama_2023",
+  "top_center_share_records": 0.32613409167007307,
+  "negatives_center_concentration": {
+    "clone": 0.34610630407911,
+    "express": 0.287778314522858,
+    "soluble": 0.41573275862068965,
+    "purify": 0.39406732585268306,
+    "stable": 0.4877854487519915,
+    "bind": 0.4956038870893105
+  },
+  "gate1": {
+    "criterion_1": false,
+    "criterion_2": true,
+    "criterion_2b_negatives": false,
+    "criterion_3": true,
+    "pass": false
+  }
+}

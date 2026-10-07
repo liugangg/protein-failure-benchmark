@@ -1,0 +1,209 @@
+# 数据源登记表 —— 全部字段都来自官方页面实查 (2026-09-30), 不是凭记忆。
+# 规则: 任何人改这里的 URL / 版本号 / 文件名前, 先回官方页面核对, 不许照记忆改。
+
+ds1_targettrack:
+  name: PSI TargetTrack 2000-2017 all data files
+  official_source: https://zenodo.org/records/821654
+  api_checked: https://zenodo.org/api/records/821654
+  doi: 10.5281/zenodo.821654
+  publication_date: "2017-07-05"
+  license: cc-by-sa-4.0          # share-alike, 衍生数据库对外发布要留意
+  files:
+    - key: TargetTrack-1Jul2017.tar.gz
+      size_bytes: 832912731      # ls -la 实测; md5 与 Zenodo 公布值一致
+      md5: 200012a8a2a11ffd7e370ed142df36c3
+      url: https://zenodo.org/api/records/821654/files/TargetTrack-1Jul2017.tar.gz/content
+  uncompressed_size_note: "官方记录写明解压后 868 MB"
+  key_paths_per_official_description:
+    xml: "TargetTrack XML files/tt.xml.gz"        # 全库 XML
+    schema_pdf: "Documentation/targetTrack-v1.4.1.pdf"
+    enumerations_xls: "Documentation/targetTrackEnumeratedDataItems-v1.4.1-1.xls"
+    schema_image: "Documentation/targetTrack-v1.4.1.jpg"
+    centers_xls: "ContributingCenters.xls"
+  scale_per_official_description: "35 个 center, >350,000 个 target"
+  role: 基石。GATE 1 主要靠它。
+  citation:   # Zenodo API 实查 (2026-10-02): /api/records/821654 的 creators 与 title
+    dataset: >-
+      Berman, H. M., Gabanyi, M. J., Kouranov, A., Micallef, D. I., Westbrook, J.,
+      & Protein Structure Initiative network of investigators (2017).
+      Protein Structure Initiative - TargetTrack 2000-2017 - all data files [Data set].
+      Zenodo. https://doi.org/10.5281/zenodo.821654
+    license_checked_via_api: cc-by-sa-4.0
+
+ds2_tsuboyama:
+  name: "Mega-scale experimental analysis of protein folding stability in biology and design (Nature 2023)"
+  # ⚠️ 2026-10-02 纠正: 这里原先写的是 7992926, 但流水线实际用的 (且 SPEC v2 §2.1 指定的)
+  # 是 7844779。两者是同一版本的两个 Zenodo 记录, 7992926 的
+  # Tsuboyama2023_Dataset2_Dataset3 少 match_aaseq / name_original 两列
+  # (697,658,024 字节 vs 718,214,782 字节)。认准 7844779, 由
+  # src/ingest/verify_raw.py 的 md5 守卫强制。
+  official_source: https://zenodo.org/records/7844779
+  doi: 10.5281/zenodo.7844779
+  wrong_record_do_not_use: 10.5281/zenodo.7992926
+  publication_date: "2023-04-21"
+  license: cc-by-4.0            # Zenodo API 实查 (2026-10-02)
+  citation: >-
+    Tsuboyama, K., Dauparas, J., Chen, J., Laine, E., Mohseni Behbahani, Y.,
+    Weinstein, J. J., et al. (2023). Mega-scale experimental analysis of protein
+    folding stability in biology and protein design. Zenodo.
+    https://doi.org/10.5281/zenodo.7844779 (论文: Nature 620, 434-444)
+  needed_files:
+    # 要的是整理好的 dG 数据集, 不是原始 NGS counts
+    - key: Processed_K50_dG_datasets.zip
+      size_mb: 1013.7
+      contains:
+        - Tsuboyama2023_Dataset1_20230416.csv
+        - Tsuboyama2023_Dataset2_Dataset3_20230416.csv
+  optional_files:
+    - key: K50_dG_tables.zip      # 按 library 分的 K50/dG 表, 449.8 MB
+  maps_to_stage: stable
+  ingested: data/interim/ds2_tsuboyama.parquet
+  measured_facts:                # 全部由 src/ingest/ds2_tsuboyama.py 实测打印
+    rows_used: 776298            # Tsuboyama2023_Dataset2_Dataset3_20230416.csv
+    stable_fail: 106887          # 95% CI 上界 < 0, 有把握没折叠
+    stable_success: 651415       # 95% CI 下界 > 0
+    stable_unobserved: 17996     # 区间跨 0, 测不准
+    distinct_WT_name: 479
+    distinct_WT_cluster: 133
+    designed_WT_names: 148       # 其余 331 个是天然结构域
+    negatives_distinct_parents: 430
+  why_dataset2_3_not_dataset1: |
+    Dataset1 有 1,841,285 行但只给 dna_seq 不给 aa_seq; Dataset2_Dataset3 直接带
+    aa_seq / mut_type / WT_name / WT_cluster / deltaG 及 95% 区间上下界, 够用。
+  hard_limit: |
+    77.6 万行在蛋白层面只有 479 个亲本 / 133 个 WT_cluster。按 SPEC §2.4 的
+    30% 簇口径, 这 10.7 万条 stable 阴性折成 219 簇。行数不等于有效样本量。
+  caveat_registration: |
+    Zenodo 页面请求使用者 "register your use of these data"。这是礼节性请求,
+    许可本身是 CC-BY-4.0 不强制。按 SPEC §2.2 的规矩, 我不代替刘刚刚去登记,
+    要不要登记由他定。
+  overlap_warning: |
+    DS3 里 66 个 Stability assay 大多是 "cDNA display proteolysis", 即同一套
+    Tsuboyama 方法。DS2 与 DS3-Stability 高度重叠, 合并前必须按序列去重,
+    否则训练/测试之间直接泄漏。
+
+ds3_proteingym:
+  name: ProteinGym DMS substitution benchmark
+  official_source: https://github.com/OATML-Markslab/ProteinGym
+  version: v1.3                  # README 明写 "The latest version is v1.3"
+  zenodo_doi: 10.5281/zenodo.15293562
+  license: MIT (code)            # 各 DMS assay 原始数据版权归各原论文
+  citation: >-
+    Notin, P., Kollasch, A., Ritter, D., van Niekerk, L., Paul, S., Spinner, H.,
+    Rollins, N., Shaw, A., Orenbuch, R., Weitzman, R., Frazer, J., Dias, M.,
+    Franceschi, D., Gal, Y., & Marks, D. (2023). ProteinGym: Large-Scale Benchmarks
+    for Protein Fitness Prediction and Design. Advances in Neural Information
+    Processing Systems 36, 64331-64379.
+  citation_extra_requirement: |
+    官方 README 原话: 还应引用各 assay 的原始实验论文, 仓库提供 assays.bib。
+    本工作只用了 33 个 assay, 投稿时附这 33 条的 bibtex 子集。
+  download_template: https://marks.hms.harvard.edu/proteingym/ProteinGym_{VERSION}/{FILENAME}
+  needed_files:
+    - key: DMS_ProteinGym_substitutions.zip
+      size_unzipped: 1.0GB
+  reference_file: reference_files/DMS_substitutions.csv   # 217 assay 的元数据, 仓库内
+  scale_per_official_readme: "~2.7M missense variants across 217 DMS assays"
+  # coarse_selection_type 实查计数 (217 个 assay):
+  #   OrganismalFitness 77 / Stability 66 / Activity 43 / Expression 18 / Binding 13
+  stage_mapping_by_coarse_selection_type:
+    Stability: stable
+    Expression: express
+    Binding: bind
+    Activity: DROP              # 酶活/功能, 不对应六阶段任何一步
+    OrganismalFitness: DROP     # 生长适应度, 更不对应
+  usable_assays: 97             # 66 + 18 + 13
+  label_source: DMS_score_bin   # README: "1 is fit, 0 is not fit"
+  ingested: data/interim/ds3_proteingym.parquet
+  binarization_gate:             # 本项目加的硬规矩, 见 src/ingest/ds3_proteingym.py
+    rule: 只收 DMS_binarization_method == "manual" 的 assay
+    reason: |
+      median (126/217 个 assay) 是拿该 assay 的中位数一刀切, 天生 50% 被标 0。
+      那不是"观测到失败", 是排序位置; 当 label 0 用就是 SPEC §0 原则 2 禁止的
+      合成假阴性 —— 只是这次由 ProteinGym 代造。
+    assays_kept: 33              # stable 21 / express 8 / bind 4
+  measured_facts:
+    rows: 654010
+    express_fail: 14761
+    stable_fail: 38109
+    bind_fail: 160281
+    distinct_uniprot: 32         # 65 万行只有 32 个不同蛋白
+    new_clusters_vs_ds1_ds5: 28  # 只带来 28 个 TargetTrack/Adaptyv 里没有的亲本
+  hard_limit: |
+    单个 assay SPG1_STRSG_Olson_2014 就有 536,962 行, 占 bind 记录的 82%,
+    但它们全是蛋白 G B1 结构域的点突变。bind 头 16 万条阴性折成 230 簇。
+  semantic_mismatch: |
+    DS3 的 Binding 测的是"突变让已有结合变弱多少"; 我们 bind 头要答的是
+    "这个从头设计的 binder 会不会结合"。不是同一个问题, 合进同一个头前要想清楚。
+
+ds4_mavedb:
+  name: MaveDB (Multiplexed Assays of Variant Effect)
+  official_source: https://mavedb.org
+  api_base: https://api.mavedb.org
+  api_version_checked: 2026.2.7.4
+  openapi: https://api.mavedb.org/openapi.json
+  status: 待做。与 DS3 重叠度需先量, ProteinGym 本身就收录了一部分 MaveDB assay。
+
+ds5_binder_negatives:
+  primary_paper:
+    name: "Predicting Experimental Success in De Novo Binder Design (Overath et al.)"
+    doi: 10.1101/2025.08.14.670059
+    date: "2025-08-14"
+    license: cc_by_nc_nd        # ⚠️ 这是**预印本正文**的许可, 非商用 + 禁改
+    status: OBTAINED            # 2026-09-30 已拿到; 下方 blocked_reason 是历史记录
+    historical_blocked_reason: |
+      当时 biorxiv.org 正文与补充数据被 Cloudflare 挑战挡住 (实测 source.xml 只回
+      "Just a moment..." 页面, 5.6 KB), GitHub 上也没搜到配套仓库。
+      后来在 Zenodo 找到配套的数据沉积 (见 dataset_deposit), 问题解决。
+  # ⚠️ 许可要分清: 预印本**正文**是 CC BY-NC-ND, 但**数据沉积**是 CC BY 4.0。
+  # 我们只用数据沉积里的 final_dataset.csv, 不用正文内容, 所以不受 NC-ND 约束。
+  # Zenodo API 实查 (2026-10-02): /api/records/15722219 -> {"id": "cc-by-4.0"}
+  dataset_deposit:
+    doi: 10.5281/zenodo.15722219
+    official_source: https://zenodo.org/records/15722219
+    title: >-
+      Dataset for: Predicting Experimental Success in De Novo Binder Design:
+      A Meta-Analysis of 3,766 Experimentally Characterised Binders
+    license: cc-by-4.0
+    publication_date: "2025-08-14"
+    needed_files:
+      - key: final_dataset.csv   # 82 MB; 不下结构包
+    citation: >-
+      Overath, M. D., Rygaard, A., & Jenkins, T. P. (2025). Dataset for:
+      Predicting Experimental Success in De Novo Binder Design: A Meta-Analysis
+      of 3,766 Experimentally Characterised Binders [Data set]. Zenodo.
+      https://doi.org/10.5281/zenodo.15722219
+    ingested: data/interim/ds5_dtu_binder.parquet   # 3,669 条; bind 阴性 3,275
+  substitute_actually_obtained:
+    - name: Adaptyv Bio EGFR Protein Design Competition Round 1
+      repo: https://github.com/adaptyvbio/egfr_competition_1
+      year: 2024
+    - name: Adaptyv Bio EGFR Protein Design Competition Round 2
+      repo: https://github.com/adaptyvbio/egfr_competition_2
+      year: 2025
+      extra_assets:
+        kinetics_raw: https://api.adaptyvbio.com/storage/v1/object/public/egfr_design_competition_2/package.zip
+        neutralisation: https://api.adaptyvbio.com/storage/v1/object/public/egfr_design_competition_2/package_neutralisation.zip
+        af2_structures: https://api.adaptyvbio.com/storage/v1/object/public/egfr_design_competition_2/structure_predictions.zip
+  license_obtained_data: ODbL (data) + Apache-2.0 (code)
+  citation_adaptyv: >-
+    Adaptyv Bio (2024, 2025). EGFR Protein Design Competition, Rounds 1 and 2.
+    https://github.com/adaptyvbio/egfr_competition_1 ;
+    https://github.com/adaptyvbio/egfr_competition_2
+  license_commercial_note: |
+    ODbL 有 share-alike 条款。仓库 LICENSE.md 原话: 需要不带 ODbL 义务的
+    商用许可请联系 Adaptyv (igor@adaptyvbio.com)。
+  ingested: data/interim/ds5_adaptyv_egfr.parquet   # 604 条; bind 阴性 464, express 阴性 22
+  why_valuable: 唯一一批 de novo 设计蛋白的真实湿实验阴性, 直接对冲 SPEC §8 的"时代错配"风险。
+
+ds6_oih_internal:
+  status: BLOCKED_ON_USER
+  what_was_found_locally:
+    - path: <OIH_TASKS_DIR>/tasks.db      # 真实路径见 configs/local_paths.yaml (未入库)
+      finding: "0 字节空文件 (ls -la 实测), 没有任何任务历史"
+    - path: <OIH_OUTPUTS_DIR>             # 真实路径见 configs/local_paths.yaml (未入库)
+      finding: "3053 个子目录, 其中 782 个目录名含 binder/rfdiff/mpnn"
+  hard_caveat: |
+    这些是**计算**产物 (MPNN 序列、AF3 confidences、ipSAE), 不是湿实验结果。
+    按 SPEC §0 原则 2, 计算失败 (ipTM 低、RFdiffusion 没出东西) 不是实验阴性,
+    不能当 label 0 用。要么刘刚刚给出真正的湿实验回执路径, 要么 DS6 只能
+    当"回顾性验证集"(GATE 4 那一条), 不能进训练标签。

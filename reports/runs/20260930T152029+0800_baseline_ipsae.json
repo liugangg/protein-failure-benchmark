@@ -1,0 +1,140 @@
+{
+  "run_name": "baseline_ipsae",
+  "timestamp": "20260930T152029+0800",
+  "seed": null,
+  "data": {
+    "sources": [
+      "ds5_dtu_binder"
+    ],
+    "contains_targettrack": false,
+    "license_note": "不含 TargetTrack —— 可作为商业化的干净起点 (v2 §1.4)"
+  },
+  "splits_used": [],
+  "split_hashes": {
+    "sequence": "32400d7121f1f132d454abf84c2a6a727fdd6bfbdd0afef34aeb18502489d5b7",
+    "lab": "8ebd096f12a627e1a7d99bbefd7e22638f22c60ab24e4dff8e37da15faa3e3ab",
+    "time": "d0861f97bc110dea41c9c9c0546a642e49ed2711157ffc8fb49a64a9a85c73bd",
+    "bind_target": "6d8a9465f50a3f7e524f535c7cc434f8748647f4916445c8a64440e4c4c8032e",
+    "_records": "f8a7d496cf01ffd1f2386c755a1b18aeed3232bf3cf6e15ba6daf5061c74eca3"
+  },
+  "records_parquet_sha256": "f8a7d496cf01ffd1f2386c755a1b18aeed3232bf3cf6e15ba6daf5061c74eca3",
+  "config": {
+    "metrics": [
+      "af3_ipSAE_min",
+      "af3_ipSAE_avg",
+      "af3_ipSAE_max",
+      "af3_iptm_avg",
+      "af3_ipae",
+      "boltz1_ipSAE_min",
+      "colab_ipSAE_min",
+      "af2_pae_interaction"
+    ],
+    "reference_best_f1": 0.61
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "not installed",
+      "transformers": "not installed"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "af3_ipSAE_min_best_f1": 0.4399524375743163,
+    "gate2_check": {
+      "reference_best_f1": 0.61,
+      "reference_note": "SPEC v2 §3.2 给的参考值: AF3 ipSAE_min 最高 F1 = 0.61",
+      "pooled_best_f1": 0.4399524375743163,
+      "per_target_mean_best_f1": 0.5724327497690825,
+      "per_target_median_best_f1": 0.5765765765765766,
+      "n_targets_aggregated": 15,
+      "aggregation_used_for_gate2": "per_target_mean",
+      "aggregation_rationale": "论文分析对象是 15 个结构多样的靶点, per-target 是它的自然单位。池化算会被 FGFR2 主导 (2,123/3,669 = 58% 的设计, 其单靶点 F1 仅 0.431), 得到 0.440, 不能与论文数字直接比。",
+      "delta_vs_reference": -0.03756725023091745,
+      "within_gate2_tolerance_0.05": true,
+      "per_target": {
+        "Mdm2": {
+          "n": 96,
+          "n_bind": 55,
+          "best_f1": 0.7382550335570469
+        },
+        "IL2Ra": {
+          "n": 66,
+          "n_bind": 6,
+          "best_f1": 0.7499999999999999
+        },
+        "IL10Ra": {
+          "n": 22,
+          "n_bind": 2,
+          "best_f1": 0.22222222222222224
+        },
+        "SARS_CoV2_RBD": {
+          "n": 99,
+          "n_bind": 9,
+          "best_f1": 0.7777777777777778
+        },
+        "pMHC_SILSY1": {
+          "n": 96,
+          "n_bind": 2,
+          "best_f1": 0.22222222222222224
+        },
+        "LTK": {
+          "n": 33,
+          "n_bind": 3,
+          "best_f1": 1.0
+        },
+        "FGFR2": {
+          "n": 2123,
+          "n_bind": 193,
+          "best_f1": 0.4314868804664723
+        },
+        "IL7Ra": {
+          "n": 171,
+          "n_bind": 38,
+          "best_f1": 0.5765765765765766
+        },
+        "InsulinR": {
+          "n": 117,
+          "n_bind": 20,
+          "best_f1": 0.42352941176470593
+        },
+        "EGFR": {
+          "n": 434,
+          "n_bind": 28,
+          "best_f1": 0.40449438202247195
+        },
+        "Pdl1": {
+          "n": 95,
+          "n_bind": 12,
+          "best_f1": 0.6923076923076924
+        },
+        "pMHC_NY1": {
+          "n": 41,
+          "n_bind": 1,
+          "best_f1": 0.6666666666666666
+        },
+        "VirB8": {
+          "n": 99,
+          "n_bind": 9,
+          "best_f1": 0.5
+        },
+        "sntx": {
+          "n": 49,
+          "n_bind": 7,
+          "best_f1": 0.7999999999999999
+        },
+        "TrkA": {
+          "n": 128,
+          "n_bind": 9,
+          "best_f1": 0.380952380952381
+        }
+      }
+    }
+  },
+  "notes": "复现 SPEC v2 §3.2 的 AF3 ipSAE_min 基线; 不含 TargetTrack"
+}

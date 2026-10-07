@@ -1,0 +1,72 @@
+{
+  "run_name": "baseline_soluprot",
+  "timestamp": "20260930T123846+0800",
+  "seed": null,
+  "data": {
+    "sources": [
+      "ds1_targettrack",
+      "ds2_tsuboyama",
+      "ds3_proteingym",
+      "ds5_adaptyv_egfr",
+      "ds5_dtu_binder"
+    ],
+    "contains_targettrack": true,
+    "license_note": "含 TargetTrack (CC BY-SA 4.0, 带 share-alike)"
+  },
+  "splits_used": [
+    "lab"
+  ],
+  "split_hashes": {
+    "sequence": "691ece093ec37278afa66c24fb7cdd9768504a7f962b8e5ad8a8edd09ec01ad5",
+    "lab": "9faf7cc49da498eaf7a354dd1f458452506545b19bb9929fc665f58b33b7f4dc",
+    "time": "eb484e37d8d20c4094e28136d2d75b05b89c731ec1054ab5943c1b56ae2c355e",
+    "bind_target": "a08f3e19206c9bb0d67ff5607fd1627cdc80319e393b7db12c5780cc23914681",
+    "_records": "88e2751d28e225b889e9cb6ebae37fff93e9247e75088258a75b292211987919"
+  },
+  "records_parquet_sha256": "88e2751d28e225b889e9cb6ebae37fff93e9247e75088258a75b292211987919",
+  "config": {
+    "soluprot_version": "1.0.1.0 (官方 standalone)",
+    "usearch": "bioconda 12.0_beta (GPL-3.0 预编译)",
+    "compat_patch": "-search_global -> -usearch_global (v12 取消了前者), 仅此一处",
+    "tmhmm": "未用 (走官方 --no_tmhmm, 因 TMHMM 需注册申请)",
+    "official_test_reproduction": {
+      "n": 21,
+      "mean_abs_diff": 0.0374,
+      "max_abs_diff": 0.1613
+    }
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "not installed",
+      "transformers": "not installed"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "lab/soluble_expression/full": {
+      "lift@100": 1.169055472263868,
+      "pr_auc": 0.7084911118381015
+    },
+    "lab/soluble_expression/clean": {
+      "lift@100": 1.171196581196581,
+      "pr_auc": 0.691497189025053
+    },
+    "lab/express/full": {
+      "lift@100": 1.1708108108108108,
+      "pr_auc": 0.7085536001620663
+    },
+    "lab/express/clean": {
+      "lift@100": 1.1732020547945206,
+      "pr_auc": 0.6915559305767736
+    },
+    "lab/soluble/full": "阴性不足 (0)",
+    "lab/soluble/clean": "阴性不足 (0)"
+  },
+  "notes": "SoluProt 基线; 全集与去污染子集两版"
+}

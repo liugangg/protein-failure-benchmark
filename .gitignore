@@ -1,0 +1,28 @@
+# Upstream raw data is never committed: the data-availability statement says this
+# work redistributes no upstream raw file.
+data/raw/
+
+# Regenerable intermediates, rebuilt by the scripts in src/
+data/interim/
+
+# The unified label table is distributed via the data deposit, not here; its
+# .prov.json fingerprint is kept so any copy can be verified.
+# The four splits and center_folds under data/processed/splits/ are committed.
+data/processed/records.parquet
+data/processed/*.parquet
+!data/processed/splits/
+
+# Machine-specific paths; see configs/local_paths.yaml.example
+configs/local_paths.yaml
+
+# Environment and toolchains
+.venv/
+.tools/
+__pycache__/
+*.pyc
+
+# Build outputs and staging
+logs/
+submission/
+zenodo_upload/
+reports/_superseded_precaliber/

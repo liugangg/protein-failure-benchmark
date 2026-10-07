@@ -1,0 +1,48 @@
+{
+  "run_name": "soluprot_tag_probe",
+  "timestamp": "20260930T170855+0800",
+  "seed": 20260930,
+  "data": {
+    "sources": [
+      "ds1_targettrack"
+    ],
+    "contains_targettrack": true,
+    "license_note": "含 TargetTrack (CC BY-SA 4.0, 带 share-alike)"
+  },
+  "splits_used": [],
+  "split_hashes": {
+    "sequence": "32400d7121f1f132d454abf84c2a6a727fdd6bfbdd0afef34aeb18502489d5b7",
+    "lab": "8ebd096f12a627e1a7d99bbefd7e22638f22c60ab24e4dff8e37da15faa3e3ab",
+    "time": "d0861f97bc110dea41c9c9c0546a642e49ed2711157ffc8fb49a64a9a85c73bd",
+    "bind_target": "6d8a9465f50a3f7e524f535c7cc434f8748647f4916445c8a64440e4c4c8032e",
+    "_records": "f8a7d496cf01ffd1f2386c755a1b18aeed3232bf3cf6e15ba6daf5061c74eca3"
+  },
+  "records_parquet_sha256": "f8a7d496cf01ffd1f2386c755a1b18aeed3232bf3cf6e15ba6daf5061c74eca3",
+  "config": {
+    "n": 4000
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "not installed",
+      "transformers": "not installed"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "mean": -0.0035833749999999993,
+    "median": -0.0030999999999999917,
+    "std": 0.03207858391683422,
+    "abs_mean": 0.021310175,
+    "frac_increased": 0.429,
+    "frac_changed_gt_0.05": 0.09225,
+    "frac_changed_gt_0.10": 0.01375,
+    "wilcoxon_p": 1.604730538777106e-20
+  },
+  "notes": "SoluProt 保留 vs 剥离 His 标签的配对预测位移"
+}

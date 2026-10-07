@@ -1,0 +1,232 @@
+# TargetTrack status / stopStatus -> 六阶段标签 映射表
+# SPEC §2.3 要求: "TargetTrack 的状态字段需要人工梳理映射关系, 映射表写成
+# configs/targettrack_status_map.yaml, 并在报告中列出映射依据。"
+#
+# 映射依据的唯一来源 (都在 tarball 里, 不是网上查的二手说法):
+#   Documentation/targetTrack-v1.4.1.xsd                     schema + 枚举 —— **以它为准**
+#   Documentation/targetTrackEnumeratedDataItems-v1.4.1.xls  同一套词表的人读版
+#   README_tt.txt                                            各文件含义
+#
+# 两份文档冲突时以 XSD 为准, 这是实测结论: XLS 写的是 "membrane protein solublized",
+# XSD 和真实数据里都是 "membrane protein solubilized" (少个 i)。第一遍解析靠
+# unknown_status 守卫抓到了这 586 条, 否则会被静默当成 null 丢掉一个 soluble 阶段的证据。
+#
+# 两个词表的官方定义 (原文):
+#   Status      = "Experimental progress steps that target or trial has **successfully reached**"
+#   Stop Status = "Description why work was stopped on a target or trial"
+# 也就是说: status history 记录的是"成功走到了哪", stopStatus 记录的是"为什么停"。
+# 前者是观测到的成功, 后者是观测到的失败。两者都不是推断。
+
+version: 1
+source_schema_version: "1.4.1"
+
+# ---------------------------------------------------------------------------
+# status -> 该状态证明**成功通过**了哪一个阶段 (null = 不对应我们六阶段任何一步)
+# ---------------------------------------------------------------------------
+status_to_reached_stage:
+  selected: null                          # 只是选进来了, 还没动手
+  cloned: clone
+  expression tested: clone                # 只说明"做过表达测试", 没说出蛋白 -> 不敢记 express=1
+  expressed: express
+  biological assay: null                  # PSI 语境下是功能实验, 不等于"结合靶点"; 见 ambiguous_decisions
+  biophysical analysis: null
+  soluble: soluble
+  membrane protein solubilized: soluble   # XSD 的拼写, 是权威的 —— 数据里实际出现 586 次
+  membrane protein solublized: soluble    # XLS 词表里的拼写少个 i, 两个都留着兜底
+  purified: purify
+  mass spec verified: purify              # 质谱验证发生在纯化之后
+  crystallized: purify
+  diffraction-quality crystals: purify
+  diffraction: purify
+  native diffraction-data: purify
+  phasing diffraction-data: purify
+  crystal structure: stable               # 见 inferred_mappings
+  HSQC satisfactory: purify
+  NMR assigned: stable                    # 见 inferred_mappings
+  NMR backbone resonances assigned: stable
+  NMR sidechain resonances assigned: stable
+  NMR structure: stable
+  in BMRB: stable
+  EM images: purify
+  EM reconstruction: purify
+  EM reconstruction in EMDB: purify
+  EM fitted model: stable
+  in PDB: stable                          # 见 inferred_mappings
+  work stopped: null                      # 不是进度, 是终止信号
+  test target: null                       # 见 exclude_records
+  other: null
+
+# 上面几条带 "见 inferred_mappings" 的是**推断**而非直接观测, 单独列出来以便一键关掉:
+inferred_mappings:
+  structure_implies_stable:
+    enabled: true
+    statuses: [crystal structure, NMR assigned, NMR backbone resonances assigned,
+               NMR sidechain resonances assigned, NMR structure, in BMRB,
+               EM fitted model, in PDB]
+    stage: stable
+    rationale: |
+      解出结构 (晶体/NMR/EM) 意味着这批蛋白折叠正确且在实验条件下足够稳定,
+      这是 stable=1 的合理证据。但它终究是推断, 不是"稳定性测量":
+      TargetTrack 没有 Tm / dG 这种量。如果后续发现 stable 头的正样本被这条
+      灌得过多 (而真实稳定性测量只来自 DS2), 把 enabled 改成 false 重跑。
+    risk: 会让 stable 头的正样本以"结构基因组学能解结构的蛋白"为主, 分布偏易结晶的蛋白。
+
+# ---------------------------------------------------------------------------
+# stopStatus -> 观测到**失败**在哪一个阶段 (null = 不对应我们六阶段, 只能记为未观测)
+# ---------------------------------------------------------------------------
+stop_status_to_failed_stage:
+  cloning failed: clone
+  sequencing failed: clone                # 测序失败发生在克隆环节内
+  expression failed: express
+  membrane protein solubilization failed: soluble
+  purification failed: purify
+  biological assay failed: null           # 见 ambiguous_decisions.biological_assay
+  biophysical analysis failed: null
+  mass spec failed: null                  # 身份验证失败, 不是六阶段任何一步
+  crystallization failed: null            # 结晶不在六阶段里; 这类记录只贡献 purify=1
+  poor diffraction: null
+  poor HSQC: null
+  poor NMR: null
+  poor EM images: null
+  structure successful: null              # 这压根不是失败
+  other: null
+  # 下面四个是行政性重复, 不是生物学失败 -> 整条记录剔除, 见 exclude_records
+  duplicate target found: EXCLUDE
+  internal duplicate target found: EXCLUDE
+  TargetTrack duplicate target found: EXCLUDE
+  PDB duplicate found: EXCLUDE
+
+# ---------------------------------------------------------------------------
+# 整条记录剔除的情形
+# ---------------------------------------------------------------------------
+exclude_records:
+  # 注意: 这些不是物理删除。ds1 的 parquet 会保留全部 trial 并打 exclusion_reason,
+  # 由 src/labels/pool.py 在汇总时按 reason 决定是否纳入。保留原始行是为了可审计:
+  # "我们排除了多少、排除了哪些"这句话在论文里要能被查证。
+  trial_status_in: [test target]          # 官方词表里的测试用条目
+  stop_status_in:
+    - duplicate target found
+    - internal duplicate target found
+    - TargetTrack duplicate target found
+    - PDB duplicate found
+  rationale: |
+    "因为发现是重复所以停了"不是蛋白失败, 是数据管理动作。把它算成阴性
+    等于教模型去认"哪些序列在库里出现过两次", 是纯噪声甚至泄漏。
+
+# ---------------------------------------------------------------------------
+# 真实数据里的矛盾 —— 不是假想, 是实测抓到的
+# ---------------------------------------------------------------------------
+conflict_policy:
+  name: status_history_wins
+  what_happens: |
+    实测例 (CESG.xml.gz): 某 trial 的 statusHistory 明确走到了 soluble
+    (dateComplete 2004-06-03), 但它的 stopDetails/stopStatus 写的是
+    "expression failed"。两者互相矛盾: 已经可溶了, 不可能表达失败。
+  rule: |
+    statusHistory 为准 (它是带时间戳的逐步记录, stopStatus 只是一个事后填的单值)。
+    当 stopStatus 指向的阶段**不晚于**已达到的最后阶段时:
+      - 保留 statusHistory 给出的全部成功位
+      - 该 trial 的失败位一律记为未观测 (-1), 不采用这个 stopStatus
+      - 打上 conflict=true, 在 GATE 1 报告里统计比例
+    宁可少一个阴性, 不要一个方向都不对的阴性。
+
+# ---------------------------------------------------------------------------
+# 需要刘刚刚拍板的模糊点 (SPEC §0 第 5 条: 停下来问, 不要猜)
+# ---------------------------------------------------------------------------
+ambiguous_decisions:
+  biological_assay:
+    question: "status/stopStatus 里的 'biological assay' 要不要映射到 bind 头?"
+    current_default: null (不映射)
+    for_mapping: |
+      结构基因组学里 biological assay 常常就是配体/底物结合或活性验证,
+      映到 bind 能给 bind 头补一批天然蛋白样本 (bind 是最缺数据的头)。
+    against_mapping: |
+      "biological assay" 在词表里没有细分, 可能是酶活、可能是结合、可能是功能互补。
+      混进 bind 头会让"结合失败"这个标签含义漂移, 而 bind 头本来就只有千级样本,
+      污染代价特别高。
+    default_reason: 先按保守的来, 等他定。改成 bind 只需改这个 YAML 不用改代码。
+  soluble_negatives_gap:
+    finding: |
+      官方 stopStatus 词表里**没有**通用的"可溶性失败", 只有
+      "membrane protein solubilization failed" (只覆盖膜蛋白)。
+    consequence: |
+      DS1 能直接给出的 soluble=0 只有膜蛋白那一支。SoluProt 那类工作是靠
+      "表达了但没到 soluble 就停了" 反推不可溶 —— 那是推断, 按 SPEC §0 原则 4
+      不能当确定阴性 (换个表达条件/融合标签就可能可溶)。
+    question: "soluble 头要不要接受这种反推的弱阴性? 还是 soluble 头只做 PU 的 unlabeled?"
+    current_default: 只认 membrane protein solubilization failed, 其余不反推
+
+# ---------------------------------------------------------------------------
+# SPEC v2 §2.4 新增的两条已定规则
+# ---------------------------------------------------------------------------
+work_stopped_rule:
+  enabled: true
+  spec_quote: |
+    v2 §2.4 原文: "`work stopped`: 只说明停止, 没说停在哪一步。取该靶点**已达到的
+    最后状态**, 把流程中的下一步标为 `0` (失败), 再往后全部 `-1` (未观测)。
+    如果连最后状态都取不到, **整条丢弃**, 不要推测。丢弃数量要在报告中统计。"
+  precedence_DECIDED_2026_09_30: |
+    刘刚刚已定: **stopStatus 优先**。v2 未规定二者冲突时的优先级, 现确认如下实现。
+  how_implemented: |
+    与 stopStatus 的关系 (v2 未规定, 刘刚刚 2026-09-30 确认):
+      1. stopStatus 能映射到某个阶段且与状态历史不矛盾 -> **优先用 stopStatus**。
+         它是直接记录的失败原因, 比"下一步推断"更具体, 信息量更大。
+      2. status == "work stopped" 且 stopStatus 缺失 / 为 other / 不可映射
+         -> 套用 v2 规则: 已达到最后阶段的**下一步**标 0。
+      3. status == "work stopped" 且取不到任何六阶段状态 -> 见 no_last_state_policy。
+    实测 work stopped trial 共 165,987 条 (占全部 trial 17.6%)。
+  caveat_to_report: |
+    这条规则产生的阴性是**推断**而非直接观测: "停工了"不等于"下一步做了并失败了",
+    也可能是经费用尽、靶点被降优先级、或换了别的构建。它与 SPEC §0 原则 4
+    ("不要把未成功当作确定阴性") 存在张力。v2 明确要求这样做, 故照做,
+    但报告与论文里必须把这部分阴性单独标注来源, 并保留一个只用"显式 stopStatus 阴性"
+    的对照口径 (见 configs 里的 evidence_tier)。
+
+  # 每条阴性打上证据等级, 便于做"只用显式阴性"的对照
+  evidence_tier:
+    explicit: stopStatus 直接给出失败阶段 (如 expression failed -> express=0)
+    inferred_next_step: work stopped + 已达到最后状态的下一步 (v2 §2.4 规则)
+
+no_last_state_policy:
+  # v2 字面规则是整条丢弃。但实测这批里有一部分其实带 stopStatus, 已被规则 1 救回;
+  # 真正无任何信息的是下面这些。
+  policy: keep_unobserved
+  # 取值:
+  #   keep_unobserved = **保留记录**, 六个阶段全部标 -1 (未观测), 打 exclusion_reason 标记。
+  #                     不产生任何阴性, 因此与 "drop" 在阴性计数上完全等价;
+  #                     区别是序列与审计线索都留着, 且这批天然就是 PU 学习要的 unlabeled 数据。
+  #   drop            = 物理丢弃 (v2 §2.4 字面)
+  #   clone_zero      = 把 selected 当最后状态, clone 标 0
+  measured_2026_09_30:
+    total_work_stopped_without_six_stage_status: 50863
+    of_which_stopstatus_cloning_failed: 15450   # 已被 stopStatus 规则标成 clone=0, 不受本策略影响
+    of_which_stopstatus_empty: 22666            # 无任何信息
+    of_which_stopstatus_other: 12511            # 无任何信息
+    note: |
+      这 50,743 条 (n_status_steps>=2) 的状态历史里走过 `selected` —— 它不属于六阶段,
+      所以"已达到的最后状态"在六阶段口径下取不到。
+  DECIDED_2026_09_30: |
+    刘刚刚两次决策, 合起来是 policy: keep_unobserved。
+    (1) **不算阴性**: 采纳"`selected` 只是选进来了, 没有任何实验动作, 说不上克隆失败",
+        与 SPEC §0 原则 4 一致。所以这 35,198 条不贡献任何 label 0。
+    (2) **但不要物理删除**: 记录保留在 data/interim/ds1_targettrack/ 里, 六阶段全标 -1,
+        并打 exclusion_reason = "no_last_state_work_stopped"。
+        理由: 它们有真实序列, 只是缺失败观测 —— 正是 PU 学习的 unlabeled 数据;
+        物理删掉等于丢掉证据, 以后想改判据也回不去。
+    在阴性计数上与 v2 §2.4 字面的"整条丢弃"完全等价 (都不产生阴性),
+    报告中仍按 v2 要求统计这批的数量。
+  原问题记录: |
+    v2 §2.4 要求"规则覆盖不到的状态组合停下来问"。这就是一处:
+    `selected` -> `work stopped` 且无可用 stopStatus 的约 35,177 条,
+    算"取不到最后状态"整条丢弃 (policy: drop), 还是把 `selected` 视作已达到的最后状态、
+    因而 `clone = 0` (policy: clone_zero)?
+    - drop 的理由: `selected` 只是"选进来了", 没有任何实验动作, 说不上克隆失败。
+    - clone_zero 的理由: 选进来后停工, 在六阶段流程里下一步正是克隆; 按 v2 规则字面
+      "下一步标 0" 就该是 clone=0, 能多出约 3.5 万条 clone 阴性。
+    默认按 drop (保守), 改这个字段即可切换, 不用改代码。
+
+test_target_rule:
+  enabled: true
+  spec_quote: |
+    v2 §2.4: "`test target`: 系统测试记录, 不是真实验。**全部排除**, 并统计排除条数。"
+  # 已在 exclude_records.trial_status_in 实现

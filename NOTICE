@@ -1,0 +1,29 @@
+negative-data-model — 蛋白实验失败预测基准
+Copyright 2026 OIH (Open Intelligence for Health)
+
+本仓库的**代码**在 Apache License 2.0 下发布 (见 LICENSE)。
+
+本仓库产出的**衍生数据** (统一标签、切分、评估产物) 的许可与上游来源绑定,
+不是单一许可 —— 详见 DATA_AVAILABILITY.md。概要:
+
+  · 含 PSI TargetTrack (DS1) 衍生内容的部分 -> CC BY-SA 4.0
+      (上游 CC BY-SA 4.0 的 share-alike 条款是传染性的, 我们无权降级为 CC BY)
+      适用于: records.parquet 中 source == "ds1_targettrack" 的 945,718 条,
+              以及据其构造的 lab / time / center_folds 切分与 express 任务全部标签
+  · 不含 DS1 的部分 -> CC BY 4.0
+      适用于: 其余 1,434,579 条 (ds2_tsuboyama / ds3_proteingym / ds5_*)
+
+本仓库**不重新分发**任何上游原始文件。data/raw/ 下的内容由 configs/data_sources.yaml
+记录的地址下载, 校验 md5 后只读使用; 复现者需自行从原始来源获取。
+
+本仓库不含湿实验数据, 不含患者或个人数据。
+
+────────────────────────────────────────────────────────────────────────
+下游使用者请注意 (share-alike 会传下去)
+────────────────────────────────────────────────────────────────────────
+上面第一类 (CC BY-SA 4.0) 的 946,322 条 **包含 express 主任务的全部标签与
+全部跨中心评估数据**。用了其中任何部分并再分发, 你的衍生成果也必须以
+CC BY-SA 4.0 (或兼容许可) 发布 —— 不能改成 CC BY / MIT, 不能闭源再分发;
+掺入自有数据后整体同样受约束。只做内部研究不对外分发则不触发 share-alike
+(署名条款仍适用)。需要更宽松许可的项目请只取不含 TargetTrack 与 Adaptyv 的
+子集, 但该子集不含 express 主任务。完整说明见 DATA_AVAILABILITY.md §3 与 §3.1。

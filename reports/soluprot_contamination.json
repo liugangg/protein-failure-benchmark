@@ -1,0 +1,49 @@
+{
+  "soluprot_train_n": 11436,
+  "soluprot_test_n": 3100,
+  "soluprot_train_source_quote": "SoluProt 官方 about 页: \"The training set is based on the TargetTrack database, which was carefully filtered to keep only targets expressed in Escherichia coli.\" —— 与我们的 DS1 同源。",
+  "criteria": "--min-seq-id 0.3 -c 0.8 --cov-mode 1 --alignment-mode 3 -s 7.5",
+  "splits": {
+    "sequence": {
+      "test_unique_sequences": 17839,
+      "exact_match_in_soluprot_train": 303,
+      "exact_match_in_soluprot_test": 47,
+      "similar_30pct_to_soluprot_train": 3336,
+      "contamination_rate_30pct": 0.187,
+      "clean_subset_size": 14503,
+      "contaminated_seq_uids_file": null,
+      "clean_subset_file": "data/processed/splits/sequence_soluprot_clean_seq_uids.parquet"
+    },
+    "lab": {
+      "test_unique_sequences": 2375,
+      "exact_match_in_soluprot_train": 40,
+      "exact_match_in_soluprot_test": 0,
+      "similar_30pct_to_soluprot_train": 236,
+      "contamination_rate_30pct": 0.0994,
+      "clean_subset_size": 2139,
+      "contaminated_seq_uids_file": null,
+      "clean_subset_file": "data/processed/splits/lab_soluprot_clean_seq_uids.parquet"
+    },
+    "time": {
+      "test_unique_sequences": 431,
+      "exact_match_in_soluprot_train": 2,
+      "exact_match_in_soluprot_test": 0,
+      "similar_30pct_to_soluprot_train": 16,
+      "contamination_rate_30pct": 0.0371,
+      "clean_subset_size": 415,
+      "contaminated_seq_uids_file": null,
+      "clean_subset_file": "data/processed/splits/time_soluprot_clean_seq_uids.parquet"
+    },
+    "bind_target": {
+      "test_unique_sequences": 300,
+      "exact_match_in_soluprot_train": 0,
+      "exact_match_in_soluprot_test": 0,
+      "similar_30pct_to_soluprot_train": 0,
+      "contamination_rate_30pct": 0.0,
+      "clean_subset_size": 300,
+      "contaminated_seq_uids_file": null,
+      "clean_subset_file": "data/processed/splits/bind_target_soluprot_clean_seq_uids.parquet"
+    }
+  },
+  "verdict_note": "污染率 >5% 的切分, SoluProt 的对比数字必须同时给全集和干净子集两版; 只给全集的数字无效 (SoluProt 在自己见过的数据上被评估)。"
+}

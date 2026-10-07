@@ -1,0 +1,56 @@
+{
+  "run_name": "baseline_ipsae",
+  "timestamp": "20260930T110122+0800",
+  "seed": null,
+  "data": {
+    "sources": [
+      "ds5_dtu_binder"
+    ],
+    "contains_targettrack": false,
+    "license_note": "不含 TargetTrack —— 可作为商业化的干净起点 (v2 §1.4)"
+  },
+  "splits_used": [],
+  "split_hashes": {
+    "sequence": "a37e4a74edc9204473d225f31e7131786d7e2e6a6d326e007efa5397061ce41e",
+    "lab": "b9df2b951aa16be825e9264d474ffe304aeb9510c7803dbbe2458cb1953150ea",
+    "time": "5c947d74e0c6edf8786554efc7af47dadb331132e30529fe6a281796cb87a082",
+    "_records": "338b55e21bf79d68bbcefd8fc9f4b471bc6315d07bbc43b909fd978336ed104a"
+  },
+  "records_parquet_sha256": "338b55e21bf79d68bbcefd8fc9f4b471bc6315d07bbc43b909fd978336ed104a",
+  "config": {
+    "metrics": [
+      "af3_ipSAE_min",
+      "af3_ipSAE_avg",
+      "af3_ipSAE_max",
+      "af3_iptm_avg",
+      "af3_ipae",
+      "boltz1_ipSAE_min",
+      "colab_ipSAE_min",
+      "af2_pae_interaction"
+    ],
+    "reference_best_f1": 0.61
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "not installed",
+      "transformers": "not installed"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "af3_ipSAE_min_best_f1": 0.4399524375743163,
+    "gate2_check": {
+      "reference_best_f1": 0.61,
+      "reproduced_best_f1": 0.4399524375743163,
+      "delta": -0.1700475624256837,
+      "within_gate2_tolerance_0.05": false
+    }
+  },
+  "notes": "复现 SPEC v2 §3.2 的 AF3 ipSAE_min 基线; 不含 TargetTrack"
+}

@@ -1,0 +1,4895 @@
+{
+  "caliber": {
+    "caliber": "default",
+    "strip_construct_residues": true,
+    "uses_sequence_length_feature": false,
+    "is_paper_default": true,
+    "note": "默认口径 = 剥构建体残留 + 不用序列长度; 依据见 configs/baseline_gbdt.yaml 与 reports/tag_confound_analysis.json (1b Simpson 反转)"
+  },
+  "results": [
+    {
+      "split": "sequence",
+      "stage": "clone",
+      "train_n": 34917,
+      "train_fail": 563,
+      "test_n": 4329,
+      "test_fail": 82,
+      "overall": {
+        "positive_class": "failure",
+        "n": 4329,
+        "n_positive": 82,
+        "n_fail": 82,
+        "base_rate": 0.018942018942018943,
+        "pr_auc": 0.03878846875724481,
+        "pr_auc_over_base": 2.0477473323184485,
+        "precision@10": 0.1,
+        "recall@10": 0.012195121951219513,
+        "lift@10": 5.279268292682927,
+        "precision@20": 0.1,
+        "recall@20": 0.024390243902439025,
+        "lift@20": 5.279268292682927,
+        "precision@50": 0.06,
+        "recall@50": 0.036585365853658534,
+        "lift@50": 3.1675609756097556,
+        "precision@100": 0.08,
+        "recall@100": 0.0975609756097561,
+        "lift@100": 4.223414634146342
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_M",
+            "mean": 0.011607632150741672,
+            "std": 0.0020591323658774962
+          },
+          {
+            "feature": "aa_K",
+            "mean": 0.008149937438644856,
+            "std": 0.0010067118724793641
+          },
+          {
+            "feature": "aa_S",
+            "mean": 0.0043819373055251675,
+            "std": 0.0022496924201270553
+          },
+          {
+            "feature": "aa_E",
+            "mean": 0.0030582471774892295,
+            "std": 0.004357828443084786
+          },
+          {
+            "feature": "aa_G",
+            "mean": 0.0020380339518503267,
+            "std": 0.0018474774882832222
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.001280849301995002,
+            "std": 0.006435009148005575
+          },
+          {
+            "feature": "aa_L",
+            "mean": 0.001023963486983912,
+            "std": 0.0018170036184144355
+          },
+          {
+            "feature": "aa_N",
+            "mean": 0.0009248794442194098,
+            "std": 0.001906501792784998
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 8886,
+        "stripped_test": 1102,
+        "stripped_test_frac": 0.2546,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 1088,
+          "Strep-tag II": 2,
+          "TEV 蛋白酶位点 ENLYFQ/G 或 /S": 20,
+          "凝血酶 (thrombin) 位点 LVPR/GS": 2,
+          "Factor Xa 位点": 10,
+          "肠激酶 (enterokinase) 位点": 1,
+          "BamHI GS 残余 (仅 N 端首两位)": 5
+        }
+      },
+      "by_center": {
+        "groups": {
+          "CESG": {
+            "positive_class": "failure",
+            "n": 340,
+            "n_positive": 7,
+            "n_fail": 7,
+            "base_rate": 0.020588235294117647,
+            "pr_auc": 0.025288107499151023,
+            "pr_auc_over_base": 1.228279507101621,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.0,
+            "recall@50": 0.0,
+            "lift@50": 0.0,
+            "precision@100": 0.03,
+            "recall@100": 0.42857142857142855,
+            "lift@100": 1.457142857142857
+          },
+          "JCSG": {
+            "positive_class": "failure",
+            "n": 827,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "MCSG": {
+            "positive_class": "failure",
+            "n": 820,
+            "n_positive": 33,
+            "n_fail": 33,
+            "base_rate": 0.04024390243902439,
+            "pr_auc": 0.06255508748474904,
+            "pr_auc_over_base": 1.5543991435604307,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.1,
+            "recall@20": 0.06060606060606061,
+            "lift@20": 2.484848484848485,
+            "precision@50": 0.08,
+            "recall@50": 0.12121212121212122,
+            "lift@50": 1.9878787878787878,
+            "precision@100": 0.08,
+            "recall@100": 0.24242424242424243,
+            "lift@100": 1.9878787878787878
+          },
+          "NESG": {
+            "positive_class": "failure",
+            "n": 247,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "NYSGRC": {
+            "positive_class": "failure",
+            "n": 247,
+            "n_positive": 9,
+            "n_fail": 9,
+            "base_rate": 0.03643724696356275,
+            "pr_auc": 0.16683324547770143,
+            "pr_auc_over_base": 4.57864573699914,
+            "precision@10": 0.1,
+            "recall@10": 0.1111111111111111,
+            "lift@10": 2.744444444444445,
+            "precision@20": 0.1,
+            "recall@20": 0.2222222222222222,
+            "lift@20": 2.744444444444445,
+            "precision@50": 0.04,
+            "recall@50": 0.2222222222222222,
+            "lift@50": 1.097777777777778,
+            "precision@100": 0.05,
+            "recall@100": 0.5555555555555556,
+            "lift@100": 1.3722222222222225
+          },
+          "SECSG": {
+            "positive_class": "failure",
+            "n": 603,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "SGPP": {
+            "positive_class": "failure",
+            "n": 382,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          }
+        },
+        "n_groups_evaluated": 7,
+        "n_groups_total": 32,
+        "min_group_n": 200,
+        "n_records": 4329,
+        "largest_groups": [
+          {
+            "group": "JCSG",
+            "n": 827
+          },
+          {
+            "group": "MCSG",
+            "n": 820
+          },
+          {
+            "group": "SECSG",
+            "n": 603
+          },
+          {
+            "group": "SGPP",
+            "n": 382
+          },
+          {
+            "group": "CESG",
+            "n": 340
+          }
+        ],
+        "precision@10_best": {
+          "group": "NYSGRC",
+          "value": 0.1
+        },
+        "precision@10_worst": {
+          "group": "CESG",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "NYSGRC",
+          "value": 2.744444444444445
+        },
+        "lift@10_worst": {
+          "group": "CESG",
+          "value": 0.0
+        },
+        "precision@20_best": {
+          "group": "MCSG",
+          "value": 0.1
+        },
+        "precision@20_worst": {
+          "group": "CESG",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "NYSGRC",
+          "value": 2.744444444444445
+        },
+        "lift@20_worst": {
+          "group": "CESG",
+          "value": 0.0
+        },
+        "precision@50_best": {
+          "group": "MCSG",
+          "value": 0.08
+        },
+        "precision@50_worst": {
+          "group": "CESG",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "MCSG",
+          "value": 1.9878787878787878
+        },
+        "lift@50_worst": {
+          "group": "CESG",
+          "value": 0.0
+        },
+        "precision@100_best": {
+          "group": "MCSG",
+          "value": 0.08
+        },
+        "precision@100_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "MCSG",
+          "value": 1.9878787878787878
+        },
+        "lift@100_worst": {
+          "group": "NYSGRC",
+          "value": 1.3722222222222225
+        },
+        "pr_auc_over_base_best": {
+          "group": "NYSGRC",
+          "value": 4.57864573699914
+        },
+        "pr_auc_over_base_worst": {
+          "group": "CESG",
+          "value": 1.228279507101621
+        },
+        "pr_auc_over_base_spread": 3.350366229897519
+      },
+      "by_year": {
+        "groups": {
+          "2000": {
+            "positive_class": "failure",
+            "n": 244,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "2003": {
+            "positive_class": "failure",
+            "n": 407,
+            "n_positive": 3,
+            "n_fail": 3,
+            "base_rate": 0.007371007371007371,
+            "pr_auc": 0.0585192120223537,
+            "pr_auc_over_base": 7.939106431032652,
+            "precision@10": 0.1,
+            "recall@10": 0.3333333333333333,
+            "lift@10": 13.566666666666666,
+            "precision@20": 0.05,
+            "recall@20": 0.3333333333333333,
+            "lift@20": 6.783333333333333,
+            "precision@50": 0.02,
+            "recall@50": 0.3333333333333333,
+            "lift@50": 2.7133333333333334,
+            "precision@100": 0.02,
+            "recall@100": 0.6666666666666666,
+            "lift@100": 2.7133333333333334
+          },
+          "2004": {
+            "positive_class": "failure",
+            "n": 578,
+            "n_positive": 4,
+            "n_fail": 4,
+            "base_rate": 0.006920415224913495,
+            "pr_auc": 0.03241756273423825,
+            "pr_auc_over_base": 4.684337815097427,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.05,
+            "recall@20": 0.25,
+            "lift@20": 7.2250000000000005,
+            "precision@50": 0.02,
+            "recall@50": 0.25,
+            "lift@50": 2.89,
+            "precision@100": 0.01,
+            "recall@100": 0.25,
+            "lift@100": 1.445
+          },
+          "2005": {
+            "positive_class": "failure",
+            "n": 323,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "2006": {
+            "positive_class": "failure",
+            "n": 253,
+            "n_positive": 4,
+            "n_fail": 4,
+            "base_rate": 0.015810276679841896,
+            "pr_auc": 0.02553235963851135,
+            "pr_auc_over_base": 1.614921747135843,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.02,
+            "recall@50": 0.25,
+            "lift@50": 1.2650000000000001,
+            "precision@100": 0.01,
+            "recall@100": 0.25,
+            "lift@100": 0.6325000000000001
+          },
+          "2007": {
+            "positive_class": "failure",
+            "n": 294,
+            "n_positive": 3,
+            "n_fail": 3,
+            "base_rate": 0.01020408163265306,
+            "pr_auc": 0.009653594051119088,
+            "pr_auc_over_base": 0.9460522170096707,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.0,
+            "recall@50": 0.0,
+            "lift@50": 0.0,
+            "precision@100": 0.0,
+            "recall@100": 0.0,
+            "lift@100": 0.0
+          },
+          "2008": {
+            "positive_class": "failure",
+            "n": 238,
+            "n_positive": 6,
+            "n_fail": 6,
+            "base_rate": 0.025210084033613446,
+            "pr_auc": 0.063799655525631,
+            "pr_auc_over_base": 2.530719669183363,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.06,
+            "recall@50": 0.5,
+            "lift@50": 2.38,
+            "precision@100": 0.06,
+            "recall@100": 1.0,
+            "lift@100": 2.38
+          },
+          "2009": {
+            "positive_class": "failure",
+            "n": 362,
+            "n_positive": 5,
+            "n_fail": 5,
+            "base_rate": 0.013812154696132596,
+            "pr_auc": 0.012896185091174937,
+            "pr_auc_over_base": 0.9336838006010655,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.0,
+            "recall@50": 0.0,
+            "lift@50": 0.0,
+            "precision@100": 0.0,
+            "recall@100": 0.0,
+            "lift@100": 0.0
+          },
+          "2010": {
+            "positive_class": "failure",
+            "n": 594,
+            "n_positive": 8,
+            "n_fail": 8,
+            "base_rate": 0.013468013468013467,
+            "pr_auc": 0.07276408044435481,
+            "pr_auc_over_base": 5.402732972993345,
+            "precision@10": 0.1,
+            "recall@10": 0.125,
+            "lift@10": 7.425000000000001,
+            "precision@20": 0.1,
+            "recall@20": 0.25,
+            "lift@20": 7.425000000000001,
+            "precision@50": 0.04,
+            "recall@50": 0.25,
+            "lift@50": 2.97,
+            "precision@100": 0.02,
+            "recall@100": 0.25,
+            "lift@100": 1.485
+          },
+          "2012": {
+            "positive_class": "failure",
+            "n": 309,
+            "n_positive": 13,
+            "n_fail": 13,
+            "base_rate": 0.042071197411003236,
+            "pr_auc": 0.04591467980061728,
+            "pr_auc_over_base": 1.0913566198762108,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.04,
+            "recall@50": 0.15384615384615385,
+            "lift@50": 0.9507692307692308,
+            "precision@100": 0.04,
+            "recall@100": 0.3076923076923077,
+            "lift@100": 0.9507692307692308
+          }
+        },
+        "n_groups_evaluated": 10,
+        "n_groups_total": 20,
+        "min_group_n": 200,
+        "n_records": 4329,
+        "largest_groups": [
+          {
+            "group": "2010",
+            "n": 594
+          },
+          {
+            "group": "2004",
+            "n": 578
+          },
+          {
+            "group": "2003",
+            "n": 407
+          },
+          {
+            "group": "2009",
+            "n": 362
+          },
+          {
+            "group": "2005",
+            "n": 323
+          }
+        ],
+        "precision@10_best": {
+          "group": "2003",
+          "value": 0.1
+        },
+        "precision@10_worst": {
+          "group": "2000",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "2003",
+          "value": 13.566666666666666
+        },
+        "lift@10_worst": {
+          "group": "2004",
+          "value": 0.0
+        },
+        "precision@20_best": {
+          "group": "2010",
+          "value": 0.1
+        },
+        "precision@20_worst": {
+          "group": "2000",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "2010",
+          "value": 7.425000000000001
+        },
+        "lift@20_worst": {
+          "group": "2006",
+          "value": 0.0
+        },
+        "precision@50_best": {
+          "group": "2008",
+          "value": 0.06
+        },
+        "precision@50_worst": {
+          "group": "2000",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "2010",
+          "value": 2.97
+        },
+        "lift@50_worst": {
+          "group": "2007",
+          "value": 0.0
+        },
+        "precision@100_best": {
+          "group": "2008",
+          "value": 0.06
+        },
+        "precision@100_worst": {
+          "group": "2000",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "2003",
+          "value": 2.7133333333333334
+        },
+        "lift@100_worst": {
+          "group": "2007",
+          "value": 0.0
+        },
+        "pr_auc_over_base_best": {
+          "group": "2003",
+          "value": 7.939106431032652
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2009",
+          "value": 0.9336838006010655
+        },
+        "pr_auc_over_base_spread": 7.005422630431586
+      },
+      "by_organism": {
+        "groups": {
+          "Arabidopsis thaliana Columbia": {
+            "positive_class": "failure",
+            "n": 202,
+            "n_positive": 6,
+            "n_fail": 6,
+            "base_rate": 0.0297029702970297,
+            "pr_auc": 0.0417168710677552,
+            "pr_auc_over_base": 1.4044679926144252,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.04,
+            "recall@50": 0.3333333333333333,
+            "lift@50": 1.3466666666666667,
+            "precision@100": 0.04,
+            "recall@100": 0.6666666666666666,
+            "lift@100": 1.3466666666666667
+          },
+          "Caenorhabditis elegans": {
+            "positive_class": "failure",
+            "n": 533,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          }
+        },
+        "n_groups_evaluated": 2,
+        "n_groups_total": 641,
+        "min_group_n": 200,
+        "n_records": 4329,
+        "largest_groups": [
+          {
+            "group": "Caenorhabditis elegans",
+            "n": 533
+          },
+          {
+            "group": "Arabidopsis thaliana Columbia",
+            "n": 202
+          },
+          {
+            "group": "Homo sapiens",
+            "n": 196
+          },
+          {
+            "group": "Leishmania major",
+            "n": 160
+          },
+          {
+            "group": "Trypanosoma brucei",
+            "n": 93
+          }
+        ],
+        "precision@10_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "precision@10_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "lift@10_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "precision@20_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "precision@20_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "lift@20_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.0
+        },
+        "precision@50_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.04
+        },
+        "precision@50_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.3466666666666667
+        },
+        "lift@50_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.3466666666666667
+        },
+        "precision@100_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.04
+        },
+        "precision@100_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.3466666666666667
+        },
+        "lift@100_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.3466666666666667
+        },
+        "pr_auc_over_base_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.4044679926144252
+        },
+        "pr_auc_over_base_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.4044679926144252
+        },
+        "pr_auc_over_base_spread": 0.0
+      }
+    },
+    {
+      "split": "sequence",
+      "stage": "express",
+      "train_n": 25615,
+      "train_fail": 5945,
+      "test_n": 3194,
+      "test_fail": 763,
+      "overall": {
+        "positive_class": "failure",
+        "n": 3194,
+        "n_positive": 763,
+        "n_fail": 763,
+        "base_rate": 0.23888541014402004,
+        "pr_auc": 0.4325422074822848,
+        "pr_auc_over_base": 1.810668166052972,
+        "precision@10": 0.7,
+        "recall@10": 0.009174311926605505,
+        "lift@10": 2.930275229357798,
+        "precision@20": 0.85,
+        "recall@20": 0.022280471821756225,
+        "lift@20": 3.5581913499344693,
+        "precision@50": 0.7,
+        "recall@50": 0.045871559633027525,
+        "lift@50": 2.930275229357798,
+        "precision@100": 0.71,
+        "recall@100": 0.09305373525557012,
+        "lift@100": 2.9721363040629094
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_E",
+            "mean": 0.07772039514132774,
+            "std": 0.00992441470969942
+          },
+          {
+            "feature": "aa_L",
+            "mean": 0.03896145354131857,
+            "std": 0.004768182054760641
+          },
+          {
+            "feature": "aa_I",
+            "mean": 0.030003377270469596,
+            "std": 0.006000257442937402
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.025246617434814878,
+            "std": 0.005207067322557075
+          },
+          {
+            "feature": "aa_S",
+            "mean": 0.02205358213611321,
+            "std": 0.002401532722948396
+          },
+          {
+            "feature": "aa_M",
+            "mean": 0.012171550136241955,
+            "std": 0.0033194007836275683
+          },
+          {
+            "feature": "aa_A",
+            "mean": 0.005636001233995075,
+            "std": 0.0030094885576313645
+          },
+          {
+            "feature": "aa_P",
+            "mean": 0.0044072565416382655,
+            "std": 0.0012442384989247697
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 5333,
+        "stripped_test": 641,
+        "stripped_test_frac": 0.2007,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 630,
+          "FLAG 标签": 1,
+          "Strep-tag II": 2,
+          "TEV 蛋白酶位点 ENLYFQ/G 或 /S": 18,
+          "Factor Xa 位点": 6,
+          "肠激酶 (enterokinase) 位点": 1,
+          "BamHI GS 残余 (仅 N 端首两位)": 3
+        }
+      },
+      "by_center": {
+        "groups": {
+          "CESG": {
+            "positive_class": "failure",
+            "n": 345,
+            "n_positive": 219,
+            "n_fail": 219,
+            "base_rate": 0.6347826086956522,
+            "pr_auc": 0.694729934327243,
+            "pr_auc_over_base": 1.0944375677757936,
+            "precision@10": 0.7,
+            "recall@10": 0.0319634703196347,
+            "lift@10": 1.1027397260273972,
+            "precision@20": 0.7,
+            "recall@20": 0.0639269406392694,
+            "lift@20": 1.1027397260273972,
+            "precision@50": 0.72,
+            "recall@50": 0.1643835616438356,
+            "lift@50": 1.1342465753424658,
+            "precision@100": 0.7,
+            "recall@100": 0.319634703196347,
+            "lift@100": 1.1027397260273972
+          },
+          "JCSG": {
+            "positive_class": "failure",
+            "n": 563,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "MCSG": {
+            "positive_class": "failure",
+            "n": 591,
+            "n_positive": 27,
+            "n_fail": 27,
+            "base_rate": 0.04568527918781726,
+            "pr_auc": 0.07120124747402123,
+            "pr_auc_over_base": 1.5585161947091315,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.1,
+            "recall@50": 0.18518518518518517,
+            "lift@50": 2.188888888888889,
+            "precision@100": 0.08,
+            "recall@100": 0.2962962962962963,
+            "lift@100": 1.7511111111111113
+          },
+          "NESG": {
+            "positive_class": "failure",
+            "n": 242,
+            "n_positive": 70,
+            "n_fail": 70,
+            "base_rate": 0.2892561983471074,
+            "pr_auc": 0.35369625695882145,
+            "pr_auc_over_base": 1.2227784883433543,
+            "precision@10": 0.2,
+            "recall@10": 0.02857142857142857,
+            "lift@10": 0.6914285714285715,
+            "precision@20": 0.4,
+            "recall@20": 0.11428571428571428,
+            "lift@20": 1.382857142857143,
+            "precision@50": 0.42,
+            "recall@50": 0.3,
+            "lift@50": 1.452,
+            "precision@100": 0.38,
+            "recall@100": 0.5428571428571428,
+            "lift@100": 1.3137142857142858
+          },
+          "NYSGRC": {
+            "positive_class": "failure",
+            "n": 241,
+            "n_positive": 177,
+            "n_fail": 177,
+            "base_rate": 0.7344398340248963,
+            "pr_auc": 0.7818295794455431,
+            "pr_auc_over_base": 1.0645250206009935,
+            "precision@10": 1.0,
+            "recall@10": 0.05649717514124294,
+            "lift@10": 1.3615819209039548,
+            "precision@20": 0.8,
+            "recall@20": 0.0903954802259887,
+            "lift@20": 1.0892655367231638,
+            "precision@50": 0.8,
+            "recall@50": 0.22598870056497175,
+            "lift@50": 1.0892655367231638,
+            "precision@100": 0.76,
+            "recall@100": 0.4293785310734463,
+            "lift@100": 1.0348022598870057
+          },
+          "SECSG": {
+            "positive_class": "failure",
+            "n": 266,
+            "n_positive": 1,
+            "n_fail": 1,
+            "base_rate": 0.0037593984962406013,
+            "pr_auc": 0.006535947712418301,
+            "pr_auc_over_base": 1.738562091503268,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.0,
+            "recall@50": 0.0,
+            "lift@50": 0.0,
+            "precision@100": 0.0,
+            "recall@100": 0.0,
+            "lift@100": 0.0
+          }
+        },
+        "n_groups_evaluated": 6,
+        "n_groups_total": 32,
+        "min_group_n": 200,
+        "n_records": 3194,
+        "largest_groups": [
+          {
+            "group": "MCSG",
+            "n": 591
+          },
+          {
+            "group": "JCSG",
+            "n": 563
+          },
+          {
+            "group": "CESG",
+            "n": 345
+          },
+          {
+            "group": "SECSG",
+            "n": 266
+          },
+          {
+            "group": "NESG",
+            "n": 242
+          }
+        ],
+        "precision@10_best": {
+          "group": "NYSGRC",
+          "value": 1.0
+        },
+        "precision@10_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "NYSGRC",
+          "value": 1.3615819209039548
+        },
+        "lift@10_worst": {
+          "group": "MCSG",
+          "value": 0.0
+        },
+        "precision@20_best": {
+          "group": "NYSGRC",
+          "value": 0.8
+        },
+        "precision@20_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "NESG",
+          "value": 1.382857142857143
+        },
+        "lift@20_worst": {
+          "group": "MCSG",
+          "value": 0.0
+        },
+        "precision@50_best": {
+          "group": "NYSGRC",
+          "value": 0.8
+        },
+        "precision@50_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "MCSG",
+          "value": 2.188888888888889
+        },
+        "lift@50_worst": {
+          "group": "SECSG",
+          "value": 0.0
+        },
+        "precision@100_best": {
+          "group": "NYSGRC",
+          "value": 0.76
+        },
+        "precision@100_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "MCSG",
+          "value": 1.7511111111111113
+        },
+        "lift@100_worst": {
+          "group": "SECSG",
+          "value": 0.0
+        },
+        "pr_auc_over_base_best": {
+          "group": "SECSG",
+          "value": 1.738562091503268
+        },
+        "pr_auc_over_base_worst": {
+          "group": "NYSGRC",
+          "value": 1.0645250206009935
+        },
+        "pr_auc_over_base_spread": 0.6740370709022745
+      },
+      "by_year": {
+        "groups": {
+          "2003": {
+            "positive_class": "failure",
+            "n": 307,
+            "n_positive": 70,
+            "n_fail": 70,
+            "base_rate": 0.2280130293159609,
+            "pr_auc": 0.37818119659017063,
+            "pr_auc_over_base": 1.658594676474034,
+            "precision@10": 0.5,
+            "recall@10": 0.07142857142857142,
+            "lift@10": 2.192857142857143,
+            "precision@20": 0.35,
+            "recall@20": 0.1,
+            "lift@20": 1.535,
+            "precision@50": 0.42,
+            "recall@50": 0.3,
+            "lift@50": 1.842,
+            "precision@100": 0.35,
+            "recall@100": 0.5,
+            "lift@100": 1.535
+          },
+          "2004": {
+            "positive_class": "failure",
+            "n": 380,
+            "n_positive": 41,
+            "n_fail": 41,
+            "base_rate": 0.10789473684210527,
+            "pr_auc": 0.16612765843535043,
+            "pr_auc_over_base": 1.539719761108126,
+            "precision@10": 0.2,
+            "recall@10": 0.04878048780487805,
+            "lift@10": 1.853658536585366,
+            "precision@20": 0.15,
+            "recall@20": 0.07317073170731707,
+            "lift@20": 1.3902439024390243,
+            "precision@50": 0.16,
+            "recall@50": 0.1951219512195122,
+            "lift@50": 1.4829268292682927,
+            "precision@100": 0.18,
+            "recall@100": 0.43902439024390244,
+            "lift@100": 1.6682926829268292
+          },
+          "2005": {
+            "positive_class": "failure",
+            "n": 228,
+            "n_positive": 30,
+            "n_fail": 30,
+            "base_rate": 0.13157894736842105,
+            "pr_auc": 0.20068912555692914,
+            "pr_auc_over_base": 1.5252373542326616,
+            "precision@10": 0.1,
+            "recall@10": 0.03333333333333333,
+            "lift@10": 0.7600000000000001,
+            "precision@20": 0.25,
+            "recall@20": 0.16666666666666666,
+            "lift@20": 1.9000000000000001,
+            "precision@50": 0.22,
+            "recall@50": 0.36666666666666664,
+            "lift@50": 1.6720000000000002,
+            "precision@100": 0.19,
+            "recall@100": 0.6333333333333333,
+            "lift@100": 1.4440000000000002
+          },
+          "2009": {
+            "positive_class": "failure",
+            "n": 308,
+            "n_positive": 81,
+            "n_fail": 81,
+            "base_rate": 0.262987012987013,
+            "pr_auc": 0.6358320152586913,
+            "pr_auc_over_base": 2.417731613576258,
+            "precision@10": 0.8,
+            "recall@10": 0.09876543209876543,
+            "lift@10": 3.0419753086419754,
+            "precision@20": 0.75,
+            "recall@20": 0.18518518518518517,
+            "lift@20": 2.8518518518518516,
+            "precision@50": 0.74,
+            "recall@50": 0.4567901234567901,
+            "lift@50": 2.813827160493827,
+            "precision@100": 0.59,
+            "recall@100": 0.7283950617283951,
+            "lift@100": 2.2434567901234566
+          },
+          "2010": {
+            "positive_class": "failure",
+            "n": 573,
+            "n_positive": 219,
+            "n_fail": 219,
+            "base_rate": 0.38219895287958117,
+            "pr_auc": 0.5645822437731421,
+            "pr_auc_over_base": 1.4771946378173992,
+            "precision@10": 0.6,
+            "recall@10": 0.0273972602739726,
+            "lift@10": 1.56986301369863,
+            "precision@20": 0.7,
+            "recall@20": 0.0639269406392694,
+            "lift@20": 1.8315068493150684,
+            "precision@50": 0.68,
+            "recall@50": 0.1552511415525114,
+            "lift@50": 1.7791780821917809,
+            "precision@100": 0.58,
+            "recall@100": 0.2648401826484018,
+            "lift@100": 1.5175342465753423
+          },
+          "2012": {
+            "positive_class": "failure",
+            "n": 281,
+            "n_positive": 122,
+            "n_fail": 122,
+            "base_rate": 0.43416370106761565,
+            "pr_auc": 0.6001561404227866,
+            "pr_auc_over_base": 1.3823268480229758,
+            "precision@10": 1.0,
+            "recall@10": 0.08196721311475409,
+            "lift@10": 2.3032786885245904,
+            "precision@20": 0.9,
+            "recall@20": 0.14754098360655737,
+            "lift@20": 2.072950819672131,
+            "precision@50": 0.64,
+            "recall@50": 0.26229508196721313,
+            "lift@50": 1.4740983606557378,
+            "precision@100": 0.52,
+            "recall@100": 0.4262295081967213,
+            "lift@100": 1.197704918032787
+          }
+        },
+        "n_groups_evaluated": 6,
+        "n_groups_total": 20,
+        "min_group_n": 200,
+        "n_records": 3194,
+        "largest_groups": [
+          {
+            "group": "2010",
+            "n": 573
+          },
+          {
+            "group": "2004",
+            "n": 380
+          },
+          {
+            "group": "2009",
+            "n": 308
+          },
+          {
+            "group": "2003",
+            "n": 307
+          },
+          {
+            "group": "2012",
+            "n": 281
+          }
+        ],
+        "precision@10_best": {
+          "group": "2012",
+          "value": 1.0
+        },
+        "precision@10_worst": {
+          "group": "2005",
+          "value": 0.1
+        },
+        "precision@10_ratio_best_over_worst": 10.0,
+        "lift@10_best": {
+          "group": "2009",
+          "value": 3.0419753086419754
+        },
+        "lift@10_worst": {
+          "group": "2005",
+          "value": 0.7600000000000001
+        },
+        "precision@20_best": {
+          "group": "2012",
+          "value": 0.9
+        },
+        "precision@20_worst": {
+          "group": "2004",
+          "value": 0.15
+        },
+        "precision@20_ratio_best_over_worst": 6.0,
+        "lift@20_best": {
+          "group": "2009",
+          "value": 2.8518518518518516
+        },
+        "lift@20_worst": {
+          "group": "2004",
+          "value": 1.3902439024390243
+        },
+        "precision@50_best": {
+          "group": "2009",
+          "value": 0.74
+        },
+        "precision@50_worst": {
+          "group": "2004",
+          "value": 0.16
+        },
+        "precision@50_ratio_best_over_worst": 4.625,
+        "lift@50_best": {
+          "group": "2009",
+          "value": 2.813827160493827
+        },
+        "lift@50_worst": {
+          "group": "2012",
+          "value": 1.4740983606557378
+        },
+        "precision@100_best": {
+          "group": "2009",
+          "value": 0.59
+        },
+        "precision@100_worst": {
+          "group": "2004",
+          "value": 0.18
+        },
+        "precision@100_ratio_best_over_worst": 3.2777777777777777,
+        "lift@100_best": {
+          "group": "2009",
+          "value": 2.2434567901234566
+        },
+        "lift@100_worst": {
+          "group": "2012",
+          "value": 1.197704918032787
+        },
+        "pr_auc_over_base_best": {
+          "group": "2009",
+          "value": 2.417731613576258
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2012",
+          "value": 1.3823268480229758
+        },
+        "pr_auc_over_base_spread": 1.0354047655532823
+      },
+      "by_organism": {
+        "groups": {
+          "Arabidopsis thaliana Columbia": {
+            "positive_class": "failure",
+            "n": 205,
+            "n_positive": 161,
+            "n_fail": 161,
+            "base_rate": 0.7853658536585366,
+            "pr_auc": 0.8142334022205053,
+            "pr_auc_over_base": 1.0367568164919478,
+            "precision@10": 0.9,
+            "recall@10": 0.055900621118012424,
+            "lift@10": 1.1459627329192545,
+            "precision@20": 0.8,
+            "recall@20": 0.09937888198757763,
+            "lift@20": 1.0186335403726707,
+            "precision@50": 0.86,
+            "recall@50": 0.2670807453416149,
+            "lift@50": 1.095031055900621,
+            "precision@100": 0.79,
+            "recall@100": 0.4906832298136646,
+            "lift@100": 1.0059006211180124
+          },
+          "Caenorhabditis elegans": {
+            "positive_class": "failure",
+            "n": 264,
+            "n_positive": 4,
+            "n_fail": 4,
+            "base_rate": 0.015151515151515152,
+            "pr_auc": 0.011633665077061303,
+            "pr_auc_over_base": 0.767821895086046,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.0,
+            "recall@50": 0.0,
+            "lift@50": 0.0,
+            "precision@100": 0.0,
+            "recall@100": 0.0,
+            "lift@100": 0.0
+          }
+        },
+        "n_groups_evaluated": 2,
+        "n_groups_total": 580,
+        "min_group_n": 200,
+        "n_records": 3194,
+        "largest_groups": [
+          {
+            "group": "Caenorhabditis elegans",
+            "n": 264
+          },
+          {
+            "group": "Arabidopsis thaliana Columbia",
+            "n": 205
+          },
+          {
+            "group": "Homo sapiens",
+            "n": 180
+          },
+          {
+            "group": "Leishmania major",
+            "n": 79
+          },
+          {
+            "group": "Sinorhizobium meliloti 1021",
+            "n": 73
+          }
+        ],
+        "precision@10_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9
+        },
+        "precision@10_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.1459627329192545
+        },
+        "lift@10_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@20_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.8
+        },
+        "precision@20_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.0186335403726707
+        },
+        "lift@20_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@50_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.86
+        },
+        "precision@50_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.095031055900621
+        },
+        "lift@50_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@100_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.79
+        },
+        "precision@100_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.0059006211180124
+        },
+        "lift@100_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.0
+        },
+        "pr_auc_over_base_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 1.0367568164919478
+        },
+        "pr_auc_over_base_worst": {
+          "group": "Caenorhabditis elegans",
+          "value": 0.767821895086046
+        },
+        "pr_auc_over_base_spread": 0.2689349214059018
+      }
+    },
+    {
+      "split": "sequence",
+      "stage": "soluble",
+      "train_n": 14336,
+      "train_fail": 993,
+      "test_n": 1776,
+      "test_fail": 128,
+      "overall": {
+        "positive_class": "failure",
+        "n": 1776,
+        "n_positive": 128,
+        "n_fail": 128,
+        "base_rate": 0.07207207207207207,
+        "pr_auc": 0.19570836085455173,
+        "pr_auc_over_base": 2.7154535068569055,
+        "precision@10": 0.6,
+        "recall@10": 0.046875,
+        "lift@10": 8.325,
+        "precision@20": 0.45,
+        "recall@20": 0.0703125,
+        "lift@20": 6.24375,
+        "precision@50": 0.3,
+        "recall@50": 0.1171875,
+        "lift@50": 4.1625,
+        "precision@100": 0.25,
+        "recall@100": 0.1953125,
+        "lift@100": 3.46875
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_A",
+            "mean": 0.04857459013543851,
+            "std": 0.008426076656735127
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.035114182983511835,
+            "std": 0.013150685935623595
+          },
+          {
+            "feature": "aa_E",
+            "mean": 0.03201973846614825,
+            "std": 0.011417437767765989
+          },
+          {
+            "feature": "aa_I",
+            "mean": 0.024761542670427676,
+            "std": 0.005661381774283431
+          },
+          {
+            "feature": "aa_S",
+            "mean": 0.02226218995516051,
+            "std": 0.013653340187097155
+          },
+          {
+            "feature": "aa_C",
+            "mean": 0.020236264967086505,
+            "std": 0.006005059475309257
+          },
+          {
+            "feature": "aa_Y",
+            "mean": 0.013606919655946629,
+            "std": 0.010667683888656984
+          },
+          {
+            "feature": "aa_H",
+            "mean": 0.013473486353958378,
+            "std": 0.006939063871128591
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 3842,
+        "stripped_test": 485,
+        "stripped_test_frac": 0.2731,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 477,
+          "FLAG 标签": 1,
+          "Strep-tag II": 3,
+          "TEV 蛋白酶位点 ENLYFQ/G 或 /S": 5,
+          "凝血酶 (thrombin) 位点 LVPR/GS": 2,
+          "Factor Xa 位点": 5
+        }
+      },
+      "by_center": {
+        "groups": {
+          "JCSG": {
+            "positive_class": "failure",
+            "n": 337,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "MCSG": {
+            "positive_class": "failure",
+            "n": 379,
+            "n_positive": 20,
+            "n_fail": 20,
+            "base_rate": 0.052770448548812667,
+            "pr_auc": 0.0775158643727284,
+            "pr_auc_over_base": 1.468925629863203,
+            "precision@10": 0.1,
+            "recall@10": 0.05,
+            "lift@10": 1.895,
+            "precision@20": 0.05,
+            "recall@20": 0.05,
+            "lift@20": 0.9475,
+            "precision@50": 0.08,
+            "recall@50": 0.2,
+            "lift@50": 1.516,
+            "precision@100": 0.08,
+            "recall@100": 0.4,
+            "lift@100": 1.516
+          }
+        },
+        "n_groups_evaluated": 2,
+        "n_groups_total": 32,
+        "min_group_n": 200,
+        "n_records": 1776,
+        "largest_groups": [
+          {
+            "group": "MCSG",
+            "n": 379
+          },
+          {
+            "group": "JCSG",
+            "n": 337
+          },
+          {
+            "group": "NESG",
+            "n": 188
+          },
+          {
+            "group": "CESG",
+            "n": 186
+          },
+          {
+            "group": "NYSGXRC",
+            "n": 104
+          }
+        ],
+        "precision@10_best": {
+          "group": "MCSG",
+          "value": 0.1
+        },
+        "precision@10_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "MCSG",
+          "value": 1.895
+        },
+        "lift@10_worst": {
+          "group": "MCSG",
+          "value": 1.895
+        },
+        "precision@20_best": {
+          "group": "MCSG",
+          "value": 0.05
+        },
+        "precision@20_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "MCSG",
+          "value": 0.9475
+        },
+        "lift@20_worst": {
+          "group": "MCSG",
+          "value": 0.9475
+        },
+        "precision@50_best": {
+          "group": "MCSG",
+          "value": 0.08
+        },
+        "precision@50_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "MCSG",
+          "value": 1.516
+        },
+        "lift@50_worst": {
+          "group": "MCSG",
+          "value": 1.516
+        },
+        "precision@100_best": {
+          "group": "MCSG",
+          "value": 0.08
+        },
+        "precision@100_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "MCSG",
+          "value": 1.516
+        },
+        "lift@100_worst": {
+          "group": "MCSG",
+          "value": 1.516
+        },
+        "pr_auc_over_base_best": {
+          "group": "MCSG",
+          "value": 1.468925629863203
+        },
+        "pr_auc_over_base_worst": {
+          "group": "MCSG",
+          "value": 1.468925629863203
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_year": {
+        "groups": {
+          "2010": {
+            "positive_class": "failure",
+            "n": 274,
+            "n_positive": 65,
+            "n_fail": 65,
+            "base_rate": 0.23722627737226276,
+            "pr_auc": 0.3368712279798046,
+            "pr_auc_over_base": 1.4200417917917918,
+            "precision@10": 0.5,
+            "recall@10": 0.07692307692307693,
+            "lift@10": 2.1076923076923078,
+            "precision@20": 0.4,
+            "recall@20": 0.12307692307692308,
+            "lift@20": 1.6861538461538463,
+            "precision@50": 0.34,
+            "recall@50": 0.26153846153846155,
+            "lift@50": 1.4332307692307693,
+            "precision@100": 0.3,
+            "recall@100": 0.46153846153846156,
+            "lift@100": 1.2646153846153847
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 19,
+        "min_group_n": 200,
+        "n_records": 1776,
+        "largest_groups": [
+          {
+            "group": "2010",
+            "n": 274
+          },
+          {
+            "group": "2009",
+            "n": 185
+          },
+          {
+            "group": "2012",
+            "n": 161
+          },
+          {
+            "group": "2006",
+            "n": 154
+          },
+          {
+            "group": "2004",
+            "n": 152
+          }
+        ],
+        "precision@10_best": {
+          "group": "2010",
+          "value": 0.5
+        },
+        "precision@10_worst": {
+          "group": "2010",
+          "value": 0.5
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "2010",
+          "value": 2.1076923076923078
+        },
+        "lift@10_worst": {
+          "group": "2010",
+          "value": 2.1076923076923078
+        },
+        "precision@20_best": {
+          "group": "2010",
+          "value": 0.4
+        },
+        "precision@20_worst": {
+          "group": "2010",
+          "value": 0.4
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "2010",
+          "value": 1.6861538461538463
+        },
+        "lift@20_worst": {
+          "group": "2010",
+          "value": 1.6861538461538463
+        },
+        "precision@50_best": {
+          "group": "2010",
+          "value": 0.34
+        },
+        "precision@50_worst": {
+          "group": "2010",
+          "value": 0.34
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "2010",
+          "value": 1.4332307692307693
+        },
+        "lift@50_worst": {
+          "group": "2010",
+          "value": 1.4332307692307693
+        },
+        "precision@100_best": {
+          "group": "2010",
+          "value": 0.3
+        },
+        "precision@100_worst": {
+          "group": "2010",
+          "value": 0.3
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "2010",
+          "value": 1.2646153846153847
+        },
+        "lift@100_worst": {
+          "group": "2010",
+          "value": 1.2646153846153847
+        },
+        "pr_auc_over_base_best": {
+          "group": "2010",
+          "value": 1.4200417917917918
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2010",
+          "value": 1.4200417917917918
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_organism": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 477,
+        "min_group_n": 200,
+        "n_records": 1776,
+        "largest_groups": [
+          {
+            "group": "Homo sapiens",
+            "n": 130
+          },
+          {
+            "group": "Arabidopsis thaliana Columbia",
+            "n": 78
+          },
+          {
+            "group": "Caenorhabditis elegans",
+            "n": 35
+          },
+          {
+            "group": "Escherichia coli",
+            "n": 35
+          },
+          {
+            "group": "Leishmania major",
+            "n": 35
+          }
+        ]
+      }
+    },
+    {
+      "split": "sequence",
+      "stage": "purify",
+      "train_n": 11789,
+      "train_fail": 2268,
+      "test_n": 1442,
+      "test_fail": 268,
+      "overall": {
+        "positive_class": "failure",
+        "n": 1442,
+        "n_positive": 268,
+        "n_fail": 268,
+        "base_rate": 0.18585298196948682,
+        "pr_auc": 0.40277876481973424,
+        "pr_auc_over_base": 2.167190219664391,
+        "precision@10": 0.7,
+        "recall@10": 0.026119402985074626,
+        "lift@10": 3.766417910447761,
+        "precision@20": 0.75,
+        "recall@20": 0.055970149253731345,
+        "lift@20": 4.03544776119403,
+        "precision@50": 0.64,
+        "recall@50": 0.11940298507462686,
+        "lift@50": 3.4435820895522387,
+        "precision@100": 0.54,
+        "recall@100": 0.20149253731343283,
+        "lift@100": 2.9055223880597016
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_S",
+            "mean": 0.10355743901574774,
+            "std": 0.009782001202034275
+          },
+          {
+            "feature": "aa_A",
+            "mean": 0.04868152716075513,
+            "std": 0.011404903637921944
+          },
+          {
+            "feature": "aa_H",
+            "mean": 0.026676652090077597,
+            "std": 0.010481432469825313
+          },
+          {
+            "feature": "aa_I",
+            "mean": 0.02139036294719527,
+            "std": 0.006289689741846468
+          },
+          {
+            "feature": "aa_K",
+            "mean": 0.01945513043353324,
+            "std": 0.009048572864707637
+          },
+          {
+            "feature": "aa_C",
+            "mean": 0.017646313800357177,
+            "std": 0.008771336600837802
+          },
+          {
+            "feature": "aa_P",
+            "mean": 0.01111626017012889,
+            "std": 0.004092486921568314
+          },
+          {
+            "feature": "aa_N",
+            "mean": 0.010491505447031636,
+            "std": 0.0037957562682497314
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 3057,
+        "stripped_test": 357,
+        "stripped_test_frac": 0.2476,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 351,
+          "FLAG 标签": 1,
+          "Strep-tag II": 1,
+          "TEV 蛋白酶位点 ENLYFQ/G 或 /S": 2,
+          "凝血酶 (thrombin) 位点 LVPR/GS": 2,
+          "Factor Xa 位点": 4
+        }
+      },
+      "by_center": {
+        "groups": {
+          "JCSG": {
+            "positive_class": "failure",
+            "n": 343,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "MCSG": {
+            "positive_class": "failure",
+            "n": 334,
+            "n_positive": 14,
+            "n_fail": 14,
+            "base_rate": 0.041916167664670656,
+            "pr_auc": 0.06683849268325315,
+            "pr_auc_over_base": 1.594575468300468,
+            "precision@10": 0.1,
+            "recall@10": 0.07142857142857142,
+            "lift@10": 2.385714285714286,
+            "precision@20": 0.05,
+            "recall@20": 0.07142857142857142,
+            "lift@20": 1.192857142857143,
+            "precision@50": 0.02,
+            "recall@50": 0.07142857142857142,
+            "lift@50": 0.4771428571428572,
+            "precision@100": 0.07,
+            "recall@100": 0.5,
+            "lift@100": 1.6700000000000004
+          }
+        },
+        "n_groups_evaluated": 2,
+        "n_groups_total": 31,
+        "min_group_n": 200,
+        "n_records": 1442,
+        "largest_groups": [
+          {
+            "group": "JCSG",
+            "n": 343
+          },
+          {
+            "group": "MCSG",
+            "n": 334
+          },
+          {
+            "group": "CESG",
+            "n": 160
+          },
+          {
+            "group": "NESG",
+            "n": 132
+          },
+          {
+            "group": "NYSGXRC",
+            "n": 109
+          }
+        ],
+        "precision@10_best": {
+          "group": "MCSG",
+          "value": 0.1
+        },
+        "precision@10_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "MCSG",
+          "value": 2.385714285714286
+        },
+        "lift@10_worst": {
+          "group": "MCSG",
+          "value": 2.385714285714286
+        },
+        "precision@20_best": {
+          "group": "MCSG",
+          "value": 0.05
+        },
+        "precision@20_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "MCSG",
+          "value": 1.192857142857143
+        },
+        "lift@20_worst": {
+          "group": "MCSG",
+          "value": 1.192857142857143
+        },
+        "precision@50_best": {
+          "group": "MCSG",
+          "value": 0.02
+        },
+        "precision@50_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "MCSG",
+          "value": 0.4771428571428572
+        },
+        "lift@50_worst": {
+          "group": "MCSG",
+          "value": 0.4771428571428572
+        },
+        "precision@100_best": {
+          "group": "MCSG",
+          "value": 0.07
+        },
+        "precision@100_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "MCSG",
+          "value": 1.6700000000000004
+        },
+        "lift@100_worst": {
+          "group": "MCSG",
+          "value": 1.6700000000000004
+        },
+        "pr_auc_over_base_best": {
+          "group": "MCSG",
+          "value": 1.594575468300468
+        },
+        "pr_auc_over_base_worst": {
+          "group": "MCSG",
+          "value": 1.594575468300468
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_year": {
+        "groups": {
+          "2010": {
+            "positive_class": "failure",
+            "n": 210,
+            "n_positive": 92,
+            "n_fail": 92,
+            "base_rate": 0.4380952380952381,
+            "pr_auc": 0.5606623986827004,
+            "pr_auc_over_base": 1.2797728665583379,
+            "precision@10": 0.7,
+            "recall@10": 0.07608695652173914,
+            "lift@10": 1.5978260869565217,
+            "precision@20": 0.6,
+            "recall@20": 0.13043478260869565,
+            "lift@20": 1.3695652173913042,
+            "precision@50": 0.58,
+            "recall@50": 0.31521739130434784,
+            "lift@50": 1.3239130434782609,
+            "precision@100": 0.54,
+            "recall@100": 0.5869565217391305,
+            "lift@100": 1.232608695652174
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 18,
+        "min_group_n": 200,
+        "n_records": 1442,
+        "largest_groups": [
+          {
+            "group": "2010",
+            "n": 210
+          },
+          {
+            "group": "2009",
+            "n": 173
+          },
+          {
+            "group": "2006",
+            "n": 151
+          },
+          {
+            "group": "2007",
+            "n": 143
+          },
+          {
+            "group": "2008",
+            "n": 122
+          }
+        ],
+        "precision@10_best": {
+          "group": "2010",
+          "value": 0.7
+        },
+        "precision@10_worst": {
+          "group": "2010",
+          "value": 0.7
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "2010",
+          "value": 1.5978260869565217
+        },
+        "lift@10_worst": {
+          "group": "2010",
+          "value": 1.5978260869565217
+        },
+        "precision@20_best": {
+          "group": "2010",
+          "value": 0.6
+        },
+        "precision@20_worst": {
+          "group": "2010",
+          "value": 0.6
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "2010",
+          "value": 1.3695652173913042
+        },
+        "lift@20_worst": {
+          "group": "2010",
+          "value": 1.3695652173913042
+        },
+        "precision@50_best": {
+          "group": "2010",
+          "value": 0.58
+        },
+        "precision@50_worst": {
+          "group": "2010",
+          "value": 0.58
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "2010",
+          "value": 1.3239130434782609
+        },
+        "lift@50_worst": {
+          "group": "2010",
+          "value": 1.3239130434782609
+        },
+        "precision@100_best": {
+          "group": "2010",
+          "value": 0.54
+        },
+        "precision@100_worst": {
+          "group": "2010",
+          "value": 0.54
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "2010",
+          "value": 1.232608695652174
+        },
+        "lift@100_worst": {
+          "group": "2010",
+          "value": 1.232608695652174
+        },
+        "pr_auc_over_base_best": {
+          "group": "2010",
+          "value": 1.2797728665583379
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2010",
+          "value": 1.2797728665583379
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_organism": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 414,
+        "min_group_n": 200,
+        "n_records": 1442,
+        "largest_groups": [
+          {
+            "group": "Homo sapiens",
+            "n": 103
+          },
+          {
+            "group": "Arabidopsis thaliana Columbia",
+            "n": 65
+          },
+          {
+            "group": "Escherichia coli",
+            "n": 37
+          },
+          {
+            "group": "Saccharomyces cerevisiae",
+            "n": 29
+          },
+          {
+            "group": "Legionella pneumophila subsp. pneumophila str. Philadelphia 1",
+            "n": 25
+          }
+        ]
+      }
+    },
+    {
+      "split": "sequence",
+      "stage": "stable",
+      "train_n": 3397,
+      "train_fail": 1230,
+      "test_n": 436,
+      "test_fail": 147,
+      "overall": {
+        "positive_class": "failure",
+        "n": 436,
+        "n_positive": 147,
+        "n_fail": 147,
+        "base_rate": 0.33715596330275227,
+        "pr_auc": 0.595281093290703,
+        "pr_auc_over_base": 1.7655956236377315,
+        "precision@10": 0.8,
+        "recall@10": 0.05442176870748299,
+        "lift@10": 2.372789115646259,
+        "precision@20": 0.75,
+        "recall@20": 0.10204081632653061,
+        "lift@20": 2.2244897959183674,
+        "precision@50": 0.76,
+        "recall@50": 0.2585034013605442,
+        "lift@50": 2.2541496598639457,
+        "precision@100": 0.62,
+        "recall@100": 0.4217687074829932,
+        "lift@100": 1.8389115646258505
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_S",
+            "mean": 0.05213499765664322,
+            "std": 0.018181429889381453
+          },
+          {
+            "feature": "aa_K",
+            "mean": 0.02755497564817988,
+            "std": 0.006083063961153746
+          },
+          {
+            "feature": "aa_C",
+            "mean": 0.026945912591085232,
+            "std": 0.01173551668856694
+          },
+          {
+            "feature": "aa_Q",
+            "mean": 0.024836187990498425,
+            "std": 0.005137616202328636
+          },
+          {
+            "feature": "aa_I",
+            "mean": 0.02433378670108497,
+            "std": 0.015582249945806925
+          },
+          {
+            "feature": "aa_Y",
+            "mean": 0.023862111035589884,
+            "std": 0.015380466816083443
+          },
+          {
+            "feature": "aa_W",
+            "mean": 0.02246215052629911,
+            "std": 0.005163267110125937
+          },
+          {
+            "feature": "aa_N",
+            "mean": 0.016607977363595684,
+            "std": 0.008513843412949019
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 746,
+        "stripped_test": 86,
+        "stripped_test_frac": 0.1972,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 84,
+          "Strep-tag II": 1,
+          "凝血酶 (thrombin) 位点 LVPR/GS": 2,
+          "BamHI GS 残余 (仅 N 端首两位)": 1
+        }
+      },
+      "by_center": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 23,
+        "min_group_n": 200,
+        "n_records": 436,
+        "largest_groups": [
+          {
+            "group": "MCSG",
+            "n": 106
+          },
+          {
+            "group": "JCSG",
+            "n": 87
+          },
+          {
+            "group": "NESG",
+            "n": 73
+          },
+          {
+            "group": "CESG",
+            "n": 56
+          },
+          {
+            "group": "RSGI",
+            "n": 42
+          }
+        ]
+      },
+      "by_year": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 17,
+        "min_group_n": 200,
+        "n_records": 436,
+        "largest_groups": [
+          {
+            "group": "2010",
+            "n": 123
+          },
+          {
+            "group": "2005",
+            "n": 53
+          },
+          {
+            "group": "2007",
+            "n": 45
+          },
+          {
+            "group": "2006",
+            "n": 36
+          },
+          {
+            "group": "2009",
+            "n": 31
+          }
+        ]
+      },
+      "by_organism": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 200,
+        "min_group_n": 200,
+        "n_records": 436,
+        "largest_groups": [
+          {
+            "group": "Homo sapiens",
+            "n": 43
+          },
+          {
+            "group": "Arabidopsis thaliana Columbia",
+            "n": 21
+          },
+          {
+            "group": "Bacillus subtilis",
+            "n": 17
+          },
+          {
+            "group": "Thermus thermophilus",
+            "n": 10
+          },
+          {
+            "group": "Mus musculus",
+            "n": 8
+          }
+        ]
+      }
+    },
+    {
+      "split": "sequence",
+      "stage": "bind",
+      "skipped": "样本不足 (train=1104, test=132)"
+    },
+    {
+      "split": "sequence",
+      "stage": "soluble_expression",
+      "train_n": 18860,
+      "train_fail": 6937,
+      "test_n": 2382,
+      "test_fail": 896,
+      "overall": {
+        "positive_class": "failure",
+        "n": 2382,
+        "n_positive": 896,
+        "n_fail": 896,
+        "base_rate": 0.37615449202350965,
+        "pr_auc": 0.6007095233085135,
+        "pr_auc_over_base": 1.5969755407599098,
+        "precision@10": 1.0,
+        "recall@10": 0.011160714285714286,
+        "lift@10": 2.658482142857143,
+        "precision@20": 0.9,
+        "recall@20": 0.020089285714285716,
+        "lift@20": 2.3926339285714286,
+        "precision@50": 0.82,
+        "recall@50": 0.04575892857142857,
+        "lift@50": 2.179955357142857,
+        "precision@100": 0.81,
+        "recall@100": 0.09040178571428571,
+        "lift@100": 2.153370535714286
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_E",
+            "mean": 0.0966800899530446,
+            "std": 0.007602673417287748
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.03252560411705716,
+            "std": 0.007377727000937863
+          },
+          {
+            "feature": "aa_I",
+            "mean": 0.018920664789830833,
+            "std": 0.0043744122246217884
+          },
+          {
+            "feature": "aa_S",
+            "mean": 0.01889070366743898,
+            "std": 0.004564013687528492
+          },
+          {
+            "feature": "aa_A",
+            "mean": 0.009947883944060243,
+            "std": 0.0025248651546712023
+          },
+          {
+            "feature": "aa_L",
+            "mean": 0.009244093410634424,
+            "std": 0.001642191039662491
+          },
+          {
+            "feature": "aa_C",
+            "mean": 0.006476204100516669,
+            "std": 0.0022875248511611593
+          },
+          {
+            "feature": "aa_F",
+            "mean": 0.005811459529327367,
+            "std": 0.0011718160768496833
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 4179,
+        "stripped_test": 522,
+        "stripped_test_frac": 0.2191,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 512,
+          "FLAG 标签": 1,
+          "Strep-tag II": 3,
+          "TEV 蛋白酶位点 ENLYFQ/G 或 /S": 17,
+          "凝血酶 (thrombin) 位点 LVPR/GS": 1,
+          "Factor Xa 位点": 6,
+          "肠激酶 (enterokinase) 位点": 1
+        }
+      },
+      "by_center": {
+        "groups": {
+          "CESG": {
+            "positive_class": "failure",
+            "n": 352,
+            "n_positive": 255,
+            "n_fail": 255,
+            "base_rate": 0.7244318181818182,
+            "pr_auc": 0.7490303546994138,
+            "pr_auc_over_base": 1.0339556268791907,
+            "precision@10": 0.9,
+            "recall@10": 0.03529411764705882,
+            "lift@10": 1.2423529411764704,
+            "precision@20": 0.8,
+            "recall@20": 0.06274509803921569,
+            "lift@20": 1.104313725490196,
+            "precision@50": 0.74,
+            "recall@50": 0.1450980392156863,
+            "lift@50": 1.0214901960784313,
+            "precision@100": 0.77,
+            "recall@100": 0.30196078431372547,
+            "lift@100": 1.0629019607843138
+          },
+          "JCSG": {
+            "positive_class": "failure",
+            "n": 333,
+            "n_positive": 0,
+            "n_fail": 0,
+            "base_rate": 0.0,
+            "pr_auc": NaN,
+            "pr_auc_over_base": NaN,
+            "precision@10": 0.0,
+            "recall@10": NaN,
+            "lift@10": NaN,
+            "precision@20": 0.0,
+            "recall@20": NaN,
+            "lift@20": NaN,
+            "precision@50": 0.0,
+            "recall@50": NaN,
+            "lift@50": NaN,
+            "precision@100": 0.0,
+            "recall@100": NaN,
+            "lift@100": NaN
+          },
+          "MCSG": {
+            "positive_class": "failure",
+            "n": 397,
+            "n_positive": 49,
+            "n_fail": 49,
+            "base_rate": 0.12342569269521411,
+            "pr_auc": 0.15858494230872422,
+            "pr_auc_over_base": 1.2848616754400717,
+            "precision@10": 0.2,
+            "recall@10": 0.04081632653061224,
+            "lift@10": 1.6204081632653062,
+            "precision@20": 0.2,
+            "recall@20": 0.08163265306122448,
+            "lift@20": 1.6204081632653062,
+            "precision@50": 0.2,
+            "recall@50": 0.20408163265306123,
+            "lift@50": 1.6204081632653062,
+            "precision@100": 0.18,
+            "recall@100": 0.3673469387755102,
+            "lift@100": 1.4583673469387755
+          },
+          "NESG": {
+            "positive_class": "failure",
+            "n": 240,
+            "n_positive": 107,
+            "n_fail": 107,
+            "base_rate": 0.44583333333333336,
+            "pr_auc": 0.6149231890933038,
+            "pr_auc_over_base": 1.3792669661905879,
+            "precision@10": 0.7,
+            "recall@10": 0.06542056074766354,
+            "lift@10": 1.570093457943925,
+            "precision@20": 0.8,
+            "recall@20": 0.14953271028037382,
+            "lift@20": 1.794392523364486,
+            "precision@50": 0.66,
+            "recall@50": 0.308411214953271,
+            "lift@50": 1.480373831775701,
+            "precision@100": 0.59,
+            "recall@100": 0.5514018691588785,
+            "lift@100": 1.3233644859813083
+          },
+          "NYSGRC": {
+            "positive_class": "failure",
+            "n": 248,
+            "n_positive": 182,
+            "n_fail": 182,
+            "base_rate": 0.7338709677419355,
+            "pr_auc": 0.7837261513731151,
+            "pr_auc_over_base": 1.067934535936992,
+            "precision@10": 0.8,
+            "recall@10": 0.04395604395604396,
+            "lift@10": 1.0901098901098902,
+            "precision@20": 0.8,
+            "recall@20": 0.08791208791208792,
+            "lift@20": 1.0901098901098902,
+            "precision@50": 0.76,
+            "recall@50": 0.2087912087912088,
+            "lift@50": 1.0356043956043957,
+            "precision@100": 0.8,
+            "recall@100": 0.43956043956043955,
+            "lift@100": 1.0901098901098902
+          }
+        },
+        "n_groups_evaluated": 5,
+        "n_groups_total": 31,
+        "min_group_n": 200,
+        "n_records": 2382,
+        "largest_groups": [
+          {
+            "group": "MCSG",
+            "n": 397
+          },
+          {
+            "group": "CESG",
+            "n": 352
+          },
+          {
+            "group": "JCSG",
+            "n": 333
+          },
+          {
+            "group": "NYSGRC",
+            "n": 248
+          },
+          {
+            "group": "NESG",
+            "n": 240
+          }
+        ],
+        "precision@10_best": {
+          "group": "CESG",
+          "value": 0.9
+        },
+        "precision@10_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "MCSG",
+          "value": 1.6204081632653062
+        },
+        "lift@10_worst": {
+          "group": "NYSGRC",
+          "value": 1.0901098901098902
+        },
+        "precision@20_best": {
+          "group": "CESG",
+          "value": 0.8
+        },
+        "precision@20_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "NESG",
+          "value": 1.794392523364486
+        },
+        "lift@20_worst": {
+          "group": "NYSGRC",
+          "value": 1.0901098901098902
+        },
+        "precision@50_best": {
+          "group": "NYSGRC",
+          "value": 0.76
+        },
+        "precision@50_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@50_ratio_best_over_worst": Infinity,
+        "lift@50_best": {
+          "group": "MCSG",
+          "value": 1.6204081632653062
+        },
+        "lift@50_worst": {
+          "group": "CESG",
+          "value": 1.0214901960784313
+        },
+        "precision@100_best": {
+          "group": "NYSGRC",
+          "value": 0.8
+        },
+        "precision@100_worst": {
+          "group": "JCSG",
+          "value": 0.0
+        },
+        "precision@100_ratio_best_over_worst": Infinity,
+        "lift@100_best": {
+          "group": "MCSG",
+          "value": 1.4583673469387755
+        },
+        "lift@100_worst": {
+          "group": "CESG",
+          "value": 1.0629019607843138
+        },
+        "pr_auc_over_base_best": {
+          "group": "NESG",
+          "value": 1.3792669661905879
+        },
+        "pr_auc_over_base_worst": {
+          "group": "CESG",
+          "value": 1.0339556268791907
+        },
+        "pr_auc_over_base_spread": 0.3453113393113971
+      },
+      "by_year": {
+        "groups": {
+          "2009": {
+            "positive_class": "failure",
+            "n": 247,
+            "n_positive": 85,
+            "n_fail": 85,
+            "base_rate": 0.3441295546558704,
+            "pr_auc": 0.8018907862734497,
+            "pr_auc_over_base": 2.330200284818142,
+            "precision@10": 1.0,
+            "recall@10": 0.11764705882352941,
+            "lift@10": 2.905882352941177,
+            "precision@20": 0.9,
+            "recall@20": 0.21176470588235294,
+            "lift@20": 2.615294117647059,
+            "precision@50": 0.86,
+            "recall@50": 0.5058823529411764,
+            "lift@50": 2.499058823529412,
+            "precision@100": 0.67,
+            "recall@100": 0.788235294117647,
+            "lift@100": 1.9469411764705884
+          },
+          "2010": {
+            "positive_class": "failure",
+            "n": 468,
+            "n_positive": 287,
+            "n_fail": 287,
+            "base_rate": 0.6132478632478633,
+            "pr_auc": 0.7322530877013237,
+            "pr_auc_over_base": 1.1940572998056427,
+            "precision@10": 0.7,
+            "recall@10": 0.024390243902439025,
+            "lift@10": 1.1414634146341462,
+            "precision@20": 0.8,
+            "recall@20": 0.05574912891986063,
+            "lift@20": 1.3045296167247387,
+            "precision@50": 0.78,
+            "recall@50": 0.13588850174216027,
+            "lift@50": 1.2719163763066201,
+            "precision@100": 0.79,
+            "recall@100": 0.27526132404181186,
+            "lift@100": 1.2882229965156795
+          },
+          "2012": {
+            "positive_class": "failure",
+            "n": 266,
+            "n_positive": 125,
+            "n_fail": 125,
+            "base_rate": 0.4699248120300752,
+            "pr_auc": 0.6333407505282755,
+            "pr_auc_over_base": 1.3477491171241704,
+            "precision@10": 0.9,
+            "recall@10": 0.072,
+            "lift@10": 1.9152,
+            "precision@20": 0.8,
+            "recall@20": 0.128,
+            "lift@20": 1.7024000000000001,
+            "precision@50": 0.7,
+            "recall@50": 0.28,
+            "lift@50": 1.4895999999999998,
+            "precision@100": 0.62,
+            "recall@100": 0.496,
+            "lift@100": 1.31936
+          }
+        },
+        "n_groups_evaluated": 3,
+        "n_groups_total": 18,
+        "min_group_n": 200,
+        "n_records": 2382,
+        "largest_groups": [
+          {
+            "group": "2010",
+            "n": 468
+          },
+          {
+            "group": "2012",
+            "n": 266
+          },
+          {
+            "group": "2009",
+            "n": 247
+          },
+          {
+            "group": "2003",
+            "n": 181
+          },
+          {
+            "group": "2004",
+            "n": 173
+          }
+        ],
+        "precision@10_best": {
+          "group": "2009",
+          "value": 1.0
+        },
+        "precision@10_worst": {
+          "group": "2010",
+          "value": 0.7
+        },
+        "precision@10_ratio_best_over_worst": 1.4285714285714286,
+        "lift@10_best": {
+          "group": "2009",
+          "value": 2.905882352941177
+        },
+        "lift@10_worst": {
+          "group": "2010",
+          "value": 1.1414634146341462
+        },
+        "precision@20_best": {
+          "group": "2009",
+          "value": 0.9
+        },
+        "precision@20_worst": {
+          "group": "2010",
+          "value": 0.8
+        },
+        "precision@20_ratio_best_over_worst": 1.125,
+        "lift@20_best": {
+          "group": "2009",
+          "value": 2.615294117647059
+        },
+        "lift@20_worst": {
+          "group": "2010",
+          "value": 1.3045296167247387
+        },
+        "precision@50_best": {
+          "group": "2009",
+          "value": 0.86
+        },
+        "precision@50_worst": {
+          "group": "2012",
+          "value": 0.7
+        },
+        "precision@50_ratio_best_over_worst": 1.2285714285714286,
+        "lift@50_best": {
+          "group": "2009",
+          "value": 2.499058823529412
+        },
+        "lift@50_worst": {
+          "group": "2010",
+          "value": 1.2719163763066201
+        },
+        "precision@100_best": {
+          "group": "2010",
+          "value": 0.79
+        },
+        "precision@100_worst": {
+          "group": "2012",
+          "value": 0.62
+        },
+        "precision@100_ratio_best_over_worst": 1.2741935483870968,
+        "lift@100_best": {
+          "group": "2009",
+          "value": 1.9469411764705884
+        },
+        "lift@100_worst": {
+          "group": "2010",
+          "value": 1.2882229965156795
+        },
+        "pr_auc_over_base_best": {
+          "group": "2009",
+          "value": 2.330200284818142
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2010",
+          "value": 1.1940572998056427
+        },
+        "pr_auc_over_base_spread": 1.1361429850124993
+      },
+      "by_organism": {
+        "groups": {
+          "Arabidopsis thaliana Columbia": {
+            "positive_class": "failure",
+            "n": 206,
+            "n_positive": 174,
+            "n_fail": 174,
+            "base_rate": 0.8446601941747572,
+            "pr_auc": 0.8348143473909204,
+            "pr_auc_over_base": 0.9883434227731587,
+            "precision@10": 0.8,
+            "recall@10": 0.04597701149425287,
+            "lift@10": 0.9471264367816093,
+            "precision@20": 0.8,
+            "recall@20": 0.09195402298850575,
+            "lift@20": 0.9471264367816093,
+            "precision@50": 0.84,
+            "recall@50": 0.2413793103448276,
+            "lift@50": 0.9944827586206897,
+            "precision@100": 0.83,
+            "recall@100": 0.47701149425287354,
+            "lift@100": 0.9826436781609196
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 555,
+        "min_group_n": 200,
+        "n_records": 2382,
+        "largest_groups": [
+          {
+            "group": "Arabidopsis thaliana Columbia",
+            "n": 206
+          },
+          {
+            "group": "Homo sapiens",
+            "n": 171
+          },
+          {
+            "group": "Sinorhizobium meliloti 1021",
+            "n": 76
+          },
+          {
+            "group": "Mus musculus",
+            "n": 43
+          },
+          {
+            "group": "Saccharomyces cerevisiae",
+            "n": 43
+          }
+        ],
+        "precision@10_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.8
+        },
+        "precision@10_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.8
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9471264367816093
+        },
+        "lift@10_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9471264367816093
+        },
+        "precision@20_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.8
+        },
+        "precision@20_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.8
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9471264367816093
+        },
+        "lift@20_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9471264367816093
+        },
+        "precision@50_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.84
+        },
+        "precision@50_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.84
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9944827586206897
+        },
+        "lift@50_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9944827586206897
+        },
+        "precision@100_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.83
+        },
+        "precision@100_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.83
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9826436781609196
+        },
+        "lift@100_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9826436781609196
+        },
+        "pr_auc_over_base_best": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9883434227731587
+        },
+        "pr_auc_over_base_worst": {
+          "group": "Arabidopsis thaliana Columbia",
+          "value": 0.9883434227731587
+        },
+        "pr_auc_over_base_spread": 0.0
+      }
+    },
+    {
+      "split": "lab",
+      "stage": "clone",
+      "train_n": 40443,
+      "train_fail": 538,
+      "test_n": 1234,
+      "test_fail": 93,
+      "overall": {
+        "positive_class": "failure",
+        "n": 1234,
+        "n_positive": 93,
+        "n_fail": 93,
+        "base_rate": 0.0753646677471637,
+        "pr_auc": 0.10108845994652274,
+        "pr_auc_over_base": 1.341324296494721,
+        "precision@10": 0.0,
+        "recall@10": 0.0,
+        "lift@10": 0.0,
+        "precision@20": 0.05,
+        "recall@20": 0.010752688172043012,
+        "lift@20": 0.6634408602150538,
+        "precision@50": 0.1,
+        "recall@50": 0.053763440860215055,
+        "lift@50": 1.3268817204301075,
+        "precision@100": 0.09,
+        "recall@100": 0.0967741935483871,
+        "lift@100": 1.1941935483870967
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_K",
+            "mean": 0.008259142039194688,
+            "std": 0.0023983171123914287
+          },
+          {
+            "feature": "aa_F",
+            "mean": 0.0062751886076021,
+            "std": 0.0035987382908907765
+          },
+          {
+            "feature": "aa_R",
+            "mean": 0.0043079954736840505,
+            "std": 0.002941217573617216
+          },
+          {
+            "feature": "aa_G",
+            "mean": 0.003362500921424376,
+            "std": 0.0017026818120048325
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.0022607504634100245,
+            "std": 0.0033910352333300585
+          },
+          {
+            "feature": "aa_E",
+            "mean": 0.0021412457869024472,
+            "std": 0.005677118954837135
+          },
+          {
+            "feature": "aa_M",
+            "mean": 0.001853685175716073,
+            "std": 0.003205822024407416
+          },
+          {
+            "feature": "aa_C",
+            "mean": 0.001490284530865378,
+            "std": 0.0015643448116046048
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 10807,
+        "stripped_test": 11,
+        "stripped_test_frac": 0.0089,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 2,
+          "Factor Xa 位点": 5,
+          "肠激酶 (enterokinase) 位点": 1,
+          "GS 柔性接头 (GST/MBP/SUMO 融合常用)": 1,
+          "BamHI GS 残余 (仅 N 端首两位)": 2
+        }
+      },
+      "by_center": {
+        "groups": {
+          "CSGID": {
+            "positive_class": "failure",
+            "n": 1012,
+            "n_positive": 35,
+            "n_fail": 35,
+            "base_rate": 0.03458498023715415,
+            "pr_auc": 0.03235835156469121,
+            "pr_auc_over_base": 0.9356186223847859,
+            "precision@10": 0.0,
+            "recall@10": 0.0,
+            "lift@10": 0.0,
+            "precision@20": 0.0,
+            "recall@20": 0.0,
+            "lift@20": 0.0,
+            "precision@50": 0.02,
+            "recall@50": 0.02857142857142857,
+            "lift@50": 0.5782857142857143,
+            "precision@100": 0.02,
+            "recall@100": 0.05714285714285714,
+            "lift@100": 0.5782857142857143
+          },
+          "EFI": {
+            "positive_class": "failure",
+            "n": 222,
+            "n_positive": 58,
+            "n_fail": 58,
+            "base_rate": 0.26126126126126126,
+            "pr_auc": 0.2878945836469871,
+            "pr_auc_over_base": 1.1019413374074334,
+            "precision@10": 0.2,
+            "recall@10": 0.034482758620689655,
+            "lift@10": 0.7655172413793104,
+            "precision@20": 0.25,
+            "recall@20": 0.08620689655172414,
+            "lift@20": 0.9568965517241379,
+            "precision@50": 0.28,
+            "recall@50": 0.2413793103448276,
+            "lift@50": 1.0717241379310345,
+            "precision@100": 0.28,
+            "recall@100": 0.4827586206896552,
+            "lift@100": 1.0717241379310345
+          }
+        },
+        "n_groups_evaluated": 2,
+        "n_groups_total": 2,
+        "min_group_n": 200,
+        "n_records": 1234,
+        "largest_groups": [
+          {
+            "group": "CSGID",
+            "n": 1012
+          },
+          {
+            "group": "EFI",
+            "n": 222
+          }
+        ],
+        "precision@10_best": {
+          "group": "EFI",
+          "value": 0.2
+        },
+        "precision@10_worst": {
+          "group": "CSGID",
+          "value": 0.0
+        },
+        "precision@10_ratio_best_over_worst": Infinity,
+        "lift@10_best": {
+          "group": "EFI",
+          "value": 0.7655172413793104
+        },
+        "lift@10_worst": {
+          "group": "CSGID",
+          "value": 0.0
+        },
+        "precision@20_best": {
+          "group": "EFI",
+          "value": 0.25
+        },
+        "precision@20_worst": {
+          "group": "CSGID",
+          "value": 0.0
+        },
+        "precision@20_ratio_best_over_worst": Infinity,
+        "lift@20_best": {
+          "group": "EFI",
+          "value": 0.9568965517241379
+        },
+        "lift@20_worst": {
+          "group": "CSGID",
+          "value": 0.0
+        },
+        "precision@50_best": {
+          "group": "EFI",
+          "value": 0.28
+        },
+        "precision@50_worst": {
+          "group": "CSGID",
+          "value": 0.02
+        },
+        "precision@50_ratio_best_over_worst": 14.000000000000002,
+        "lift@50_best": {
+          "group": "EFI",
+          "value": 1.0717241379310345
+        },
+        "lift@50_worst": {
+          "group": "CSGID",
+          "value": 0.5782857142857143
+        },
+        "precision@100_best": {
+          "group": "EFI",
+          "value": 0.28
+        },
+        "precision@100_worst": {
+          "group": "CSGID",
+          "value": 0.02
+        },
+        "precision@100_ratio_best_over_worst": 14.000000000000002,
+        "lift@100_best": {
+          "group": "EFI",
+          "value": 1.0717241379310345
+        },
+        "lift@100_worst": {
+          "group": "CSGID",
+          "value": 0.5782857142857143
+        },
+        "pr_auc_over_base_best": {
+          "group": "EFI",
+          "value": 1.1019413374074334
+        },
+        "pr_auc_over_base_worst": {
+          "group": "CSGID",
+          "value": 0.9356186223847859
+        },
+        "pr_auc_over_base_spread": 0.1663227150226475
+      },
+      "by_year": {
+        "groups": {
+          "2013": {
+            "positive_class": "failure",
+            "n": 222,
+            "n_positive": 32,
+            "n_fail": 32,
+            "base_rate": 0.14414414414414414,
+            "pr_auc": 0.18910333565462248,
+            "pr_auc_over_base": 1.3119043911039434,
+            "precision@10": 0.1,
+            "recall@10": 0.03125,
+            "lift@10": 0.6937500000000001,
+            "precision@20": 0.2,
+            "recall@20": 0.125,
+            "lift@20": 1.3875000000000002,
+            "precision@50": 0.18,
+            "recall@50": 0.28125,
+            "lift@50": 1.24875,
+            "precision@100": 0.19,
+            "recall@100": 0.59375,
+            "lift@100": 1.318125
+          },
+          "2014": {
+            "positive_class": "failure",
+            "n": 227,
+            "n_positive": 11,
+            "n_fail": 11,
+            "base_rate": 0.048458149779735685,
+            "pr_auc": 0.2022569280207219,
+            "pr_auc_over_base": 4.1738475146094425,
+            "precision@10": 0.1,
+            "recall@10": 0.09090909090909091,
+            "lift@10": 2.0636363636363635,
+            "precision@20": 0.15,
+            "recall@20": 0.2727272727272727,
+            "lift@20": 3.0954545454545452,
+            "precision@50": 0.12,
+            "recall@50": 0.5454545454545454,
+            "lift@50": 2.476363636363636,
+            "precision@100": 0.1,
+            "recall@100": 0.9090909090909091,
+            "lift@100": 2.0636363636363635
+          }
+        },
+        "n_groups_evaluated": 2,
+        "n_groups_total": 10,
+        "min_group_n": 200,
+        "n_records": 1234,
+        "largest_groups": [
+          {
+            "group": "2014",
+            "n": 227
+          },
+          {
+            "group": "2013",
+            "n": 222
+          },
+          {
+            "group": "2010",
+            "n": 176
+          },
+          {
+            "group": "2011",
+            "n": 167
+          },
+          {
+            "group": "2012",
+            "n": 143
+          }
+        ],
+        "precision@10_best": {
+          "group": "2013",
+          "value": 0.1
+        },
+        "precision@10_worst": {
+          "group": "2013",
+          "value": 0.1
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "2014",
+          "value": 2.0636363636363635
+        },
+        "lift@10_worst": {
+          "group": "2013",
+          "value": 0.6937500000000001
+        },
+        "precision@20_best": {
+          "group": "2013",
+          "value": 0.2
+        },
+        "precision@20_worst": {
+          "group": "2014",
+          "value": 0.15
+        },
+        "precision@20_ratio_best_over_worst": 1.3333333333333335,
+        "lift@20_best": {
+          "group": "2014",
+          "value": 3.0954545454545452
+        },
+        "lift@20_worst": {
+          "group": "2013",
+          "value": 1.3875000000000002
+        },
+        "precision@50_best": {
+          "group": "2013",
+          "value": 0.18
+        },
+        "precision@50_worst": {
+          "group": "2014",
+          "value": 0.12
+        },
+        "precision@50_ratio_best_over_worst": 1.5,
+        "lift@50_best": {
+          "group": "2014",
+          "value": 2.476363636363636
+        },
+        "lift@50_worst": {
+          "group": "2013",
+          "value": 1.24875
+        },
+        "precision@100_best": {
+          "group": "2013",
+          "value": 0.19
+        },
+        "precision@100_worst": {
+          "group": "2014",
+          "value": 0.1
+        },
+        "precision@100_ratio_best_over_worst": 1.9,
+        "lift@100_best": {
+          "group": "2014",
+          "value": 2.0636363636363635
+        },
+        "lift@100_worst": {
+          "group": "2013",
+          "value": 1.318125
+        },
+        "pr_auc_over_base_best": {
+          "group": "2014",
+          "value": 4.1738475146094425
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2013",
+          "value": 1.3119043911039434
+        },
+        "pr_auc_over_base_spread": 2.8619431235054993
+      },
+      "by_organism": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 210,
+        "min_group_n": 200,
+        "n_records": 1234,
+        "largest_groups": [
+          {
+            "group": "Chlamydia trachomatis D/UW-3/CX",
+            "n": 125
+          },
+          {
+            "group": "Bacillus anthracis str. Ames",
+            "n": 123
+          },
+          {
+            "group": "Monkeypox virus Zaire-96-I-16",
+            "n": 62
+          },
+          {
+            "group": "Yersinia pestis CO92",
+            "n": 62
+          },
+          {
+            "group": "Listeria monocytogenes EGD-e",
+            "n": 44
+          }
+        ]
+      }
+    },
+    {
+      "split": "lab",
+      "stage": "express",
+      "train_n": 29105,
+      "train_fail": 6353,
+      "test_n": 1058,
+      "test_fail": 649,
+      "overall": {
+        "positive_class": "failure",
+        "n": 1058,
+        "n_positive": 649,
+        "n_fail": 649,
+        "base_rate": 0.6134215500945179,
+        "pr_auc": 0.7194202712326148,
+        "pr_auc_over_base": 1.1727991478645707,
+        "precision@10": 1.0,
+        "recall@10": 0.015408320493066256,
+        "lift@10": 1.63020030816641,
+        "precision@20": 0.95,
+        "recall@20": 0.029275808936825885,
+        "lift@20": 1.5486902927580894,
+        "precision@50": 0.84,
+        "recall@50": 0.06471494607087827,
+        "lift@50": 1.3693682588597842,
+        "precision@100": 0.82,
+        "recall@100": 0.1263482280431433,
+        "lift@100": 1.336764252696456
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_E",
+            "mean": 0.03699884847963656,
+            "std": 0.007824940278383645
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.01871232884272501,
+            "std": 0.00588691984739305
+          },
+          {
+            "feature": "aa_L",
+            "mean": 0.013643916199276573,
+            "std": 0.006633840587887139
+          },
+          {
+            "feature": "aa_S",
+            "mean": 0.01218223765105193,
+            "std": 0.002682677813161193
+          },
+          {
+            "feature": "aa_Y",
+            "mean": 0.00975838678947999,
+            "std": 0.0030054324004208637
+          },
+          {
+            "feature": "aa_I",
+            "mean": 0.005968694253015461,
+            "std": 0.005785940846225172
+          },
+          {
+            "feature": "aa_C",
+            "mean": 0.004838939468017311,
+            "std": 0.002647675780437307
+          },
+          {
+            "feature": "aa_M",
+            "mean": 0.0037546142300139084,
+            "std": 0.004110161756187076
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 6361,
+        "stripped_test": 10,
+        "stripped_test_frac": 0.0095,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 2,
+          "Factor Xa 位点": 5,
+          "肠激酶 (enterokinase) 位点": 1,
+          "GS 柔性接头 (GST/MBP/SUMO 融合常用)": 1,
+          "BamHI GS 残余 (仅 N 端首两位)": 1
+        }
+      },
+      "by_center": {
+        "groups": {
+          "CSGID": {
+            "positive_class": "failure",
+            "n": 887,
+            "n_positive": 547,
+            "n_fail": 547,
+            "base_rate": 0.616685456595265,
+            "pr_auc": 0.7134354932111162,
+            "pr_auc_over_base": 1.1568871708926143,
+            "precision@10": 1.0,
+            "recall@10": 0.018281535648994516,
+            "lift@10": 1.6215722120658134,
+            "precision@20": 0.95,
+            "recall@20": 0.03473491773308958,
+            "lift@20": 1.5404936014625228,
+            "precision@50": 0.82,
+            "recall@50": 0.07495429616087751,
+            "lift@50": 1.3296892138939669,
+            "precision@100": 0.77,
+            "recall@100": 0.14076782449725778,
+            "lift@100": 1.2486106032906763
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 2,
+        "min_group_n": 200,
+        "n_records": 1058,
+        "largest_groups": [
+          {
+            "group": "CSGID",
+            "n": 887
+          },
+          {
+            "group": "EFI",
+            "n": 171
+          }
+        ],
+        "precision@10_best": {
+          "group": "CSGID",
+          "value": 1.0
+        },
+        "precision@10_worst": {
+          "group": "CSGID",
+          "value": 1.0
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "CSGID",
+          "value": 1.6215722120658134
+        },
+        "lift@10_worst": {
+          "group": "CSGID",
+          "value": 1.6215722120658134
+        },
+        "precision@20_best": {
+          "group": "CSGID",
+          "value": 0.95
+        },
+        "precision@20_worst": {
+          "group": "CSGID",
+          "value": 0.95
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "CSGID",
+          "value": 1.5404936014625228
+        },
+        "lift@20_worst": {
+          "group": "CSGID",
+          "value": 1.5404936014625228
+        },
+        "precision@50_best": {
+          "group": "CSGID",
+          "value": 0.82
+        },
+        "precision@50_worst": {
+          "group": "CSGID",
+          "value": 0.82
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "CSGID",
+          "value": 1.3296892138939669
+        },
+        "lift@50_worst": {
+          "group": "CSGID",
+          "value": 1.3296892138939669
+        },
+        "precision@100_best": {
+          "group": "CSGID",
+          "value": 0.77
+        },
+        "precision@100_worst": {
+          "group": "CSGID",
+          "value": 0.77
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "CSGID",
+          "value": 1.2486106032906763
+        },
+        "lift@100_worst": {
+          "group": "CSGID",
+          "value": 1.2486106032906763
+        },
+        "pr_auc_over_base_best": {
+          "group": "CSGID",
+          "value": 1.1568871708926143
+        },
+        "pr_auc_over_base_worst": {
+          "group": "CSGID",
+          "value": 1.1568871708926143
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_year": {
+        "groups": {
+          "2013": {
+            "positive_class": "failure",
+            "n": 205,
+            "n_positive": 142,
+            "n_fail": 142,
+            "base_rate": 0.6926829268292682,
+            "pr_auc": 0.7961942455435529,
+            "pr_auc_over_base": 1.1494353544818898,
+            "precision@10": 0.9,
+            "recall@10": 0.06338028169014084,
+            "lift@10": 1.2992957746478875,
+            "precision@20": 0.9,
+            "recall@20": 0.1267605633802817,
+            "lift@20": 1.2992957746478875,
+            "precision@50": 0.82,
+            "recall@50": 0.2887323943661972,
+            "lift@50": 1.1838028169014085,
+            "precision@100": 0.76,
+            "recall@100": 0.5352112676056338,
+            "lift@100": 1.0971830985915494
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 10,
+        "min_group_n": 200,
+        "n_records": 1058,
+        "largest_groups": [
+          {
+            "group": "2013",
+            "n": 205
+          },
+          {
+            "group": "2014",
+            "n": 196
+          },
+          {
+            "group": "2011",
+            "n": 136
+          },
+          {
+            "group": "2012",
+            "n": 135
+          },
+          {
+            "group": "2009",
+            "n": 107
+          }
+        ],
+        "precision@10_best": {
+          "group": "2013",
+          "value": 0.9
+        },
+        "precision@10_worst": {
+          "group": "2013",
+          "value": 0.9
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "2013",
+          "value": 1.2992957746478875
+        },
+        "lift@10_worst": {
+          "group": "2013",
+          "value": 1.2992957746478875
+        },
+        "precision@20_best": {
+          "group": "2013",
+          "value": 0.9
+        },
+        "precision@20_worst": {
+          "group": "2013",
+          "value": 0.9
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "2013",
+          "value": 1.2992957746478875
+        },
+        "lift@20_worst": {
+          "group": "2013",
+          "value": 1.2992957746478875
+        },
+        "precision@50_best": {
+          "group": "2013",
+          "value": 0.82
+        },
+        "precision@50_worst": {
+          "group": "2013",
+          "value": 0.82
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "2013",
+          "value": 1.1838028169014085
+        },
+        "lift@50_worst": {
+          "group": "2013",
+          "value": 1.1838028169014085
+        },
+        "precision@100_best": {
+          "group": "2013",
+          "value": 0.76
+        },
+        "precision@100_worst": {
+          "group": "2013",
+          "value": 0.76
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "2013",
+          "value": 1.0971830985915494
+        },
+        "lift@100_worst": {
+          "group": "2013",
+          "value": 1.0971830985915494
+        },
+        "pr_auc_over_base_best": {
+          "group": "2013",
+          "value": 1.1494353544818898
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2013",
+          "value": 1.1494353544818898
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_organism": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 183,
+        "min_group_n": 200,
+        "n_records": 1058,
+        "largest_groups": [
+          {
+            "group": "Chlamydia trachomatis D/UW-3/CX",
+            "n": 120
+          },
+          {
+            "group": "Bacillus anthracis str. Ames",
+            "n": 73
+          },
+          {
+            "group": "Monkeypox virus Zaire-96-I-16",
+            "n": 52
+          },
+          {
+            "group": "Yersinia pestis CO92",
+            "n": 51
+          },
+          {
+            "group": "Listeria monocytogenes EGD-e",
+            "n": 37
+          }
+        ]
+      }
+    },
+    {
+      "split": "lab",
+      "stage": "soluble",
+      "skipped": "阴性不足 (train_fail=1200, test_fail=0)"
+    },
+    {
+      "split": "lab",
+      "stage": "purify",
+      "train_n": 13104,
+      "train_fail": 2550,
+      "test_n": 339,
+      "test_fail": 71,
+      "overall": {
+        "positive_class": "failure",
+        "n": 339,
+        "n_positive": 71,
+        "n_fail": 71,
+        "base_rate": 0.20943952802359883,
+        "pr_auc": 0.313460612251665,
+        "pr_auc_over_base": 1.4966640500466821,
+        "precision@10": 0.4,
+        "recall@10": 0.056338028169014086,
+        "lift@10": 1.9098591549295774,
+        "precision@20": 0.3,
+        "recall@20": 0.08450704225352113,
+        "lift@20": 1.432394366197183,
+        "precision@50": 0.38,
+        "recall@50": 0.2676056338028169,
+        "lift@50": 1.8143661971830984,
+        "precision@100": 0.3,
+        "recall@100": 0.4225352112676056,
+        "lift@100": 1.432394366197183
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_S",
+            "mean": 0.04352918948131961,
+            "std": 0.01822523479406287
+          },
+          {
+            "feature": "aa_E",
+            "mean": 0.026498736985791776,
+            "std": 0.009076885242982235
+          },
+          {
+            "feature": "aa_I",
+            "mean": 0.024163856087415066,
+            "std": 0.018937092167794538
+          },
+          {
+            "feature": "aa_R",
+            "mean": 0.018020501428248355,
+            "std": 0.006728927577333035
+          },
+          {
+            "feature": "aa_H",
+            "mean": 0.015460057197331645,
+            "std": 0.01878558918850712
+          },
+          {
+            "feature": "aa_K",
+            "mean": 0.011323730269463067,
+            "std": 0.012143370639798144
+          },
+          {
+            "feature": "aa_W",
+            "mean": 0.010854300075909911,
+            "std": 0.0024695487897351113
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.006069406445854264,
+            "std": 0.008154068329854432
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 3524,
+        "stripped_test": 3,
+        "stripped_test_frac": 0.0088,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 3,
+          "TEV 蛋白酶位点 ENLYFQ/G 或 /S": 1
+        }
+      },
+      "by_center": {
+        "groups": {
+          "CSGID": {
+            "positive_class": "failure",
+            "n": 291,
+            "n_positive": 71,
+            "n_fail": 71,
+            "base_rate": 0.24398625429553264,
+            "pr_auc": 0.32340980919492135,
+            "pr_auc_over_base": 1.3255247109256636,
+            "precision@10": 0.4,
+            "recall@10": 0.056338028169014086,
+            "lift@10": 1.63943661971831,
+            "precision@20": 0.3,
+            "recall@20": 0.08450704225352113,
+            "lift@20": 1.2295774647887323,
+            "precision@50": 0.38,
+            "recall@50": 0.2676056338028169,
+            "lift@50": 1.5574647887323945,
+            "precision@100": 0.31,
+            "recall@100": 0.43661971830985913,
+            "lift@100": 1.2705633802816902
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 2,
+        "min_group_n": 200,
+        "n_records": 339,
+        "largest_groups": [
+          {
+            "group": "CSGID",
+            "n": 291
+          },
+          {
+            "group": "EFI",
+            "n": 48
+          }
+        ],
+        "precision@10_best": {
+          "group": "CSGID",
+          "value": 0.4
+        },
+        "precision@10_worst": {
+          "group": "CSGID",
+          "value": 0.4
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "CSGID",
+          "value": 1.63943661971831
+        },
+        "lift@10_worst": {
+          "group": "CSGID",
+          "value": 1.63943661971831
+        },
+        "precision@20_best": {
+          "group": "CSGID",
+          "value": 0.3
+        },
+        "precision@20_worst": {
+          "group": "CSGID",
+          "value": 0.3
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "CSGID",
+          "value": 1.2295774647887323
+        },
+        "lift@20_worst": {
+          "group": "CSGID",
+          "value": 1.2295774647887323
+        },
+        "precision@50_best": {
+          "group": "CSGID",
+          "value": 0.38
+        },
+        "precision@50_worst": {
+          "group": "CSGID",
+          "value": 0.38
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "CSGID",
+          "value": 1.5574647887323945
+        },
+        "lift@50_worst": {
+          "group": "CSGID",
+          "value": 1.5574647887323945
+        },
+        "precision@100_best": {
+          "group": "CSGID",
+          "value": 0.31
+        },
+        "precision@100_worst": {
+          "group": "CSGID",
+          "value": 0.31
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "CSGID",
+          "value": 1.2705633802816902
+        },
+        "lift@100_worst": {
+          "group": "CSGID",
+          "value": 1.2705633802816902
+        },
+        "pr_auc_over_base_best": {
+          "group": "CSGID",
+          "value": 1.3255247109256636
+        },
+        "pr_auc_over_base_worst": {
+          "group": "CSGID",
+          "value": 1.3255247109256636
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_year": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 10,
+        "min_group_n": 200,
+        "n_records": 339,
+        "largest_groups": [
+          {
+            "group": "2012",
+            "n": 76
+          },
+          {
+            "group": "2014",
+            "n": 59
+          },
+          {
+            "group": "2013",
+            "n": 47
+          },
+          {
+            "group": "2011",
+            "n": 41
+          },
+          {
+            "group": "2016",
+            "n": 31
+          }
+        ]
+      },
+      "by_organism": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 104,
+        "min_group_n": 200,
+        "n_records": 339,
+        "largest_groups": [
+          {
+            "group": "Bacillus anthracis str. Ames",
+            "n": 41
+          },
+          {
+            "group": "Chlamydia trachomatis D/UW-3/CX",
+            "n": 33
+          },
+          {
+            "group": "Listeria monocytogenes EGD-e",
+            "n": 16
+          },
+          {
+            "group": "Vibrio cholerae O1 biovar El Tor",
+            "n": 14
+          },
+          {
+            "group": "Francisella tularensis subsp. tularensis SCHU S4",
+            "n": 13
+          }
+        ]
+      }
+    },
+    {
+      "split": "lab",
+      "stage": "stable",
+      "skipped": "样本不足 (train=3614, test=36)"
+    },
+    {
+      "split": "lab",
+      "stage": "bind",
+      "skipped": "样本不足 (train=57, test=0)"
+    },
+    {
+      "split": "lab",
+      "stage": "soluble_expression",
+      "train_n": 20947,
+      "train_fail": 7495,
+      "test_n": 1058,
+      "test_fail": 650,
+      "overall": {
+        "positive_class": "failure",
+        "n": 1058,
+        "n_positive": 650,
+        "n_fail": 650,
+        "base_rate": 0.6143667296786389,
+        "pr_auc": 0.7175578277217437,
+        "pr_auc_over_base": 1.1679633565070844,
+        "precision@10": 1.0,
+        "recall@10": 0.015384615384615385,
+        "lift@10": 1.6276923076923078,
+        "precision@20": 0.75,
+        "recall@20": 0.023076923076923078,
+        "lift@20": 1.2207692307692308,
+        "precision@50": 0.78,
+        "recall@50": 0.06,
+        "lift@50": 1.2696,
+        "precision@100": 0.8,
+        "recall@100": 0.12307692307692308,
+        "lift@100": 1.3021538461538462
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_E",
+            "mean": 0.03952973774878643,
+            "std": 0.007910837103680577
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.02245931029284375,
+            "std": 0.006688714363477317
+          },
+          {
+            "feature": "aa_Y",
+            "mean": 0.0065730169435024854,
+            "std": 0.0019803117625282005
+          },
+          {
+            "feature": "aa_S",
+            "mean": 0.00463676251105335,
+            "std": 0.00514870487679496
+          },
+          {
+            "feature": "aa_M",
+            "mean": 0.004539463659663001,
+            "std": 0.00272481335117366
+          },
+          {
+            "feature": "aa_C",
+            "mean": 0.004535030586679201,
+            "std": 0.0016242278772694544
+          },
+          {
+            "feature": "aa_N",
+            "mean": 0.00393600009998748,
+            "std": 0.00160159645618381
+          },
+          {
+            "feature": "aa_Q",
+            "mean": 0.0032031133023179836,
+            "std": 0.0031421491295467487
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 4971,
+        "stripped_test": 11,
+        "stripped_test_frac": 0.0104,
+        "pattern_hits_test": {
+          "His6/His8/His10 多聚组氨酸标签": 3,
+          "TEV 蛋白酶位点 ENLYFQ/G 或 /S": 1,
+          "Factor Xa 位点": 5,
+          "肠激酶 (enterokinase) 位点": 1,
+          "GS 柔性接头 (GST/MBP/SUMO 融合常用)": 1,
+          "BamHI GS 残余 (仅 N 端首两位)": 1
+        }
+      },
+      "by_center": {
+        "groups": {
+          "CSGID": {
+            "positive_class": "failure",
+            "n": 887,
+            "n_positive": 548,
+            "n_fail": 548,
+            "base_rate": 0.6178128523111612,
+            "pr_auc": 0.7124080033819289,
+            "pr_auc_over_base": 1.153112954379144,
+            "precision@10": 1.0,
+            "recall@10": 0.01824817518248175,
+            "lift@10": 1.6186131386861313,
+            "precision@20": 0.75,
+            "recall@20": 0.02737226277372263,
+            "lift@20": 1.2139598540145986,
+            "precision@50": 0.78,
+            "recall@50": 0.07116788321167883,
+            "lift@50": 1.2625182481751824,
+            "precision@100": 0.78,
+            "recall@100": 0.14233576642335766,
+            "lift@100": 1.2625182481751824
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 2,
+        "min_group_n": 200,
+        "n_records": 1058,
+        "largest_groups": [
+          {
+            "group": "CSGID",
+            "n": 887
+          },
+          {
+            "group": "EFI",
+            "n": 171
+          }
+        ],
+        "precision@10_best": {
+          "group": "CSGID",
+          "value": 1.0
+        },
+        "precision@10_worst": {
+          "group": "CSGID",
+          "value": 1.0
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "CSGID",
+          "value": 1.6186131386861313
+        },
+        "lift@10_worst": {
+          "group": "CSGID",
+          "value": 1.6186131386861313
+        },
+        "precision@20_best": {
+          "group": "CSGID",
+          "value": 0.75
+        },
+        "precision@20_worst": {
+          "group": "CSGID",
+          "value": 0.75
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "CSGID",
+          "value": 1.2139598540145986
+        },
+        "lift@20_worst": {
+          "group": "CSGID",
+          "value": 1.2139598540145986
+        },
+        "precision@50_best": {
+          "group": "CSGID",
+          "value": 0.78
+        },
+        "precision@50_worst": {
+          "group": "CSGID",
+          "value": 0.78
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "CSGID",
+          "value": 1.2625182481751824
+        },
+        "lift@50_worst": {
+          "group": "CSGID",
+          "value": 1.2625182481751824
+        },
+        "precision@100_best": {
+          "group": "CSGID",
+          "value": 0.78
+        },
+        "precision@100_worst": {
+          "group": "CSGID",
+          "value": 0.78
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "CSGID",
+          "value": 1.2625182481751824
+        },
+        "lift@100_worst": {
+          "group": "CSGID",
+          "value": 1.2625182481751824
+        },
+        "pr_auc_over_base_best": {
+          "group": "CSGID",
+          "value": 1.153112954379144
+        },
+        "pr_auc_over_base_worst": {
+          "group": "CSGID",
+          "value": 1.153112954379144
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_year": {
+        "groups": {
+          "2013": {
+            "positive_class": "failure",
+            "n": 206,
+            "n_positive": 142,
+            "n_fail": 142,
+            "base_rate": 0.6893203883495146,
+            "pr_auc": 0.7737861840826428,
+            "pr_auc_over_base": 1.1225348867677776,
+            "precision@10": 0.7,
+            "recall@10": 0.04929577464788732,
+            "lift@10": 1.0154929577464789,
+            "precision@20": 0.8,
+            "recall@20": 0.11267605633802817,
+            "lift@20": 1.1605633802816901,
+            "precision@50": 0.84,
+            "recall@50": 0.29577464788732394,
+            "lift@50": 1.2185915492957746,
+            "precision@100": 0.74,
+            "recall@100": 0.5211267605633803,
+            "lift@100": 1.0735211267605633
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 10,
+        "min_group_n": 200,
+        "n_records": 1058,
+        "largest_groups": [
+          {
+            "group": "2013",
+            "n": 206
+          },
+          {
+            "group": "2014",
+            "n": 195
+          },
+          {
+            "group": "2011",
+            "n": 136
+          },
+          {
+            "group": "2012",
+            "n": 135
+          },
+          {
+            "group": "2009",
+            "n": 107
+          }
+        ],
+        "precision@10_best": {
+          "group": "2013",
+          "value": 0.7
+        },
+        "precision@10_worst": {
+          "group": "2013",
+          "value": 0.7
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "2013",
+          "value": 1.0154929577464789
+        },
+        "lift@10_worst": {
+          "group": "2013",
+          "value": 1.0154929577464789
+        },
+        "precision@20_best": {
+          "group": "2013",
+          "value": 0.8
+        },
+        "precision@20_worst": {
+          "group": "2013",
+          "value": 0.8
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "2013",
+          "value": 1.1605633802816901
+        },
+        "lift@20_worst": {
+          "group": "2013",
+          "value": 1.1605633802816901
+        },
+        "precision@50_best": {
+          "group": "2013",
+          "value": 0.84
+        },
+        "precision@50_worst": {
+          "group": "2013",
+          "value": 0.84
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "2013",
+          "value": 1.2185915492957746
+        },
+        "lift@50_worst": {
+          "group": "2013",
+          "value": 1.2185915492957746
+        },
+        "precision@100_best": {
+          "group": "2013",
+          "value": 0.74
+        },
+        "precision@100_worst": {
+          "group": "2013",
+          "value": 0.74
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "2013",
+          "value": 1.0735211267605633
+        },
+        "lift@100_worst": {
+          "group": "2013",
+          "value": 1.0735211267605633
+        },
+        "pr_auc_over_base_best": {
+          "group": "2013",
+          "value": 1.1225348867677776
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2013",
+          "value": 1.1225348867677776
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_organism": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 183,
+        "min_group_n": 200,
+        "n_records": 1058,
+        "largest_groups": [
+          {
+            "group": "Chlamydia trachomatis D/UW-3/CX",
+            "n": 120
+          },
+          {
+            "group": "Bacillus anthracis str. Ames",
+            "n": 73
+          },
+          {
+            "group": "Monkeypox virus Zaire-96-I-16",
+            "n": 52
+          },
+          {
+            "group": "Yersinia pestis CO92",
+            "n": 51
+          },
+          {
+            "group": "Listeria monocytogenes EGD-e",
+            "n": 37
+          }
+        ]
+      }
+    },
+    {
+      "split": "time",
+      "stage": "clone",
+      "skipped": "阴性不足 (train_fail=626, test_fail=10)"
+    },
+    {
+      "split": "time",
+      "stage": "express",
+      "skipped": "样本不足 (train=29783, test=135)"
+    },
+    {
+      "split": "time",
+      "stage": "soluble",
+      "skipped": "样本不足 (train=16071, test=125)"
+    },
+    {
+      "split": "time",
+      "stage": "purify",
+      "skipped": "样本不足 (train=13101, test=68)"
+    },
+    {
+      "split": "time",
+      "stage": "stable",
+      "skipped": "样本不足 (train=3188, test=8)"
+    },
+    {
+      "split": "time",
+      "stage": "bind",
+      "skipped": "样本不足 (train=56, test=0)"
+    },
+    {
+      "split": "time",
+      "stage": "soluble_expression",
+      "skipped": "样本不足 (train=21597, test=135)"
+    },
+    {
+      "split": "bind_target",
+      "stage": "clone",
+      "skipped": "样本不足 (train=15, test=0)"
+    },
+    {
+      "split": "bind_target",
+      "stage": "express",
+      "skipped": "样本不足 (train=15, test=0)"
+    },
+    {
+      "split": "bind_target",
+      "stage": "soluble",
+      "skipped": "样本不足 (train=0, test=0)"
+    },
+    {
+      "split": "bind_target",
+      "stage": "purify",
+      "skipped": "样本不足 (train=0, test=0)"
+    },
+    {
+      "split": "bind_target",
+      "stage": "stable",
+      "skipped": "样本不足 (train=0, test=0)"
+    },
+    {
+      "split": "bind_target",
+      "stage": "bind",
+      "train_n": 1014,
+      "train_fail": 931,
+      "test_n": 238,
+      "test_fail": 190,
+      "overall": {
+        "positive_class": "failure",
+        "n": 238,
+        "n_positive": 190,
+        "n_fail": 190,
+        "base_rate": 0.7983193277310925,
+        "pr_auc": 0.8246979224378845,
+        "pr_auc_over_base": 1.0330426607379817,
+        "precision@10": 0.9,
+        "recall@10": 0.04736842105263158,
+        "lift@10": 1.1273684210526316,
+        "precision@20": 0.9,
+        "recall@20": 0.09473684210526316,
+        "lift@20": 1.1273684210526316,
+        "precision@50": 0.84,
+        "recall@50": 0.22105263157894736,
+        "lift@50": 1.0522105263157893,
+        "precision@100": 0.81,
+        "recall@100": 0.4263157894736842,
+        "lift@100": 1.0146315789473683
+      },
+      "feature_importance": {
+        "method": "permutation_importance (scoring=average_precision, n_repeats=10)",
+        "top": [
+          {
+            "feature": "aa_F",
+            "mean": 0.02219080347480794,
+            "std": 0.014909785724533242
+          },
+          {
+            "feature": "aa_K",
+            "mean": 0.01774693620145774,
+            "std": 0.013402808334304088
+          },
+          {
+            "feature": "aa_D",
+            "mean": 0.011323074696596092,
+            "std": 0.004558869785833652
+          },
+          {
+            "feature": "aa_N",
+            "mean": 0.010454550940677144,
+            "std": 0.004551680952744061
+          },
+          {
+            "feature": "aa_H",
+            "mean": 0.0077239627133597,
+            "std": 0.00276016901386262
+          },
+          {
+            "feature": "aa_G",
+            "mean": 0.007607328917137668,
+            "std": 0.008333137869455652
+          },
+          {
+            "feature": "aa_V",
+            "mean": 0.0073786251278223245,
+            "std": 0.006387399257871279
+          },
+          {
+            "feature": "aa_L",
+            "mean": 0.005208701998095344,
+            "std": 0.007228271002727669
+          }
+        ],
+        "seq_len_share": 0.0
+      },
+      "strip_tags": true,
+      "tag_info": {
+        "stripped_train": 12,
+        "stripped_test": 0,
+        "stripped_test_frac": 0.0,
+        "pattern_hits_test": {}
+      },
+      "by_center": {
+        "groups": {},
+        "n_groups_evaluated": 0,
+        "n_groups_total": 5,
+        "min_group_n": 200,
+        "n_records": 238,
+        "largest_groups": [
+          {
+            "group": "dtu_IL7Ra_Watson_et_al",
+            "n": 80
+          },
+          {
+            "group": "dtu_TrkA_Watson_et_al",
+            "n": 66
+          },
+          {
+            "group": "dtu_Cao_et_al_IL7Ra",
+            "n": 40
+          },
+          {
+            "group": "dtu_Mdm2_Watson_et_al",
+            "n": 37
+          },
+          {
+            "group": "dtu_Cao_et_al_TrkA",
+            "n": 15
+          }
+        ]
+      },
+      "by_year": {
+        "groups": {
+          "2025": {
+            "positive_class": "failure",
+            "n": 238,
+            "n_positive": 190,
+            "n_fail": 190,
+            "base_rate": 0.7983193277310925,
+            "pr_auc": 0.8246979224378845,
+            "pr_auc_over_base": 1.0330426607379817,
+            "precision@10": 0.9,
+            "recall@10": 0.04736842105263158,
+            "lift@10": 1.1273684210526316,
+            "precision@20": 0.9,
+            "recall@20": 0.09473684210526316,
+            "lift@20": 1.1273684210526316,
+            "precision@50": 0.84,
+            "recall@50": 0.22105263157894736,
+            "lift@50": 1.0522105263157893,
+            "precision@100": 0.81,
+            "recall@100": 0.4263157894736842,
+            "lift@100": 1.0146315789473683
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 1,
+        "min_group_n": 200,
+        "n_records": 238,
+        "largest_groups": [
+          {
+            "group": "2025",
+            "n": 238
+          }
+        ],
+        "precision@10_best": {
+          "group": "2025",
+          "value": 0.9
+        },
+        "precision@10_worst": {
+          "group": "2025",
+          "value": 0.9
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "2025",
+          "value": 1.1273684210526316
+        },
+        "lift@10_worst": {
+          "group": "2025",
+          "value": 1.1273684210526316
+        },
+        "precision@20_best": {
+          "group": "2025",
+          "value": 0.9
+        },
+        "precision@20_worst": {
+          "group": "2025",
+          "value": 0.9
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "2025",
+          "value": 1.1273684210526316
+        },
+        "lift@20_worst": {
+          "group": "2025",
+          "value": 1.1273684210526316
+        },
+        "precision@50_best": {
+          "group": "2025",
+          "value": 0.84
+        },
+        "precision@50_worst": {
+          "group": "2025",
+          "value": 0.84
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "2025",
+          "value": 1.0522105263157893
+        },
+        "lift@50_worst": {
+          "group": "2025",
+          "value": 1.0522105263157893
+        },
+        "precision@100_best": {
+          "group": "2025",
+          "value": 0.81
+        },
+        "precision@100_worst": {
+          "group": "2025",
+          "value": 0.81
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "2025",
+          "value": 1.0146315789473683
+        },
+        "lift@100_worst": {
+          "group": "2025",
+          "value": 1.0146315789473683
+        },
+        "pr_auc_over_base_best": {
+          "group": "2025",
+          "value": 1.0330426607379817
+        },
+        "pr_auc_over_base_worst": {
+          "group": "2025",
+          "value": 1.0330426607379817
+        },
+        "pr_auc_over_base_spread": 0.0
+      },
+      "by_organism": {
+        "groups": {
+          "de_novo_design": {
+            "positive_class": "failure",
+            "n": 238,
+            "n_positive": 190,
+            "n_fail": 190,
+            "base_rate": 0.7983193277310925,
+            "pr_auc": 0.8246979224378845,
+            "pr_auc_over_base": 1.0330426607379817,
+            "precision@10": 0.9,
+            "recall@10": 0.04736842105263158,
+            "lift@10": 1.1273684210526316,
+            "precision@20": 0.9,
+            "recall@20": 0.09473684210526316,
+            "lift@20": 1.1273684210526316,
+            "precision@50": 0.84,
+            "recall@50": 0.22105263157894736,
+            "lift@50": 1.0522105263157893,
+            "precision@100": 0.81,
+            "recall@100": 0.4263157894736842,
+            "lift@100": 1.0146315789473683
+          }
+        },
+        "n_groups_evaluated": 1,
+        "n_groups_total": 1,
+        "min_group_n": 200,
+        "n_records": 238,
+        "largest_groups": [
+          {
+            "group": "de_novo_design",
+            "n": 238
+          }
+        ],
+        "precision@10_best": {
+          "group": "de_novo_design",
+          "value": 0.9
+        },
+        "precision@10_worst": {
+          "group": "de_novo_design",
+          "value": 0.9
+        },
+        "precision@10_ratio_best_over_worst": 1.0,
+        "lift@10_best": {
+          "group": "de_novo_design",
+          "value": 1.1273684210526316
+        },
+        "lift@10_worst": {
+          "group": "de_novo_design",
+          "value": 1.1273684210526316
+        },
+        "precision@20_best": {
+          "group": "de_novo_design",
+          "value": 0.9
+        },
+        "precision@20_worst": {
+          "group": "de_novo_design",
+          "value": 0.9
+        },
+        "precision@20_ratio_best_over_worst": 1.0,
+        "lift@20_best": {
+          "group": "de_novo_design",
+          "value": 1.1273684210526316
+        },
+        "lift@20_worst": {
+          "group": "de_novo_design",
+          "value": 1.1273684210526316
+        },
+        "precision@50_best": {
+          "group": "de_novo_design",
+          "value": 0.84
+        },
+        "precision@50_worst": {
+          "group": "de_novo_design",
+          "value": 0.84
+        },
+        "precision@50_ratio_best_over_worst": 1.0,
+        "lift@50_best": {
+          "group": "de_novo_design",
+          "value": 1.0522105263157893
+        },
+        "lift@50_worst": {
+          "group": "de_novo_design",
+          "value": 1.0522105263157893
+        },
+        "precision@100_best": {
+          "group": "de_novo_design",
+          "value": 0.81
+        },
+        "precision@100_worst": {
+          "group": "de_novo_design",
+          "value": 0.81
+        },
+        "precision@100_ratio_best_over_worst": 1.0,
+        "lift@100_best": {
+          "group": "de_novo_design",
+          "value": 1.0146315789473683
+        },
+        "lift@100_worst": {
+          "group": "de_novo_design",
+          "value": 1.0146315789473683
+        },
+        "pr_auc_over_base_best": {
+          "group": "de_novo_design",
+          "value": 1.0330426607379817
+        },
+        "pr_auc_over_base_worst": {
+          "group": "de_novo_design",
+          "value": 1.0330426607379817
+        },
+        "pr_auc_over_base_spread": 0.0
+      }
+    },
+    {
+      "split": "bind_target",
+      "stage": "soluble_expression",
+      "skipped": "样本不足 (train=0, test=0)"
+    }
+  ]
+}

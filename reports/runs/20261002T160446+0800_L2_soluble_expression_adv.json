@@ -1,0 +1,85 @@
+{
+  "run_name": "L2_soluble_expression_adv",
+  "timestamp": "20261002T160446+0800",
+  "seed": 20260930,
+  "data": {
+    "sources": [
+      "ds1_targettrack"
+    ],
+    "contains_targettrack": true,
+    "license_note": "含 TargetTrack (CC BY-SA 4.0, 带 share-alike)"
+  },
+  "splits_used": [
+    "center_folds"
+  ],
+  "split_hashes": {
+    "sequence": "1d5032c5d3f3d4c7824b2e32593f026beaeb7a5ae3e50dbb14d020ac3dfef083",
+    "lab": "8db25c131e451c88dc5e416dd0718ef53f57f07ce485a789ab7897b0f85aae96",
+    "time": "a08c217a6ed3cb57bc7f80b18286f6f26fe4d9ed8070360fa1ffb4c6ae0fecba",
+    "bind_target": "5ac1e62546717aa67e73c5e33a1c9911c9988969d36a045e83d1f91d7055142e",
+    "_records": "e887059736b60a98cc92e59c32f2241ab87d5908c1df9400210e981572ddd7e2"
+  },
+  "records_parquet_sha256": "e887059736b60a98cc92e59c32f2241ab87d5908c1df9400210e981572ddd7e2",
+  "config": {
+    "level": "L2",
+    "adversarial": true,
+    "name": "ESM-2 650M + LoRA",
+    "model_id": "facebook/esm2_t33_650M_UR50D",
+    "lora": {
+      "r": 16,
+      "alpha": 32,
+      "dropout": 0.05,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "out_proj"
+      ]
+    },
+    "attn_budget": 3500000,
+    "max_batch": 16,
+    "batch_size": 8,
+    "grad_accum": 4,
+    "epochs": 3,
+    "lr": 0.0001,
+    "warmup_ratio": 0.06,
+    "continue_if": "cross-center 明显超过 L1",
+    "caliber": "default",
+    "strip_construct_residues": true,
+    "uses_sequence_length_feature": false,
+    "is_paper_default": true,
+    "note": "默认口径 = 剥构建体残留 + 不用序列长度; 依据见 configs/baseline_gbdt.yaml 与 reports/tag_confound_analysis.json (1b Simpson 反转)"
+  },
+  "env": {
+    "python": "3.11.16",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "polars": "1.44.2",
+      "numpy": "2.4.6",
+      "sklearn": "1.9.1",
+      "pyarrow": "25.0.1",
+      "torch": "2.10.0+cu128",
+      "transformers": "5.17.0"
+    },
+    "git_rev": null
+  },
+  "results": {
+    "fold1": {
+      "cross_lift100": 1.405062595393665,
+      "cross_pr_auc_over_base": 1.3219744975126249
+    },
+    "fold2": {
+      "cross_lift100": 0.2396414306463326,
+      "cross_pr_auc_over_base": 1.034331439612284
+    },
+    "fold3": {
+      "cross_lift100": 0.8290269598391383,
+      "cross_pr_auc_over_base": 1.0307687405787618
+    },
+    "fold4": {
+      "cross_lift100": 1.281787703276331,
+      "cross_pr_auc_over_base": 1.1120319625440196
+    }
+  },
+  "notes": "L2 = ESM-2 650M + LoRA; 收尾性质, 单轮超参无搜索"
+}

@@ -1,0 +1,21 @@
+{
+  "artifact": {
+    "path": "reports/default/PREPRINT_biorxiv_EN.md",
+    "size": 66023,
+    "sha256": "83898ef3abb4b48d7e6ffceccdc0019c69293d9875aee510f083c8c290810bb1",
+    "rows": null
+  },
+  "produced_by": "人工/外部翻译 (不在生成链上)",
+  "inputs": [
+    {
+      "path": "reports/default/PREPRINT_biorxiv.md",
+      "size": 51562,
+      "sha256": "5a9c4dd74bef0e0f1cba3ed6b42d252256e3ada8a3b37a5c78cb2acd1149dd77",
+      "rows": null
+    }
+  ],
+  "extra": {
+    "note": "英文稿是手工产物。中文稿由 src/eval/preprint.py 生成; 中文稿一变本指纹即失效, 必须重译后重新 --stamp。",
+    "checked_at_stamp": "两稿**科学正文**数值集合一致 (署名/单位等投稿元数据不参与比对)"
+  }
+}

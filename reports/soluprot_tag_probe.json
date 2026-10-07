@@ -1,0 +1,28 @@
+{
+  "n_paired": 4000,
+  "n_stripped": 4000,
+  "residues_removed_median": 6.0,
+  "soluble_score_keep": {
+    "mean": 0.5509969,
+    "median": 0.5442
+  },
+  "soluble_score_strip": {
+    "mean": 0.547413525,
+    "median": 0.541
+  },
+  "paired_shift": {
+    "mean": -0.0035833749999999993,
+    "median": -0.0030999999999999917,
+    "std": 0.03207858391683422,
+    "abs_mean": 0.021310175,
+    "frac_increased": 0.429,
+    "frac_changed_gt_0.05": 0.09225,
+    "frac_changed_gt_0.10": 0.01375,
+    "wilcoxon_p": 1.604730538777106e-20
+  },
+  "feature_missing_warnings": {
+    "keep": 848,
+    "strip": 1397
+  },
+  "interpretation_note": "SoluProt 的 96 个特征里含氨基酸组成与与 PDB 序列的一致度, 剥掉 His 标签会同时改变组成 (H 频率) 与长度。所以位移量化的是'标签残留对已发表预测器的影响', 不区分具体是哪个特征通道。"
+}

@@ -1,0 +1,244 @@
+# 阶段三训练超参。一律放在这里, 不硬编码在代码里。
+version: 2
+seed: 20260930
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 变更记录 (CHANGELOG) —— 评估规则的改动必须留痕, 尤其是发生在争议结果之后的
+# ─────────────────────────────────────────────────────────────────────────────
+changelog:
+  - date: "2026-10-01"
+    change: "eval.primary_metric 由 lift@100 改为 pr_auc_over_base, 对**所有**折生效"
+    when_relative_to_dispute: |
+      **改动发生在争议结果之后。** 时间线:
+        1) L2 在 express 折 2 上给出 PR-AUC/base = 1.15, 而当时的判定门槛是 1.10,
+           只差 0.05, 且该折基础失败率仅 3.2% —— 出现"是信号还是噪声"的争议;
+        2) 为定这个争议, 跑按簇分层自助法;
+        3) 自助法**顺带**暴露了 lift@100 作为主数字的问题 (见 reason);
+        4) 于是改规则。
+      形式上敏感 (改规则可能被看作为迁就某个结果), 所以主动暴露而非回避。
+    reason: |
+      lift@100 在 n=2,475 的折上只用了 top-100 = 4% 的样本, 自助法 95% CI 宽 0.63;
+      而 PR-AUC/base 用整个排序, CI 宽 0.17。两者在 L1 express 折 1 上给出**相反判定**:
+        PR-AUC/base 1.20 [1.12, 1.29]  不跨 1.0 -> 真信号
+        lift@100    1.24 [0.90, 1.53]  跨 1.0   -> 不可区分
+      一个支撑不了折级判定的统计量不能当主数字。
+    impact: |
+      **三折判定与改动前完全一致** (折1 真信号 / 折2 不可区分 / 折3 反向),
+      未改变任何已有结论。改动只是让判定有区间支撑且不自相矛盾。
+    lift_at_k_retained_as: 可解释性指标 ("固定 100 个湿实验名额能中几个"), 不用于情形判定
+
+  - date: "2026-10-02"
+    change: |
+      情形判定由"点估计 vs 1.10"三分类改为**显式区分方向可分辨性与效应量**的四分类,
+      并对"真信号"加一条对抗稳健性降级规则:
+        区间跨 1.0            -> 不可区分
+        区间整体 < 1.0        -> 反向
+        不跨 1.0 且点估计 ≥1.10 -> 真信号
+        不跨 1.0 但点估计 <1.10 -> **弱但可分辨** (新增类别)
+        上述"真信号"中, 若同折的对抗版区间跨 1.0 -> 降级为**边界情形**, 不计入真信号
+    when_relative_to_dispute: |
+      **改动发生在补算折 4 区间之后, 由数据迫出, 不是为迁就结论。** 时间线:
+        1) 为写预印本, 把自助法从折 1-3 补到折 4, 并补上 soluble_expression 两个任务;
+        2) L1 express 折 4 给出 1.05 [1.03, 1.07] —— 区间不跨 1.0 (统计上可分辨),
+           但效应量只有 +5%。此前的三分类规则 (点估计 ≥1.10) 把它判成"不可区分",
+           而 2026-10-01 定稿的硬性要求 (区间不跨 1.0) 把它判成"真信号" —— **两条规则冲突**;
+        3) 冲突的根源是用区间显著性冒充效应量。n=7,399 时 +5% 也能显著。
+           L1 soluble_expression 折 3 (1.05 [1.03, 1.07]) 是同一情况;
+        4) 于是把两件事拆开: 区间定方向可不可分辨, 点估计定幅度够不够用。
+      "边界情形"降级规则不是新标准, 是把 2026-10-01 已对 L2 express 折 2 用过的
+      判据 ("一个稳健的信号不会因为加入对抗头而消失") 写成可机械执行的规则,
+      避免靠人工个案处理。实查: 全部 22 个折级结果中**只有 L2 express 折 2 被它降级**,
+      与此前的人工裁定完全一致。
+    reason: |
+      区间不跨 1.0 只回答"方向能不能分辨", 不回答"幅度够不够用"。
+      把两者混为一谈会在大 n 的折上把 +5% 报成"真信号", 在小 n 的折上
+      把真实的中等效应报成"不可区分"。拆开之后两个口径各自说得清。
+    impact: |
+      **改变两处判定, 都是从"不可区分"改为"弱但可分辨" (更准确, 不是更强)**:
+        L1 express 折 4            1.05 [1.03, 1.07]  不可区分 -> 弱但可分辨
+        L1 soluble_expression 折 3 1.05 [1.03, 1.07]  不可区分 -> 弱但可分辨
+      不改变任何"真信号"或"反向"判定。L2 express 折 2 仍为边界情形 (现由规则自动给出)。
+      论文正文的"情形混合"因此由三类变为四类, 核心结论
+      ("跨中心也跨任务不一致、无廉价事前判据") 不变且被加强:
+      折 3 在 express 上是反向、在 soluble_expression 上是弱但可分辨, 跨任务翻转更明确。
+    four_class_rule_impl: src/eval/bootstrap_ci.py (effect_size_class 字段)
+
+  - date: "2026-10-02b"
+    change: |
+      四分类判定新增**种子稳健性**前置条件: 方向判定 (正 / 负 / 不定) 必须在
+      5 个独立自助法种子上**全部一致**; 不一致则按保守方向定为"不可区分"。
+      实现: src/eval/bootstrap_ci.py 的 seed_stability 字段 (--n-seeds, 默认 5)。
+    when_relative_to_dispute: |
+      **改动发生在 L2 补跑完成、补算完所有区间之后, 由一次显示精度检查意外发现。**
+        1) 补齐 L2 的 express 折 4 与 soluble_expression 四折后重算全部区间;
+        2) 核对输出时发现两个单元格在两位小数下都显示 [1.00, 1.04] 却得到相反判定:
+           compare_levels L0 折 4 下界 0.995691 (跨 1.0 -> 不可区分)
+           L2 soluble_expression 折 3 下界 1.000986 (不跨 -> 弱但可分辨)
+        3) 判定只差 0.001, 于是直接测稳健性: 同一数据换自助法种子重跑 ->
+           L2 soluble 折 3 在 3 个种子里 2 个给"不可区分"、1 个给"弱但可分辨";
+           n_boot 从 2,000 提到 20,000 仍是 1.0007, **不解决** ——
+           不确定性在数据里, 不在重采样次数里;
+           对照 L0 折 4 三个种子一致 (稳定的 不可区分)。
+        4) 所以不是"换个种子/加大 n_boot 就好", 而是规则本身允许一个
+           随机种子决定结论。加种子一致性条件把这种单元格挡在方向性结论之外。
+    reason: |
+      一个会随自助法种子翻转的方向判定不是结论, 是噪声。这与同一套判定里
+      "一个稳健的信号不会因为加入对抗头而消失"是同一条纪律的另一面:
+      结论必须对与科学问题无关的实现选择 (对抗头、随机种子) 不敏感。
+      选择保守方向 (不可区分) 而非取多数票, 因为多数票仍把 2:1 当成定论。
+    impact: |
+      **只改变 1 个单元格**: L2 soluble_expression 折 3
+      (1.02 [1.00, 1.04]) 由"弱但可分辨"改为"不可区分"。
+      不影响任何 express 折的判定, 不影响论文主结论 (主结论落在 express 上),
+      也不影响"折 3 跨任务方向相反"那条单例观察 ——
+      该观察的证据是 L1 (express 反向 vs soluble 弱但可分辨, 两侧都种子稳定),
+      L2 侧改判后只是不再提供独立佐证, 不构成反证。
+    display_fix: |
+      同时修显示: 区间端点落在 1.0 的 ±0.02 内时打印 4 位小数,
+      否则两位小数会让 0.9957 与 1.0010 都显示成 1.00 而判定相反。
+
+  - date: "2026-10-03"
+    change: |
+      **纯文档修正, 不是口径变更。** 旧版 §4.1/§4.3 (现 §5.1/§5.3) 及多处报告把 L0 /
+      简单基线的特征标注为"长度+组成"或"长度 + 氨基酸组成 + GBDT", 系文档错误;
+      实际实现**始终**是 20 维氨基酸组成 (configs/baseline_gbdt.yaml 里
+      `seq_len: false` / `log_seq_len: false`, 特征名 aa_A…aa_Y)。
+      **数值未变, 仅修正表述。**
+    when_relative_to_dispute: |
+      刘刚刚 2026-10-02 据错标签提出"我们给领域定的 1.17 门槛建立在自己认定的混杂之上"。
+      核实后该前提不成立 (门槛取自默认口径即无长度口径), 他随即收回。
+      但仓库历史里确实存在过那个错标签, 故在此留痕说明它是**标签错误而非口径变更** ——
+      否则日后翻历史的人会以为我们曾经用过含长度的基线定门槛, 或以为我们偷偷改了口径。
+    reason: |
+      口径敏感的量必须把口径和数字写在一起。这个错标签没有改变任何数字,
+      但它让论文读起来自相矛盾 (一边论证长度是实验室身份通道, 一边好像拿长度当基线),
+      足以构成拒稿理由。含长度的版本一直单独存在于
+      reports/ablation_keeptags_keeplen/, 从未进入主表。
+    impact: |
+      0 个数字改变。改动范围: src/eval/{preprint,gate2_baselines,paper_data_methods,
+      readme_status}.py 的表述, 以及由它们生成的 4 份报告。
+      另在 gate2_baselines.md §3 与 paper_data_methods.md §2.6 各留一条说明,
+      写明 SPEC v2 §3.2 的原话是"长度 + 组成"而实现有意偏离 (因为后来实测长度是身份通道)。
+    verified_by: |
+      configs/baseline_gbdt.yaml 的 features 段; src/models/baseline_gbdt.py 的
+      feature_names(); src/models/compare_levels.py:47 的注释
+      ("默认口径的 L0 特征: **只有**氨基酸组成, 不含长度")。
+
+# ── 数据口径 (SPEC §1): 必须是新默认, 主训练不许用保留标签/长度的版本 ──
+data:
+  records: data/processed/records.parquet
+  caliber:
+    strip_construct_residues: true     # 剥 21 类构建体残留 (见 baseline_gbdt.TAG_PATTERNS)
+    use_sequence_length_feature: false # 去长度; PLM 不吃显式长度特征
+  main_task: express                   # 唯一去冗余后阴性过万的阶段
+  control_task: soluble_expression     # 复合标签, 57.5% 显式证据, 次要
+  never_train: [soluble]               # 阴性 99.9% 推断且倾向记录产物 (SPEC §1)
+  not_main: [clone, purify, stable, bind]
+  max_length: 1024                     # 截断上限; 截断比例必须记进 run log (SPEC §6)
+
+# ── 评估 (SPEC §3.1 / §4): 主评估是 cross-center ──
+eval:
+  primary: cross_center                # GroupKFold by center, 留出中心模型完全没见过
+  also_report: within_center           # 对照; within - cross 就是身份通道贡献量
+  exclude_from_main_table: [random_split]
+  ks: [10, 20, 50, 100, 500]
+  n_center_folds: 5
+  # ── 低基础率任务的方法学提醒 (2026-09-30 被折 2 打出来的) ──
+  # 折 2 (MCSG 等) 的基础失败率只有 2.7-3.6%, top-100 里随机期望仅 2.7-3.6 个真失败,
+  # 所以 lift@100 观测到 0 个**不是"无信息"而是分辨率不足** (P(≤观测|随机) = 0.285/0.032/0.060,
+  # 两个内折落在小数波动内)。改用 lift@500 得 0.71/1.02/0.88, PR-AUC/base 得 0.89/1.01/0.96,
+  # 两者一致指向"与随机不可区分"。
+  # 规则: 基础率 < 10% 的折/任务, **主数字用 PR-AUC/base** (用整个排序, 不依赖 k),
+  # lift@500 作次要, lift@100 只作参考并标注分辨率限制。
+  low_base_rate_threshold: 0.10
+  primary_metric: pr_auc_over_base   # 对**所有**折, 不只低基础率折 —— 见下方理由
+  primary_metric_rationale: |
+    自助法区间 (按 split_group 分层, 2000 次) 显示 lift@100 的区间宽度比 PR-AUC/base 大
+    一个量级, 且在 L1 express 折 1 上两者给出相反结论:
+      PR-AUC/base 1.20 [1.12, 1.29]  (宽 0.17, 不跨 1.0 -> 真信号)
+      lift@100    1.24 [0.90, 1.53]  (宽 0.63, 跨 1.0   -> 不可区分)
+    原因: 2,475 条里取 top-100 只用了 4% 的样本。所以情形判定一律用 PR-AUC/base,
+    lift@100 保留作可解释性指标 ("做 100 个实验能中几个"), 不用于判定。
+    改这条规则**不改变任何已有结论** (三折判定与此前一致), 只是让判定有区间支撑且不自相矛盾。
+  # 对照: 折 3 的 top-100 期望 40 个只拿到 10 个, P < 0.001 且三个内折一致 ——
+  # 那是统计上确定的反向, 不是分辨率问题。两种情形必须分开判。                    # 按中心分组的折数
+  min_test_n: 150
+  min_test_positives: 20
+
+# ── 分级 (SPEC §2): 不许跳级 ──
+levels:
+  L0:
+    name: "长度+组成 GBDT (去长度版)"
+    impl: src/models/baseline_gbdt.py
+  L1:
+    name: "ESM-2 650M 冻结 + 线性头"
+    model_id: facebook/esm2_t33_650M_UR50D
+    frozen: true
+    head: linear
+    pooling: mean                      # 对非 padding 位置做均值池化
+    batch_size: 16
+    embed_batch_size: 8                # 抽 embedding 时的批大小 (只前向)
+    head_epochs: 40
+    head_lr: 1.0e-3
+    continue_if: "cross-center lift 不低于 L0"
+  L2:
+    name: "ESM-2 650M + LoRA"
+    model_id: facebook/esm2_t33_650M_UR50D
+    # target_modules 是 fair-esm 的实际模块名 (实查: q/k/v/out_proj 各 33 个, fc1/fc2 各 33 个)
+    # 不是 HF ESM 的 query/key/value/dense —— 本项目用的是 fair-esm 格式的本地 checkpoint
+    lora: {r: 16, alpha: 32, dropout: 0.05,
+           target_modules: [q_proj, k_proj, v_proj, out_proj]}
+    # 动态分批: 显存由 batch x len^2 支配 (fair-esm 的 softmax 强制 fp32, 注意力矩阵是主要开销)。
+    # 实测 4090 48GB 上的上限: len=512/batch=16 峰值 38.6GB; len=1024/batch=6 峰值 43.0GB。
+    # 取预算 3.5M (= 16x512^2 的 83%), 留余量给碎片与 LoRA 优化器状态。
+    attn_budget: 3500000               # batch * len^2 的上限
+    max_batch: 16                      # 短序列也不要太大批, 否则梯度噪声变小影响可比性
+    batch_size: 8                      # 仅作名义值; 实际批大小由 attn_budget 决定
+    grad_accum: 4
+    epochs: 3
+    lr: 1.0e-4
+    warmup_ratio: 0.06
+    continue_if: "cross-center 明显超过 L1"
+  L3:
+    name: "ESM-2 3B + LoRA"
+    model_id: facebook/esm2_t36_3B_UR50D
+    enabled: false                     # SPEC §7.3: 等 L2 结果出来再定, 不预先承诺
+    note: 单卡 48GB 带得动但 batch 要减小 + 梯度累积补偿
+
+# ── PU 学习 (SPEC §3.2) ──
+pu:
+  exclude_unobserved: true             # -1 不进损失, 只在 0/1 上算梯度
+  imbalance: class_weight              # 或 focal; **不许随机下采样** (会丢真实阴性)
+  focal_gamma: 2.0                     # 仅当 imbalance: focal 时生效
+
+# ── 对抗性去偏 (SPEC §3.3) ──
+adversarial:
+  enabled: true                        # 刘刚刚 2026-09-30 定: 做 (SPEC §7.2)
+  head: center_classifier              # 预测"来自哪个中心"
+  grad_reversal_lambda: 0.1
+  report: [cross_center_lift_before, cross_center_lift_after]
+  note: |
+    上升 -> 量化了身份通道能被主动移除多少, 是干净的正面结果。
+    不升甚至降 -> 通道已深度编码在序列里, 重加权去不掉 (呼应 His 标签"编码在序列本身")。
+    两种结果都如实报。
+
+# ── 硬件 (SPEC §6) ──
+hardware:
+  # ⚠️ 必须同时设这两个环境变量, 缺 CUDA_DEVICE_ORDER 会拿到错的卡。
+  # 实测 (2026-09-30):
+  #   CUDA_VISIBLE_DEVICES=1 (无 ORDER)                  -> RTX PRO 5000  ❌ 别人在用 (69.6GB)
+  #   CUDA_VISIBLE_DEVICES=0 (无 ORDER)                  -> RTX 4090
+  #   CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=1 -> RTX 4090     ✅
+  # 原因: CUDA 默认 FASTEST_FIRST 排序, 与 nvidia-smi 的 PCI 顺序相反。
+  # nvidia-smi: 0=RTX PRO 5000 (81:00.0), 1=RTX 4090 (C1:00.0)
+  env:
+    CUDA_DEVICE_ORDER: PCI_BUS_ID
+    CUDA_VISIBLE_DEVICES: "1"
+  device: "cuda:0"                     # 上面已把 4090 映射成唯一可见设备, 所以是 cuda:0
+  gpu_name_assert: "GeForce RTX 4090"  # 训练脚本启动时硬断言, 不符就退出
+  expected_sm: "8.9"
+  amp_dtype: bf16
+  note: |
+    只设 device 不够, 必须断言卡名 —— 2026-09-02 曾因 CUDA 默认 FASTEST_FIRST 把模型
+    落到错的卡上, 2026-09-26 又因容器/宿主 GPU 编号传错导致 CUDA 不可用。
+    另: 不许占 index 0 (RTX PRO 5000), 它上面有别人的作业。

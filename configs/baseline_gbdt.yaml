@@ -1,0 +1,41 @@
+# 简单基线 (SPEC §3.2): 序列长度 + 氨基酸组成 + 梯度提升树。
+# SPEC 原话: "简单基线非常重要。如果后面的深度模型超不过'长度 + 组成 + GBDT',
+#            说明模型没学到东西, 要如实报告。"
+# 所以这个基线的作用是**给后面的 PLM 定一条必须跨过的线**, 不是为了好看。
+version: 2
+seed: 20260930
+
+# 默认预处理 (刘刚刚 2026-09-30 定): 清除构建体残留。--keep-tags 是消融。
+strip_tags: true
+
+# 默认配置 = 已清除构建体残留 + **不用序列长度**。
+# 去长度的依据 (2026-09-30 中心内分层实测): 长度对失败的表观预测力主要来自中心之间的
+# 长度惯例差异, 不是生物学 —— rank AUC 跨中心 0.62 (clone) / 0.58 (express),
+# 中心内中位掉到 0.55 / 0.53; purify 与 stable 更是**跨中心与中心内方向完全相反**
+# (0.476 vs 0.545; 0.413 vs 0.548), 典型 Simpson 反转。
+# 所以"长度"和"标签"是同一类身份通道, 默认都不给模型。保留版作消融 (--keep-length)。
+features:
+  seq_len: false
+  log_seq_len: false
+  aa_composition: true          # 20 种标准氨基酸的频率
+  aa_dipeptide: false           # 400 维, 先不开; 要开的话记得它会大幅增加过拟合风险
+  molecular_weight: false       # 与长度高度相关, 不额外加
+
+model:
+  kind: HistGradientBoostingClassifier   # sklearn 自带, 不额外引依赖
+  max_iter: 300
+  learning_rate: 0.1
+  max_leaf_nodes: 31
+  l2_regularization: 1.0
+  early_stopping: true
+  validation_fraction: 0.1
+
+eval:
+  ks: [10, 20, 50, 100]      # 刘刚刚 2026-09-30: 报多个预算点, 不由我们选单一门槛
+  group_by: [center, year, organism]   # CLAUDE.md 与 SPEC §3.3: 按实验室 / 年份 / 物种
+  min_group_n: 200
+
+# v2 §2.4 规则生效后各阶段都有千级以上阴性簇, 六个头都跑; 样本不足的会自动 SKIP。
+stages: [clone, express, soluble, purify, stable, bind, soluble_expression]
+# soluble_expression 是派生标签 (express 与 soluble 的复合), 专为对齐 SoluProt 的定义;
+# 它不是第七个阶段, 不参与 GATE 1 的"≥3 个阶段"计数。

@@ -1,0 +1,122 @@
+{
+  "k": 5,
+  "seed": 20260930,
+  "assignment": "greedy_balance_by_size",
+  "exclusion_policy": "per_fold",
+  "centers_train_only": [
+    "OCSP",
+    "GPCR",
+    "TMPC",
+    "ISFI",
+    "S2F",
+    "MPSBC",
+    "MSGP",
+    "BIGS",
+    "YSG",
+    "MPID",
+    "XMTB",
+    "ATCG3D",
+    "OPPF",
+    "CHTSB",
+    "TEMIMPS",
+    "ISPC",
+    "SGC",
+    "STAD",
+    "MPSBYNMR"
+  ],
+  "folds": [
+    {
+      "fold": 0,
+      "centers": [
+        "JCSG"
+      ],
+      "n_test": 378364,
+      "n_train": 177200,
+      "train_loss_pct_from_homology_exclusion": 68.8,
+      "test_neg_groups_express": 0,
+      "train_neg_groups_express": 9392,
+      "test_neg_groups_soluble_expression": 0,
+      "train_neg_groups_soluble_expression": 10054,
+      "evaluable_express": false,
+      "evaluable_soluble_expression": false,
+      "not_evaluable_reason": "test 侧 express 阴性簇仅 0 个 (门槛 20); 留出中心 JCSG 不记录失败"
+    },
+    {
+      "fold": 1,
+      "centers": [
+        "NATPRO",
+        "NESG",
+        "RSGI"
+      ],
+      "n_test": 140257,
+      "n_train": 331511,
+      "train_loss_pct_from_homology_exclusion": 58.8,
+      "test_neg_groups_express": 1714,
+      "train_neg_groups_express": 7622,
+      "test_neg_groups_soluble_expression": 2053,
+      "train_neg_groups_soluble_expression": 8049,
+      "evaluable_express": true,
+      "evaluable_soluble_expression": true
+    },
+    {
+      "fold": 2,
+      "centers": [
+        "CSMP",
+        "MCSG",
+        "MPP",
+        "SGPP",
+        "SGX",
+        "TRANSPORTPDB"
+      ],
+      "n_test": 140080,
+      "n_train": 260327,
+      "train_loss_pct_from_homology_exclusion": 67.7,
+      "test_neg_groups_express": 643,
+      "train_neg_groups_express": 8290,
+      "test_neg_groups_soluble_expression": 831,
+      "train_neg_groups_soluble_expression": 8812,
+      "evaluable_express": true,
+      "evaluable_soluble_expression": true
+    },
+    {
+      "fold": 3,
+      "centers": [
+        "BSGC",
+        "BSGI",
+        "NYCOMPS",
+        "NYSGRC",
+        "SECSG",
+        "SSGCID"
+      ],
+      "n_test": 140878,
+      "n_train": 281287,
+      "train_loss_pct_from_homology_exclusion": 65.1,
+      "test_neg_groups_express": 4154,
+      "train_neg_groups_express": 5544,
+      "test_neg_groups_soluble_expression": 4248,
+      "train_neg_groups_soluble_expression": 6111,
+      "evaluable_express": true,
+      "evaluable_soluble_expression": true
+    },
+    {
+      "fold": 4,
+      "centers": [
+        "CESG",
+        "CSGID",
+        "EFI",
+        "NYSGXRC",
+        "SPINE",
+        "TB"
+      ],
+      "n_test": 140086,
+      "n_train": 316086,
+      "train_loss_pct_from_homology_exclusion": 60.8,
+      "test_neg_groups_express": 5511,
+      "train_neg_groups_express": 4980,
+      "test_neg_groups_soluble_expression": 5832,
+      "train_neg_groups_soluble_expression": 5419,
+      "evaluable_express": true,
+      "evaluable_soluble_expression": true
+    }
+  ]
+}

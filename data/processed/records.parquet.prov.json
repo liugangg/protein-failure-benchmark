@@ -1,0 +1,24 @@
+{
+  "artifact": {
+    "path": "data/processed/records.parquet",
+    "size": 132717275,
+    "sha256": "e887059736b60a98cc92e59c32f2241ab87d5908c1df9400210e981572ddd7e2",
+    "rows": 2380297
+  },
+  "produced_by": "src/splits/make_splits.py",
+  "inputs": [
+    {
+      "path": "data/interim/pooled_records.parquet",
+      "size": 130856803,
+      "sha256": "0056308e0ad5a484f24ed65f10b23d2c30ff42a0f754a12ab0d78c21f5f9b270",
+      "rows": 2380297
+    },
+    {
+      "path": "data/interim/split_groups.parquet",
+      "size": 2076576,
+      "sha256": "ba4ddfbe54fdff8730213a0aaa5562f3222f875aeef9f3253578accd5c807458",
+      "rows": 354019
+    }
+  ],
+  "extra": {}
+}

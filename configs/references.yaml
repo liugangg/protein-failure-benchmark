@@ -1,0 +1,289 @@
+# 参考文献 —— 每条的 DOI / 期刊 / 卷期页均在 2026-10-02 经 Crossref API 实查,
+# 每条引语 (verbatim) 均在同日从出版商全文页核对过原文, 并记下核实来源。
+# 规则 (全局 CLAUDE.md 铁律的延伸): **不凭记忆写引用, 不猜 DOI**。
+#   本轮实查中我猜的两个 DOI 全错 (10.1016/j.tibtech.2025.05.011 与 10.1038/nbt.1932
+#   都指向完全无关的论文), 所以未核实的条目一律不写进稿子。
+verified_on: "2026-10-02"          # 第一轮: netsolp / soluprot / plm_sol / price2011
+verified_on_round2: "2026-10-05"  # 第二轮: 结晶倾向这一支 5 篇 + 综述 + Bushuiev 拆两篇
+verification_sources:
+  crossref: "https://api.crossref.org/works/{DOI}  (题目/作者/卷期页)"
+  fulltext: "出版商全文页 (引语逐字核对)"
+
+refs:
+  netsolp:
+    key: "Thumuluri2022"
+    authors: "Thumuluri V, Martiny HM, Almagro Armenteros JJ, Salomon J, Nielsen H, Johansen AR"
+    year: 2022
+    title: "NetSolP: predicting protein solubility in Escherichia coli using language models"
+    journal: "Bioinformatics"
+    volume: "38"
+    issue: "4"
+    pages: "941-946"
+    doi: "10.1093/bioinformatics/btab801"
+    verbatim:
+      tag_counts: >-
+        An example of this is that 11 602 out of 69 420 sequences of the training set and
+        344 out of 2001 sequences of the test set have the N-terminal His-tag
+        'MGSDKIHHHHHH' with ~99% and ~97% of them being insoluble, respectively.
+      other_tags: >-
+        Other N-terminal His-tags like 'MGSSHHHH', 'MHHHHHHS' and 'MRGSHHHH' with over
+        100 instances each have 88, 100 and 100% mean solubility, respectively.
+      consequence: >-
+        The consequence of this is that the trained models focus more on the His-tag
+        instead of the wild-type sequence.
+      label_inconsistency: >-
+        [Hon et al. (2021)] compared the labels of sequences from this dataset with another
+        dataset whose solubility was provided separately ([Price et al., 2011]) and found
+        that around 18.6% of labels were different, even with 100% identical sequences.
+    does_center_level_analysis: false
+    center_check_note: >-
+      全文实查: 未做任何按实验室 / 结构基因组学中心的比较或分层。
+      注意归属: 18.6% 这个数字是 NetSolP **转述** Hon et al. (2021) 对比 Price et al.
+      (2011) 的发现, 不是 NetSolP 自己测的, 引用时要写清。
+
+  soluprot:
+    key: "Hon2021"
+    authors: "Hon J, Marusiak M, Martinek T, Kunka A, Zendulka J, Bednar D, Damborsky J"
+    year: 2021
+    title: "SoluProt: prediction of soluble protein expression in Escherichia coli"
+    journal: "Bioinformatics"
+    volume: "37"
+    issue: "1"
+    pages: "23-28"
+    doi: "10.1093/bioinformatics/btaa1102"
+    verbatim:
+      length_balancing: >-
+        we balanced the sequence length distribution so that length alone would not play
+        a dominant role in the predictions.
+      pdb_feature: >-
+        maximum identity to the E.coli PDB subset as calculated using USEARCH (1 feature)
+    does_center_level_analysis: false
+    center_check_note: "全文实查: 无按实验室 / 中心 / 靶点提供方的分层分析。"
+
+  plm_sol:
+    key: "Zhang2024"
+    authors: "Zhang X, Hu X, Zhang T, Yang L, Liu C, Xu N, Wang H, Sun W"
+    year: 2024
+    title: >-
+      PLM_Sol: predicting protein solubility by benchmarking multiple protein language
+      models with the updated Escherichia coli protein solubility dataset
+    journal: "Briefings in Bioinformatics"
+    volume: "25"
+    issue: "5"
+    pages: "bbae404"
+    doi: "10.1093/bib/bbae404"
+    verbatim:
+      tag_exclusion: >-
+        The following His tag fragments in proteins were excluded due to an uneven
+        distribution of these tags between Insol and Sol proteins revealed by NetSolP:
+        "MGSDKIHHHHHH", "MGSSHHHHHH", "MHHHHHHS", "MRGSHHHHHH", "MAHHHHHH", "MGHHHHHH",
+        "MGGSHHHHHH", "HHHHHHH" and "AHHHHHHH".
+      dataset_size: >-
+        Finally, there were 31,581 entries categorized as Insol and 46,450 entries
+        categorized as Sol, resulting in the creation of the UESolDS.
+    does_center_level_analysis: false
+    center_check_note: >-
+      全文实查: 无按来源实验室 / 中心的分层或对比。
+      意义: 剥 His 标签到 2024 年已是本领域构建数据集的标准步骤, **不是本文的创新**。
+
+  price2011:
+    key: "Price2011"
+    authors: >-
+      Price WN, Handelman SK, Everett JK, Tong SN, Bracic A, Luff JD, Naumov V, Acton T,
+      Manor P, Xiao R, Rost B, Montelione GT, Hunt JF
+    year: 2011
+    title: >-
+      Large-scale experimental studies show unexpected amino acid effects on protein
+      expression and solubility in vivo in E. coli
+    journal: "Microbial Informatics and Experimentation"
+    volume: "1"
+    issue: "1"
+    pages: "6"
+    doi: "10.1186/2042-5783-1-6"
+    role: "NetSolP 转述的 18.6% 标签不一致, 对比的就是这套独立测定的可溶性标签。"
+
+  # ⚠️ Bushuiev 这组有两篇, 论断分属不同篇, 2026-10-05 核实后拆开 (此前合引一篇是错的)。
+  bushuiev2024_iclr:
+    key: "Bushuiev2024a"
+    authors: >-
+      Bushuiev A, Bushuiev R, Kouba P, Filkin A, Gabrielova M, Gabriel M, Sedlar J,
+      Pluskal T, Damborsky J, Mazurenko S, Sivic J
+    year: 2024
+    title: "Learning to design protein-protein interactions with enhanced generalization"
+    venue: "International Conference on Learning Representations (ICLR) 2024"
+    arxiv: "2310.18515"
+    verbatim:
+      ppiref_idist: >-
+        First, we construct PPIRef, a comprehensive dataset of protein-protein interaction
+        structures from the Protein Data Bank. Using iDist, a new scalable algorithm, we
+        enhance ...
+      ppiref50k_size: >-
+        results in the final non-redundant dataset comprising 45,553 PPIs, which we call
+        PPIRef50K
+      split_leakage: >-
+        Second, the approaches employed for the train-test splitting of both large-scale
+        unlabeled PPIs and small mutational libraries introduce data leakage
+      defers_to_workshop: >-
+        In Bushuiev et al. (2024), we demonstrate that high data leakage is present in most
+        splits of PPI ...
+    covers: >-
+      **PPIRef 数据集与 iDist 近重复检测算法的出处** (正文逐字核实: 从 ICLR 2024 正会
+      PDF 抽文本后 grep 到 "Using iDist, a new scalable algorithm" 与
+      "45,553 PPIs, which we call PPIRef50K")。也提出按 3D 界面相似度构造非泄漏切分。
+    does_not_cover: >-
+      "按序列或元数据相似度切分引入严重泄漏"这句**不在本篇**: 正会全文搜不到
+      "metadata similarity" / "major data leakage"; 且本篇第 223 行把泄漏论证明确让给
+      workshop 那篇 ("In Bushuiev et al. (2024), we demonstrate that high data leakage
+      is present in most splits of PPI ...")。该论断引 bushuiev2024_workshop。
+
+  bushuiev2024_workshop:
+    key: "Bushuiev2024b"
+    authors: >-
+      Bushuiev A, Bushuiev R, Sedlar J, Pluskal T, Damborsky J, Mazurenko S, Sivic J
+    year: 2024
+    title: "Revealing Data Leakage in Protein Interaction Benchmarks"
+    venue: "ICLR 2024 Workshop on Generative and Experimental Perspectives for Biomolecular Design (GEM)"
+    verbatim:
+      claim: >-
+        commonly used splitting strategies for protein complexes, based on protein sequence
+        or metadata similarity, introduce major data leakage
+      consequence: >-
+        may result in overoptimistic evaluation of generalization, as well as unfair
+        benchmarking of the models, biased towards assessing their overfitting capacity
+        rather than practical utility
+      remedy: >-
+        constructing data splits based on 3D structural similarity of protein-protein
+        interfaces and suggest corresponding algorithms
+    covers: >-
+      **"按序列或元数据相似度切分会引入严重泄漏"这一论断的出处** (专篇论证)。
+      本文 §4 引这一篇; 作者少 4 人 (无 Kouba / Filkin / Gabrielova / Gabriel), 与正会篇不同。
+    note: >-
+      OpenReview 页面有浏览器校验拦截, 故引语取自 mlanthology.org 的该篇索引页摘要;
+      题目 / 作者 / venue 与正会篇的参考文献条目 ("Revealing data leakage in protein
+      interaction benchmarks. In ICLR ...") 相互印证。
+
+  # 数据来源的引用见 configs/data_sources.yaml 的 citation 字段 (同样经实查)。
+
+  # ── 结晶倾向 / 多阶段实验结果预测这一支 (2026-10-05 补) ──
+  # 这是与本文**同数据源、同多阶段框架**的一整支工作, 不止一篇。
+  # 全部条目经 Crossref 实查; 家族层面的事实取自下方 crystal_review 的全文核对。
+  predppcrys:
+    key: "Wang2014"
+    authors: "Wang H, Wang M, Tan H, Li Y, Zhang Z, Song J"
+    year: 2014
+    title: >-
+      PredPPCrys: Accurate Prediction of Sequence Cloning, Protein Production,
+      Purification and Crystallization Propensity from Protein Sequences Using
+      Multi-Step Heterogeneous Feature Fusion and Selection
+    journal: "PLoS ONE"
+    volume: "9"
+    issue: "8"
+    pages: "e105902"
+    doi: "10.1371/journal.pone.0105902"
+    verbatim:
+      scale: >-
+        We downloaded the most recent datasets from the PepcDB database comprising
+        108,933 targets and 979,645 experimental trials.
+      cdhit: >-
+        We reduced sequence homology in the datasets by removing sequences with >=40%
+        sequence identity using CD-HIT within each class.
+      blast: >-
+        We applied BLAST to further reduce the sequence redundancy between the training
+        and independent test datasets using a cutoff of 25% sequence identity.
+    stages: "克隆 / 产出 / 纯化 / 结晶 / 衍射级结晶 (五个连续阶段)"
+    does_center_level_analysis: false
+    center_check_note: >-
+      全文实查: 无按实验室 / 结构基因组学中心的分层或比较。
+      **这是本文批评的具体对象而非竞争者**: 同数据源 (PepcDB/TargetTrack)、同多阶段框架,
+      但切分只做同源去冗余、无中心留出, 故其报告成绩可能被实验室身份通道虚高。
+
+  ppcpred:
+    key: "Mizianty2011"
+    authors: "Mizianty MJ, Kurgan L"
+    year: 2011
+    title: >-
+      Sequence-based prediction of protein crystallization, purification and production
+      propensity
+    journal: "Bioinformatics"
+    volume: "27"
+    issue: "13"
+    pages: "i24-i33"
+    doi: "10.1093/bioinformatics/btr229"
+    role: "三个多阶段预测器之一 (见 crystal_review 原文)。"
+    does_center_level_analysis: false
+
+  crysalis:
+    key: "Wang2016"
+    authors: "Wang H, Feng L, Zhang Z, Webb GI, Lin D, Song J"
+    year: 2016
+    title: >-
+      Crysalis: an integrated server for computational analysis and design of protein
+      crystallization
+    journal: "Scientific Reports"
+    volume: "6"
+    pages: "21383"
+    doi: "10.1038/srep21383"
+    role: "三个多阶段预测器之一 (见 crystal_review 原文)。"
+    does_center_level_analysis: false
+
+  fdetect:
+    key: "Meng2017"
+    authors: "Meng F, Wang C, Kurgan L"
+    year: 2017
+    title: >-
+      fDETECT webserver: fast predictor of propensity for protein production,
+      purification, and crystallization
+    journal: "BMC Bioinformatics"
+    volume: "18"
+    pages: "580"
+    doi: "10.1186/s12859-017-1995-z"
+    role: "同一支里速度最快的预测器; 同样覆盖产出 / 纯化 / 结晶三个环节。"
+    does_center_level_analysis: false
+
+  deepcascade2021:
+    key: "Zhu2021"
+    authors: "Zhu Y, Hu J, Ge F, Li F, Song J, Zhang Y, Yu DJ"
+    year: 2021
+    title: >-
+      Accurate multistage prediction of protein crystallization propensity using
+      deep-cascade forest with sequence-based features
+    journal: "Briefings in Bioinformatics"
+    volume: "22"
+    issue: "3"
+    pages: "bbaa076"
+    doi: "10.1093/bib/bbaa076"
+    role: "该支最新的多阶段工作 (2021), 说明这条线仍在延续, 本文的批评不是针对一篇旧论文。"
+    does_center_level_analysis: false
+
+  crystal_review:
+    key: "Wang2018"
+    authors: "Wang H, Feng L, Webb GI, Kurgan L, Song J, Lin D"
+    year: 2018
+    title: >-
+      Critical evaluation of bioinformatics tools for the prediction of protein
+      crystallization propensity
+    journal: "Briefings in Bioinformatics"
+    volume: "19"
+    issue: "5"
+    pages: "838-852"
+    doi: "10.1093/bib/bbx018"
+    verbatim:
+      data_sources: >-
+        The data sets used to develop these tools were derived from a number of relevant
+        public databases, including TargetDB, PepcDB and TargetTrack.
+      multistage: >-
+        Three tools (PPCPred, PredPPCrys and Crysalis) also predict the propensity for
+        successfully completing some of the crucial steps during the crystallization
+        process.
+      pipeline_bias: >-
+        a portion of crystal structures deposited in PDB was determined traditionally by
+        structural biologists using specialized equipment, unique protocols and laborious
+        trial-and-error efforts.
+    does_center_level_analysis: false
+    center_check_note: >-
+      **家族级结论的依据**。该综述系统评测了这一整支预测器, 全文实查:
+      无任何按实验室 / 结构基因组学中心的分层或评测切分; 它明确写出 TargetTrack 的数据来自
+      ">40 structural genomics centers worldwide", 却未就此做任何中心级分析。
+      去冗余一律只用序列同源阈值 (类内 / 类间 25% identity)。
+      综述确实提到了"流水线偏差"(见 pipeline_bias 引语), 但未系统考察中心级混杂 ——
+      这正是本文补上的那一步。

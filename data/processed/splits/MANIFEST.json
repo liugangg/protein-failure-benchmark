@@ -1,0 +1,459 @@
+{
+  "config": {
+    "version": 1,
+    "seed": 20260930,
+    "sequence_split": {
+      "fractions": {
+        "train": 0.8,
+        "val": 0.1,
+        "test": 0.1
+      },
+      "unit": "split_group",
+      "sources": "all",
+      "pin_large_groups_to_train_above_fraction": 0.01,
+      "pin_rationale": "实测在 30% 相似度 / 80% 覆盖(较短序列)下做传递闭包, TargetTrack 的靶点空间\n形成一个巨型连通分量: 单个 split_group 含 26,373 个 set-cover 簇 / 158,681 条\n序列 = 全部序列的 44.7%; 第二大的再占 41,744 条。两个组合计占 56% 的序列。\n成因不是短片段搭桥 (已验证: 巨型组长度中位 293aa, <60aa 的只占 0.6%, 比其余还少),\n而是**多结构域蛋白在家族之间搭桥** —— A 与 B 共享域 1, A 与 C 共享域 2,\n传递闭包就把 B 和 C 也连到一起。这是结构基因组学靶点空间的真实性质。\n这么大的组无论落到哪一侧都会把那一侧撑成全库的一半, 当测试集更是荒谬。\n所以: 占比超过 1% 的组一律进训练侧, 测试/验证集只从其余小组里出。\n代价要说清楚: 测试集**系统性地不含**那些处在大同源网络里的蛋白,\n它代表的是\"同源网络外围/孤立的蛋白\"。报告结论时必须带上这个限定。\n"
+    },
+    "lab_split": {
+      "sources": [
+        "ds1_targettrack"
+      ],
+      "holdout_centers": [
+        "CSGID",
+        "EFI"
+      ],
+      "holdout_rationale": "挑选规则: (a) 该 center 必须有足够阴性, 否则测试集里没有阴性可算 precision@k;\n         (b) 不能是阴性的最大贡献方, 否则训练侧的阴性被抽干。\n实测各 center 的 express 阴性簇数: NYSGRC 6,543 (53.7%) / CSGID 3,353 /\nNYSGXRC 2,142 / EFI 1,071 / CESG 383。留 CSGID + EFI 到测试侧 ->\n测试侧约 4,424 个 express 阴性簇, 训练侧仍留约 9,068 个。\nNYSGRC 留在训练侧, 因为它一家占 53.7%, 留出它等于废掉训练集。\n",
+      "conflict_policy": "drop_mixed_clusters",
+      "conflict_rationale": "92,779 个簇里有 25,818 个 (27.8%) 跨多个 center。实验室切分和簇完整性天然冲突。\n三种处理里选了最干净的一种:\n  (1) 混合簇整簇归测试 -> 测试集里混进非留出实验室的记录, \"跨实验室\"的解释就脏了\n  (2) 混合簇整簇归训练 -> 测试集与训练集存在同源序列, 直接泄漏\n  (3) **混合簇两边都不要** <- 采用。测试侧记录全部来自留出实验室,\n      且训练侧不含任何与测试侧同源(>30%)的序列。代价是丢掉一部分数据, 已记数。\n"
+    },
+    "time_split": {
+      "sources": [
+        "ds1_targettrack"
+      ],
+      "test_from_year": 2015,
+      "conflict_policy": "drop_mixed_clusters",
+      "conflict_rationale": "同一个簇里既有 2015 前又有 2015 后的记录时两边都不要, 理由同上。\n"
+    },
+    "bind_target_split": {
+      "sources": [
+        "ds5_dtu_binder",
+        "ds5_adaptyv_egfr"
+      ],
+      "scope_rationale": "只用 DS5 (真实 de novo binder 设计的湿实验结合结果)。\n不含 DS3 的 bind: 它测的是\"突变让已有结合变弱多少\", 与\"从头设计的 binder 会不会结合\"\n不是同一个问题 (见 configs/data_sources.yaml 的 semantic_mismatch), 混进来会让任务定义漂移。\n也不含 DS1 的 186 条 bind (来自 v2 §2.4 推断, 证据等级最弱且与设计蛋白无关)。\n",
+      "holdout_targets": [
+        "IL7Ra",
+        "TrkA",
+        "Mdm2"
+      ],
+      "holdout_rationale": "挑选规则 (实测 15 个靶点 / 1,325 个 split_group 之后定的):\n  (a) 最大的两个靶点必须留在训练侧: FGFR2 占 38.0% 的 group、EGFR 占 20.0%,\n      合计 58%, 留出任一个都会把训练侧抽干。\n  (b) 留出集合占全部 group 的 20-30%: IL7Ra 143 + TrkA 98 + Mdm2 39 = 280 (21.1%)。\n  (c) **必须含至少一个失败率明显低于其它靶点的**, 否则测试集几乎全是阴性,\n      precision@k 会因基础失败率接近 1 而失去区分力。\n      各靶点结合失败率多在 85-98%, 只有 Mdm2 是 42.7% —— 所以 Mdm2 必须进留出集。\n  三个靶点分别来自 2 / 2 / 1 个研究, 不是同一批次。\n",
+      "conflict_policy": "drop_mixed_clusters",
+      "conflict_note": "实测 1,325 个 split_group 里只有 42 个跨靶点 (3.2%), 所以丢弃混合组的代价很小 ——\n远好于 TargetTrack 上的实验室切分 (那里 27.8% 的簇跨中心)。\n原因是不同靶点的 binder 设计骨架大多不同源。\n"
+    }
+  },
+  "split_unit": "split_group",
+  "split_unit_note": "切分单位是 split_group (见 src/splits/split_groups.py): 把 set-cover 簇之间仍有 >30% 相似边的簇并成连通分量。直接按 set-cover 簇切分实测会泄漏(序列切分训练/测试之间 10,841 对 >30%, 最高 fident=1.00)。",
+  "splits": {
+    "sequence": {
+      "file": "sequence_split.parquet",
+      "sha256": "1d5032c5d3f3d4c7824b2e32593f026beaeb7a5ae3e50dbb14d020ac3dfef083",
+      "pin_threshold_fraction": 0.01,
+      "pinned_groups": 1,
+      "pinned_sequences": 178311,
+      "sides": {
+        "train": {
+          "split": "train",
+          "records": 2227070,
+          "clusters": 84160,
+          "split_groups": 45587,
+          "centers": 75,
+          "stages": {
+            "clone": {
+              "neg_records": 16990,
+              "neg_clusters": 5134,
+              "pos_records": 725118
+            },
+            "express": {
+              "neg_records": 85983,
+              "neg_clusters": 19993,
+              "pos_records": 583679
+            },
+            "soluble": {
+              "neg_records": 8892,
+              "neg_clusters": 4089,
+              "pos_records": 461639
+            },
+            "purify": {
+              "neg_records": 26916,
+              "neg_clusters": 8075,
+              "pos_records": 374821
+            },
+            "stable": {
+              "neg_records": 147865,
+              "neg_clusters": 3355,
+              "pos_records": 655531
+            },
+            "bind": {
+              "neg_records": 159593,
+              "neg_clusters": 1367,
+              "pos_records": 385314
+            }
+          }
+        },
+        "val": {
+          "split": "val",
+          "records": 80008,
+          "clusters": 7584,
+          "split_groups": 5662,
+          "centers": 59,
+          "stages": {
+            "clone": {
+              "neg_records": 599,
+              "neg_clusters": 241,
+              "pos_records": 45061
+            },
+            "express": {
+              "neg_records": 4523,
+              "neg_clusters": 1433,
+              "pos_records": 34647
+            },
+            "soluble": {
+              "neg_records": 604,
+              "neg_clusters": 304,
+              "pos_records": 28465
+            },
+            "purify": {
+              "neg_records": 1600,
+              "neg_clusters": 471,
+              "pos_records": 24526
+            },
+            "stable": {
+              "neg_records": 3081,
+              "neg_clusters": 219,
+              "pos_records": 24516
+            },
+            "bind": {
+              "neg_records": 1219,
+              "neg_clusters": 663,
+              "pos_records": 162
+            }
+          }
+        },
+        "test": {
+          "split": "test",
+          "records": 73219,
+          "clusters": 6873,
+          "split_groups": 5686,
+          "centers": 60,
+          "stages": {
+            "clone": {
+              "neg_records": 809,
+              "neg_clusters": 288,
+              "pos_records": 45313
+            },
+            "express": {
+              "neg_records": 3659,
+              "neg_clusters": 1345,
+              "pos_records": 35547
+            },
+            "soluble": {
+              "neg_records": 499,
+              "neg_clusters": 247,
+              "pos_records": 29913
+            },
+            "purify": {
+              "neg_records": 1338,
+              "neg_clusters": 455,
+              "pos_records": 26425
+            },
+            "stable": {
+              "neg_records": 2912,
+              "neg_clusters": 192,
+              "pos_records": 15464
+            },
+            "bind": {
+              "neg_records": 3138,
+              "neg_clusters": 131,
+              "pos_records": 783
+            }
+          }
+        }
+      }
+    },
+    "lab": {
+      "file": "lab_split.parquet",
+      "sha256": "8db25c131e451c88dc5e416dd0718ef53f57f07ce485a789ab7897b0f85aae96",
+      "holdout_centers": [
+        "CSGID",
+        "EFI"
+      ],
+      "mixed_split_groups_dropped": 1687,
+      "records_dropped": 537854,
+      "eligible_split_groups": 55565,
+      "sides": {
+        "train": {
+          "split": "train",
+          "records": 402021,
+          "clusters": 60646,
+          "split_groups": 52338,
+          "centers": 39,
+          "stages": {
+            "clone": {
+              "neg_records": 3924,
+              "neg_clusters": 1679,
+              "pos_records": 352041
+            },
+            "express": {
+              "neg_records": 27113,
+              "neg_clusters": 10392,
+              "pos_records": 279519
+            },
+            "soluble": {
+              "neg_records": 4383,
+              "neg_clusters": 2335,
+              "pos_records": 229304
+            },
+            "purify": {
+              "neg_records": 10876,
+              "neg_clusters": 3945,
+              "pos_records": 205293
+            },
+            "stable": {
+              "neg_records": 3435,
+              "neg_clusters": 1622,
+              "pos_records": 7141
+            },
+            "bind": {
+              "neg_records": 84,
+              "neg_clusters": 59,
+              "pos_records": 0
+            }
+          }
+        },
+        "test": {
+          "split": "test",
+          "records": 5843,
+          "clusters": 1556,
+          "split_groups": 1540,
+          "centers": 2,
+          "stages": {
+            "clone": {
+              "neg_records": 302,
+              "neg_clusters": 191,
+              "pos_records": 5127
+            },
+            "express": {
+              "neg_records": 1931,
+              "neg_clusters": 790,
+              "pos_records": 1882
+            },
+            "soluble": {
+              "neg_records": 2,
+              "neg_clusters": 2,
+              "pos_records": 1862
+            },
+            "purify": {
+              "neg_records": 215,
+              "neg_clusters": 109,
+              "pos_records": 922
+            },
+            "stable": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 47
+            },
+            "bind": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            }
+          }
+        }
+      }
+    },
+    "time": {
+      "file": "time_split.parquet",
+      "sha256": "a08c217a6ed3cb57bc7f80b18286f6f26fe4d9ed8070360fa1ffb4c6ae0fecba",
+      "test_from_year": 2015,
+      "mixed_split_groups_dropped": 1933,
+      "records_dropped": 621289,
+      "eligible_split_groups": 55565,
+      "sides": {
+        "train": {
+          "split": "train",
+          "records": 323823,
+          "clusters": 62227,
+          "split_groups": 53313,
+          "centers": 41,
+          "stages": {
+            "clone": {
+              "neg_records": 4507,
+              "neg_clusters": 1991,
+              "pos_records": 271106
+            },
+            "express": {
+              "neg_records": 32808,
+              "neg_clusters": 11884,
+              "pos_records": 191431
+            },
+            "soluble": {
+              "neg_records": 4748,
+              "neg_clusters": 2455,
+              "pos_records": 143154
+            },
+            "purify": {
+              "neg_records": 12111,
+              "neg_clusters": 4227,
+              "pos_records": 115790
+            },
+            "stable": {
+              "neg_records": 3757,
+              "neg_clusters": 1731,
+              "pos_records": 4385
+            },
+            "bind": {
+              "neg_records": 83,
+              "neg_clusters": 58,
+              "pos_records": 0
+            }
+          }
+        },
+        "test": {
+          "split": "test",
+          "records": 606,
+          "clusters": 322,
+          "split_groups": 319,
+          "centers": 7,
+          "stages": {
+            "clone": {
+              "neg_records": 30,
+              "neg_clusters": 19,
+              "pos_records": 435
+            },
+            "express": {
+              "neg_records": 29,
+              "neg_clusters": 18,
+              "pos_records": 268
+            },
+            "soluble": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 267
+            },
+            "purify": {
+              "neg_records": 66,
+              "neg_clusters": 18,
+              "pos_records": 108
+            },
+            "stable": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 8
+            },
+            "bind": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            }
+          }
+        }
+      }
+    },
+    "bind_target": {
+      "file": "bind_target_split.parquet",
+      "sha256": "5ac1e62546717aa67e73c5e33a1c9911c9988969d36a045e83d1f91d7055142e",
+      "holdout_targets": [
+        "IL7Ra",
+        "TrkA",
+        "Mdm2"
+      ],
+      "mixed_split_groups_dropped": 35,
+      "records_dropped": 1998,
+      "eligible_split_groups": 1287,
+      "sides": {
+        "train": {
+          "split": "train",
+          "records": 1624,
+          "clusters": 1109,
+          "split_groups": 1014,
+          "centers": 16,
+          "stages": {
+            "clone": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 253
+            },
+            "express": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 253
+            },
+            "soluble": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "purify": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "stable": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "bind": {
+              "neg_records": 1459,
+              "neg_clusters": 1026,
+              "pos_records": 165
+            }
+          }
+        },
+        "test": {
+          "split": "test",
+          "records": 300,
+          "clusters": 267,
+          "split_groups": 238,
+          "centers": 5,
+          "stages": {
+            "clone": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "express": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "soluble": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "purify": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "stable": {
+              "neg_records": 0,
+              "neg_clusters": 0,
+              "pos_records": 0
+            },
+            "bind": {
+              "neg_records": 214,
+              "neg_clusters": 205,
+              "pos_records": 86
+            }
+          }
+        }
+      }
+    }
+  },
+  "records": {
+    "file": "data/processed/records.parquet",
+    "sha256": "e887059736b60a98cc92e59c32f2241ab87d5908c1df9400210e981572ddd7e2",
+    "rows": 2380297,
+    "clusters": 98617
+  }
+}
