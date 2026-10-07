@@ -69,12 +69,12 @@ def main() -> None:
             bad.append("稿件仍有未发布占位符, 与 pending 表述重复")
         # 沉积还没发布时, 任何"已归档"的**现在时**表述都是假陈述 ——
         # 读者照它去找会什么也找不到, 而这正是本文批评别人的那类问题。
-        present_tense = [
-            "are archived at Zenodo", "is archived at Zenodo",
-            "archived at Zenodo;", "归档于 Zenodo,", "已归档于 Zenodo",
-            "are deposited at Zenodo", "is deposited at Zenodo",
-        ]
-        hit = [x for x in present_tense if x in md]
+        # 上一版用字面量清单, 只列了 "archived" 的几种写法, 结果
+        # "Two items are deposited separately" 整句漏过去 —— 枚举措辞永远漏。
+        # 改成按**语法**拦: 系动词 + 分词, 不管后面接什么。
+        hit = [m.group(0) for m in re.finditer(
+            r"\b(?:is|are|has been|have been|was|were)\s+(?:archived|deposited)\b", md)]
+        hit += [x for x in ("已归档", "已沉积", "归档于 Zenodo,") if x in md]
         if hit:
             bad.append(f"稿件用现在时声称数据已归档, 但沉积尚未发布: {hit}")
         if bad:
@@ -100,6 +100,20 @@ def main() -> None:
                 "!! zenodo_doi 为空且未标 pending, 但稿件里没有占位符 —— "
                 "是不是手写了一个 DOI? 未发布的 Zenodo DOI 不解析, 不能写进稿件。")
         print("DOI 门: 未落实且未标 pending —— 稿件带明显占位符")
+    # ── 排版门: 散文段不得有段内换行 (刘刚刚 2026-10-07) ──
+    # md2html 把换行当段落边界, 于是硬换行的段落在 PDF 里变成"一行一段", 行距撑开,
+    # 一眼就是排版事故。这不是美观问题: §7 正是筛查者最先翻的那一页。
+    wrapped = [x.strip() for x in md.split("\n\n")
+               if "\n" in x.strip()
+               and not x.lstrip().startswith(("|", "-", "#", ">"))
+               and not x.lstrip()[:3].rstrip().rstrip(".").isdigit()]
+    if wrapped:
+        raise SystemExit(
+            f"!! {len(wrapped)} 个散文段在源文件里有段内换行, 渲染后会变成'一行一段':\n  - "
+            + "\n  - ".join(w.replace("\n", " / ")[:90] for w in wrapped)
+            + "\n   每段写成一整行。(表格、列表、标题、引用块不受此限。)")
+    print("排版门: PASS —— 无段内换行的散文段")
+
     # ── 仓库路径门 (刘刚刚 2026-10-07) ──
     # §7 有一句全称陈述: "all reports cited here are released in the companion repository",
     # §9 又列出一串仓库内路径。全称陈述必须机械可核 —— 稿件声称"在仓库中"的路径,
@@ -111,11 +125,11 @@ def main() -> None:
     # 否则豁免就退化成"悄悄放过" —— 删掉 §7 那句话, 这里就会炸。
     NOT_SHIPPED = {
         "data/raw/": "redistributes no upstream raw file",
-        "records.parquet": "deposited\nseparately rather than in the repository",
-        "data/processed/records.parquet": "deposited\nseparately rather than in the repository",
-        "data/interim/pooled_records.parquet": "under `data/interim/` are shipped as neither",
-        "data/interim/pooled_unique_seqs.fasta": "under `data/interim/` are shipped as neither",
-        "data/interim/split_groups.parquet": "under `data/interim/` are shipped as neither",
+        "records.parquet": "Two items are not in the repository",
+        "data/processed/records.parquet": "Two items are not in the repository",
+        "data/interim/pooled_records.parquet": "under `data/interim/` are not distributed either",
+        "data/interim/pooled_unique_seqs.fasta": "under `data/interim/` are not distributed either",
+        "data/interim/split_groups.parquet": "under `data/interim/` are not distributed either",
     }
     missing_decl = [k for k, v in NOT_SHIPPED.items() if v not in md]
     if missing_decl:
@@ -204,6 +218,17 @@ def main() -> None:
           f"丢失数值 {len(lost_docx)}")
     print(f"PDF  {pdf.stat().st_size/1e6:.2f} MB  丢失数值 "
           f"{len(lost_pdf) if ptxt else '(无 pdftotext, 未核)'}")
+
+    # 渲染结果里不许出现字面量 "<http": md2html 不支持 <url> autolink 语法,
+    # 写成那样尖括号会原样印出来且不可点击。裸链接只能写成 [url](url)。
+    for label, txt in (("PDF", ptxt), ("DOCX", dtxt)):
+        if txt and ("<http" in txt or "&lt;http" in txt):
+            raise SystemExit(
+                f"!! 渲染后的 {label} 里出现字面量 '<http' —— 稿件有 <url> 形式的裸链接, "
+                "本转换器不支持该语法。改写成 [url](url)。")
+    if not ptxt:
+        raise SystemExit("!! 找不到 pdftotext, 无法核验渲染后的 PDF 文本, 拒绝出件。")
+    print("链接门: PASS —— 渲染结果无字面量 <http")
 
     # 结构核对: 列表**块**数守恒, 不是列表项数。
     # 第一版数的是项数, 结果毫无用处: 续行支持被破坏时每个标记行照样产生一个 <li>,
