@@ -27,7 +27,12 @@ from labels import provenance  # noqa: E402
 OUT = pathlib.Path("zenodo_upload")
 REPO = "https://github.com/liugangg/protein-failure-benchmark"
 
-# 9 个带指纹的产物
+# 带指纹的产物。
+# pooled_records.parquet 与 pooled_unique_seqs.fasta 已剔除: 两者都是可导出的冗余 ——
+# pooled_records 的列是 records.parquet 的子集且同为 2,380,297 行 (它正是 records 的上游输入),
+# fasta 的序列数等于 split_groups.parquet 的 cluster_key_seq n_unique。
+# 两者合计 ~250 MB, 占原沉积的六成多, 却不让任何一个数字变得可核。
+# 它们的指纹仍在仓库里 (git 跟踪), 所以从原始源到 pooled 这一段链条没有断。
 ARTIFACTS = [
     "data/processed/records.parquet",
     "data/processed/splits/sequence_split.parquet",
@@ -35,8 +40,6 @@ ARTIFACTS = [
     "data/processed/splits/time_split.parquet",
     "data/processed/splits/bind_target_split.parquet",
     "data/processed/splits/center_folds.parquet",
-    "data/interim/pooled_records.parquet",
-    "data/interim/pooled_unique_seqs.fasta",
     "data/interim/split_groups.parquet",
 ]
 # SoluProt 去污染子集的 uid 列表: 无 .prov.json, 但 §5.1 的依据, 必须随沉积走
@@ -62,10 +65,6 @@ WHAT = {
         "Cross-target `bind` split — IL7Ra, TrkA and Mdm2 held out",
     "center_folds.parquet":
         "Center-grouped cross-validation fold assignment",
-    "pooled_records.parquet":
-        "Merged records before any split assignment",
-    "pooled_unique_seqs.fasta":
-        "All unique sequences; the input to the MMseqs2 searches",
     "split_groups.parquet":
         "Split groups — transitive-closure components of the 30% identity graph",
     "sequence_soluprot_clean_seq_uids.parquet":
@@ -219,7 +218,8 @@ def main() -> None:
     A("")
     A("## Contents")
     A("")
-    A("Files are flat; there are no subdirectories. Each of the nine primary artifacts is "
+    _NA = {7: "seven", 8: "eight", 9: "nine", 6: "six"}.get(len(ARTIFACTS), str(len(ARTIFACTS)))
+    A(f"Files are flat; there are no subdirectories. Each of the {_NA} primary artifacts is "
       "accompanied by its `.prov.json` fingerprint, which records that artifact's own "
       "sha256 and row count **and the same values for all of its upstream inputs**. The "
       "scripts in the repository verify that chain at startup and exit on mismatch.")
@@ -257,7 +257,7 @@ def main() -> None:
       f"produced the numbers in the paper — do not compare results against it.")
     A("")
     A("All row counts in the table above were recomputed from the files in this deposit "
-      "rather than copied from the fingerprints. For the nine fingerprinted artifacts the "
+      f"rather than copied from the fingerprints. For the {_NA} fingerprinted artifacts the "
       "recomputed row count **and** sha256 were additionally checked against the values "
       "recorded in their `.prov.json`; the four uid lists have no fingerprint to check "
       "against, so for those the count is simply the recomputed one. A fingerprint states "
@@ -304,8 +304,13 @@ def main() -> None:
     A("- **Model weights.** None were saved; the training scripts evaluate and discard "
       "them. Predictions are kept in the repository, so every reported number is "
       "checkable without the weights.")
-    A("- **Regenerable intermediates** beyond the three included here, and the per-run "
-      "environment logs, which are in the repository under `reports/runs/`.")
+    A("- **Regenerable intermediates.** Only `split_groups.parquet` is included, because "
+      "the split definitions depend on it. The pooled record table and the unique-sequence "
+      "FASTA are deliberately omitted: both are derivable — the pooled table's columns are "
+      "a subset of `records.parquet`, which it is the upstream input to, and the FASTA's "
+      "sequence count is the `split_groups.parquet` key count. Their fingerprints are in "
+      "the repository, so the chain from the raw sources is still auditable. The per-run "
+      "environment logs are in the repository under `reports/runs/`.")
     A("")
 
     (OUT / "README.md").write_text("\n".join(L) + "\n", encoding="utf8")
