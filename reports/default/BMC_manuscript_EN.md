@@ -218,7 +218,9 @@ Finally, all evaluations were retrospective and included no new wet-lab experime
 
 ## Conclusions
 
-[TO BE WRITTEN BY THE AUTHOR — one paragraph expanding on the Abstract's Conclusions, stating the main conclusion and its importance for the field, per BMC's requirement for this section. This is the one section deliberately left for the author.]
+Public protein-production records contain learnable associations, but their transfer between laboratories is uneven. In our matched evaluations, training on other centers produced substantially poorer predictions than training on data from the test centers, despite the larger cross-center training sets. Performance on held-out center groups ranged from enrichment above the prevalence baseline to performance below it. Removing recognizable construct features did not ensure transfer, and the below-baseline result in one group persisted after low-rank adaptation and the tested adversarial intervention. Together, these findings show why sequence-homology control must be accompanied by an explicit assessment of transfer between laboratories.
+
+The unified labels, frozen splits and evaluation code provide a reproducible basis for this assessment across the represented failure stages and evaluation settings. For a laboratory deciding which proteins to pursue, the relevant evidence is performance on the intended experimental endpoint under its production protocol. A favorable score on a pooled dataset or at another center does not establish that benefit. Prospective studies with documented protocols and explicit failure records are needed to determine whether model-guided selection improves experimental outcomes, and to distinguish transferable sequence associations from those specific to the conditions represented in the training data.
 
 ---
 
