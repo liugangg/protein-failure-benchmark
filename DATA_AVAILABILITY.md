@@ -110,7 +110,7 @@ share-alike 的义务是会传下去的。用了上面那 946,322 条 (39.8%) �
 
 > Adaptyv Bio (2024, 2025). EGFR Protein Design Competition, Rounds 1 and 2. https://github.com/adaptyvbio/egfr_competition_1 ; https://github.com/adaptyvbio/egfr_competition_2
 
-ProteinGym 的官方 README 另有要求: 还须引用各 DMS assay 的**原始实验论文** (仓库提供 `assays.bib`)。本工作只用到 33 个 assay, 投稿时附这 33 条的子集。
+ProteinGym 的官方 README 另有要求: 还须引用各 DMS assay 的**原始实验论文** (仓库提供 `assays.bib`)。本工作用到 33 个 assay, 它们出自 **13 篇**原始论文 —— assay 数不等于论文数, 多篇论文各贡献多个 assay; 此前文档写成「33 篇原始论文」是把两者混了。逐条对应见 `reports/proteingym_assays_used.md`。
 
 ## 6 不包含的内容
 

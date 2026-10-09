@@ -91,6 +91,28 @@ if sec: res.append(f"残留旧稿 § 交叉引用 {len(sec)} 处")
 if res: fail.append("; ".join(res))
 else: print("✅ 无编辑说明残留、无旧稿 § 交叉引用")
 
+# ── 7) 稿件引用的仓库路径必须真被 git 跟踪 ──
+# 和 bioRxiv 版那道门同一条纪律: 声称"在仓库里"的东西必须真在仓库里。
+import subprocess
+tracked = set(subprocess.run(["git", "ls-files"], capture_output=True, text=True).stdout.split())
+cited_paths = set(re.findall(r"`((?:src|configs|reports|data)/[A-Za-z0-9_/.\-]+\.[a-z]+)`", md))
+cited_paths |= set(re.findall(r"`([A-Z][A-Z_]*\.md)`", md))
+untracked = sorted(x for x in cited_paths if x not in tracked)
+if untracked:
+    fail.append(f"稿件引用的仓库路径未被 git 跟踪: {untracked}")
+else:
+    print(f"✅ 仓库路径: 引用的 {len(cited_paths)} 个路径全部被 git 跟踪")
+
+# ── 8) 本次投稿只提交正文, 不得承诺任何 Additional file ──
+# 承诺了却不提交, 正是本稿反复在清的那类陈述 (记录说有, 实际没有)。
+promised = [ln.strip()[:100] for ln in md.split("\n")
+            if re.search(r"(supplied|provided|included|attached)\s+as\s+an?\s+additional file", ln, re.I)
+            or ln.lstrip().startswith("| Additional file")]
+if promised:
+    fail.append(f"稿件承诺了 Additional file 但本次只提交正文 ({len(promised)}): " + " / ".join(promised[:3]))
+else:
+    print("✅ 未承诺任何 Additional file (本次只提交稿件正文)")
+
 # ── 6) 有意留空的部分, 明确列出而不是静默通过 ──
 todo = [ln.strip() for ln in md.split("\n") if "TO BE WRITTEN" in ln]
 print(f"\n⚠ 有意留给作者的部分: {len(todo)} 处")
